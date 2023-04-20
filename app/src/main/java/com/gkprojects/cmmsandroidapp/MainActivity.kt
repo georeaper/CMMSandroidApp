@@ -9,9 +9,11 @@ import kotlinx.coroutines.launch
 import java.io.File
 
 class MainActivity : AppCompatActivity() {
+    lateinit var AppDb: AppDatabase
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        AppDb=AppDatabase.getDatabase(this)
         val db = Room.databaseBuilder(
             applicationContext,
             AppDatabase::class.java, "cmms_db"
@@ -20,14 +22,13 @@ class MainActivity : AppCompatActivity() {
         val email= "giorgoskouvarakis@gmail.com"
         val address= "sperheioi16"
         val date="27-11-2027"
-        val customer= CustomerData(1,name,email,address,date)
+        val customer= CustomerData(null,name,email,address,date)
 
         GlobalScope.launch(Dispatchers.IO){
-
+             AppDb.CustomerDao().insertAll(customer)
         }
 
-//        val customerDao = db.userDao()
-//        //val customer = CustomerDao.insertAll()
+
 
     }
 
