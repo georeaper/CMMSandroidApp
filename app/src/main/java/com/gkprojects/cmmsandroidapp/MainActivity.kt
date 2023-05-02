@@ -3,55 +3,68 @@ package com.gkprojects.cmmsandroidapp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.room.Room
+import androidx.fragment.app.Fragment
+import com.gkprojects.cmmsandroidapp.Fragments.*
+
 import com.google.android.material.navigation.NavigationView
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import java.io.File
 
 class MainActivity : AppCompatActivity() {
     lateinit var toggle: ActionBarDrawerToggle
-    lateinit var AppDb: AppDatabase
+    lateinit var drawerLayout: DrawerLayout
+
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_main)
 
-        val drawerLayout : DrawerLayout = findViewById(R.id.DrawLayout)
+
+
+       drawerLayout = findViewById(R.id.DrawLayout)
         val navView :NavigationView=findViewById(R.id.navView)
         toggle= ActionBarDrawerToggle(this,drawerLayout,R.string.open,R.string.close)
         drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+
+        val startFragment = supportFragmentManager
+        val firstTransactionFrag =startFragment.beginTransaction()
+        firstTransactionFrag.replace(R.id.frameLayout1, HomeFragment())
+        firstTransactionFrag.commit()
+        drawerLayout.closeDrawers()
+        setTitle(this.title.toString())
+
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         navView.setNavigationItemSelectedListener {
-
+            it.isChecked=true
             when(it.itemId){
-                R.id.home_item -> Toast.makeText(applicationContext,"Home Clicked",Toast.LENGTH_SHORT).show()
-                R.id.download_item -> Toast.makeText(applicationContext,"Download Clicked",Toast.LENGTH_SHORT).show()
+                R.id.home_item -> replaceFragment(HomeFragment(),it.title.toString())
+                R.id.settings_item -> replaceFragment(SettingsFragment(),it.title.toString())
+                R.id.cases_item -> replaceFragment(CasesFragment(),it.title.toString())
+                R.id.equipment_item -> replaceFragment(EquipmentFragment(),it.title.toString())
+                R.id.customer_item -> replaceFragment(CustomerFragment(),it.title.toString())
+                R.id.contract_item -> replaceFragment(ContractFragment(),it.title.toString())
+
             }
             true
         }
 
 
-//        AppDb=AppDatabase.getDatabase(this)
-//        val db = Room.databaseBuilder(
-//            applicationContext,
-//            AppDatabase::class.java, "cmms_db"
-//        ).build()
-//        val name= "George"
-//        val email= "giorgoskouvarakis@gmail.com"
-//        val address= "sperheioi16"
-//        val date="27-11-2027"
-//        val customer= CustomerData(null,name,email,address,date)
-//
-//        GlobalScope.launch(Dispatchers.IO){
-//             AppDb.CustomerDao().insertAll(customer)
-        }
 
+        }
+private fun replaceFragment(fragment : Fragment , title :String){
+
+    val fragmentManager =supportFragmentManager
+    val fragmentTransaction=fragmentManager.beginTransaction()
+    fragmentTransaction.replace(R.id.frameLayout1,fragment)
+    fragmentTransaction.commit()
+    drawerLayout.closeDrawers()
+    setTitle(title)
+
+}
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         if(toggle.onOptionsItemSelected(item)){
