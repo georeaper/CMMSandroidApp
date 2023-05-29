@@ -1,6 +1,7 @@
 package com.gkprojects.cmmsandroidapp.Fragments
 
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -125,10 +126,11 @@ class CustomerFragment : Fragment() {
 
 
 
+    @SuppressLint("SuspiciousIndentation")
     private fun filterSearch(filterList :List<Customers>, query :String?){
     var tempList = arrayListOf<Customers>()
 
-        Log.d("tag3",tempList.toString())
+        //Log.d("tag3",tempList.toString())
         if(query.isNullOrEmpty()){
             tempList.clear()
             tempList.addAll(filterList)
