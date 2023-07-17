@@ -6,9 +6,39 @@
     tools:context=".Fragments.EquipmentFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Equipment" />
+        android:orientation="vertical">
+
+        <SearchView
+            android:id="@+id/searchView_equipment"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+
+
+
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/equipment_recyclerview"
+            android:layout_weight="1"/>
+<!--            tools:listitem="@layout/list_equipment"/>-->
+    </LinearLayout>
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/openEquipmentFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+
+
+        android:clickable="true"
+        android:src="@android:drawable/ic_menu_add"
+        tools:ignore="SpeakableTextPresentCheck" />
 
 </FrameLayout>

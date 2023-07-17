@@ -1,0 +1,545 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "0fdcfe8eb251c8fe37706e16d15d6352",
+    "entities": [
+      {
+        "tableName": "hospitals",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`hospitalID` INTEGER PRIMARY KEY AUTOINCREMENT, `name` TEXT NOT NULL DEFAULT 's', `address` TEXT NOT NULL DEFAULT 'a', `city` TEXT NOT NULL DEFAULT 's', `zipCode` TEXT NOT NULL DEFAULT 's', `contactPerson` TEXT NOT NULL DEFAULT 's', `contactEmail` TEXT NOT NULL DEFAULT 's', `contactPhone` TEXT NOT NULL DEFAULT 's')",
+        "fields": [
+          {
+            "fieldPath": "hospitalID",
+            "columnName": "hospitalID",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'s'"
+          },
+          {
+            "fieldPath": "address",
+            "columnName": "address",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'a'"
+          },
+          {
+            "fieldPath": "city",
+            "columnName": "city",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'s'"
+          },
+          {
+            "fieldPath": "zipCode",
+            "columnName": "zipCode",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'s'"
+          },
+          {
+            "fieldPath": "contactPerson",
+            "columnName": "contactPerson",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'s'"
+          },
+          {
+            "fieldPath": "contactEmail",
+            "columnName": "contactEmail",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'s'"
+          },
+          {
+            "fieldPath": "contactPhone",
+            "columnName": "contactPhone",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'s'"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "hospitalID"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "equipment",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`equipmentID` INTEGER PRIMARY KEY AUTOINCREMENT, `hospitalID` INTEGER DEFAULT s, `category` TEXT NOT NULL DEFAULT 's', `manufacturer` TEXT NOT NULL DEFAULT 's', `model` TEXT NOT NULL DEFAULT 's', `serialNumber` TEXT NOT NULL DEFAULT 's', `installationDate` TEXT NOT NULL DEFAULT 's', `warrantyExpirationDate` TEXT NOT NULL DEFAULT 's', `lastMaintenanceDate` TEXT NOT NULL DEFAULT 's', `nextMaintenanceDueDate` TEXT NOT NULL DEFAULT 's', `status` TEXT NOT NULL DEFAULT 's', FOREIGN KEY(`hospitalID`) REFERENCES `hospitals`(`hospitalID`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "equipmentID",
+            "columnName": "equipmentID",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "hospitalID",
+            "columnName": "hospitalID",
+            "affinity": "INTEGER",
+            "notNull": false,
+            "defaultValue": "s"
+          },
+          {
+            "fieldPath": "category",
+            "columnName": "category",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'s'"
+          },
+          {
+            "fieldPath": "manufacturer",
+            "columnName": "manufacturer",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'s'"
+          },
+          {
+            "fieldPath": "model",
+            "columnName": "model",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'s'"
+          },
+          {
+            "fieldPath": "serialNumber",
+            "columnName": "serialNumber",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'s'"
+          },
+          {
+            "fieldPath": "installationDate",
+            "columnName": "installationDate",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'s'"
+          },
+          {
+            "fieldPath": "warrantyExpirationDate",
+            "columnName": "warrantyExpirationDate",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'s'"
+          },
+          {
+            "fieldPath": "lastMaintenanceDate",
+            "columnName": "lastMaintenanceDate",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'s'"
+          },
+          {
+            "fieldPath": "nextMaintenanceDueDate",
+            "columnName": "nextMaintenanceDueDate",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'s'"
+          },
+          {
+            "fieldPath": "status",
+            "columnName": "status",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'s'"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "equipmentID"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "hospitals",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "hospitalID"
+            ],
+            "referencedColumns": [
+              "hospitalID"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "contracts",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`contractID` INTEGER PRIMARY KEY AUTOINCREMENT, `hospitalID` TEXT NOT NULL DEFAULT 's', `startDate` TEXT NOT NULL DEFAULT 's', `endDate` TEXT NOT NULL DEFAULT 's', `contractType` TEXT NOT NULL DEFAULT 's', `contractValue` REAL NOT NULL DEFAULT s, `contractStatus` TEXT NOT NULL DEFAULT 's', FOREIGN KEY(`hospitalID`) REFERENCES `hospitals`(`hospitalID`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "contractID",
+            "columnName": "contractID",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "hospitalID",
+            "columnName": "hospitalID",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'s'"
+          },
+          {
+            "fieldPath": "startDate",
+            "columnName": "startDate",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'s'"
+          },
+          {
+            "fieldPath": "endDate",
+            "columnName": "endDate",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'s'"
+          },
+          {
+            "fieldPath": "contractType",
+            "columnName": "contractType",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'s'"
+          },
+          {
+            "fieldPath": "contractValue",
+            "columnName": "contractValue",
+            "affinity": "REAL",
+            "notNull": true,
+            "defaultValue": "s"
+          },
+          {
+            "fieldPath": "contractStatus",
+            "columnName": "contractStatus",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'s'"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "contractID"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "hospitals",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "hospitalID"
+            ],
+            "referencedColumns": [
+              "hospitalID"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "contract_equipment",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`contractID` INTEGER NOT NULL, `equipmentID` INTEGER NOT NULL, PRIMARY KEY(`contractID`, `equipmentID`), FOREIGN KEY(`contractID`) REFERENCES `contracts`(`contractID`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`equipmentID`) REFERENCES `equipment`(`equipmentID`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "contractID",
+            "columnName": "contractID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "equipmentID",
+            "columnName": "equipmentID",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "contractID",
+            "equipmentID"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "contracts",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "contractID"
+            ],
+            "referencedColumns": [
+              "contractID"
+            ]
+          },
+          {
+            "table": "equipment",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "equipmentID"
+            ],
+            "referencedColumns": [
+              "equipmentID"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "maintenance",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`maintenanceID` INTEGER PRIMARY KEY AUTOINCREMENT, `equipmentID` TEXT NOT NULL, `maintenanceDate` TEXT NOT NULL, `technicianName` TEXT NOT NULL, `description` TEXT NOT NULL, `cost` REAL NOT NULL, `notes` TEXT NOT NULL, FOREIGN KEY(`equipmentID`) REFERENCES `equipment`(`equipmentID`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "maintenanceID",
+            "columnName": "maintenanceID",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "equipmentID",
+            "columnName": "equipmentID",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "maintenanceDate",
+            "columnName": "maintenanceDate",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "technicianName",
+            "columnName": "technicianName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "cost",
+            "columnName": "cost",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "notes",
+            "columnName": "notes",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "maintenanceID"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "equipment",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "equipmentID"
+            ],
+            "referencedColumns": [
+              "equipmentID"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "spare_parts",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`partID` INTEGER PRIMARY KEY AUTOINCREMENT, `equipmentID` INTEGER, `name` TEXT NOT NULL, `manufacturer` TEXT NOT NULL, `model` TEXT NOT NULL, `quantity` INTEGER NOT NULL, `cost` REAL NOT NULL, `lastRestockDate` TEXT NOT NULL, `supplier` TEXT NOT NULL, FOREIGN KEY(`equipmentID`) REFERENCES `equipment`(`equipmentID`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "partID",
+            "columnName": "partID",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "equipmentID",
+            "columnName": "equipmentID",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "manufacturer",
+            "columnName": "manufacturer",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "model",
+            "columnName": "model",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "quantity",
+            "columnName": "quantity",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "cost",
+            "columnName": "cost",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lastRestockDate",
+            "columnName": "lastRestockDate",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "supplier",
+            "columnName": "supplier",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "partID"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "equipment",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "equipmentID"
+            ],
+            "referencedColumns": [
+              "equipmentID"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "cases",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`caseID` INTEGER PRIMARY KEY AUTOINCREMENT, `title` TEXT NOT NULL DEFAULT 's', `startDate` TEXT NOT NULL DEFAULT 's', `endDate` TEXT NOT NULL DEFAULT 's', `comments` TEXT NOT NULL DEFAULT 's', `userID` INTEGER NOT NULL DEFAULT 2, `customerID` INTEGER NOT NULL DEFAULT 1, `active` TEXT NOT NULL DEFAULT 's', `status` TEXT NOT NULL DEFAULT 's', FOREIGN KEY(`customerID`) REFERENCES `hospitals`(`hospitalID`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "caseID",
+            "columnName": "caseID",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'s'"
+          },
+          {
+            "fieldPath": "startDate",
+            "columnName": "startDate",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'s'"
+          },
+          {
+            "fieldPath": "endDate",
+            "columnName": "endDate",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'s'"
+          },
+          {
+            "fieldPath": "comments",
+            "columnName": "comments",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'s'"
+          },
+          {
+            "fieldPath": "userID",
+            "columnName": "userID",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "2"
+          },
+          {
+            "fieldPath": "customerID",
+            "columnName": "customerID",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "1"
+          },
+          {
+            "fieldPath": "active",
+            "columnName": "active",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'s'"
+          },
+          {
+            "fieldPath": "status",
+            "columnName": "status",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'s'"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "caseID"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "hospitals",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "customerID"
+            ],
+            "referencedColumns": [
+              "hospitalID"
+            ]
+          }
+        ]
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0fdcfe8eb251c8fe37706e16d15d6352')"
+    ]
+  }
+}
