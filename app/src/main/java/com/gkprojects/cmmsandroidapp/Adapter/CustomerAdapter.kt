@@ -12,7 +12,7 @@ import com.gkprojects.cmmsandroidapp.R
 
 class CustomerAdapter(private val context: Context, private var customerList:ArrayList<Hospital>): RecyclerView.Adapter<CustomerAdapter.MyViewHolder>() {
 
-
+    private var onClickListener: OnClickListener? = null
 
 
 
@@ -27,16 +27,30 @@ class CustomerAdapter(private val context: Context, private var customerList:Arr
     override fun getItemCount(): Int {
         return customerList.size
     }
+
     fun setData(customerList:ArrayList<Hospital>)
     {
         this.customerList=customerList
         notifyDataSetChanged()
+    }
+    fun setOnClickListener(onClickListener: OnClickListener) {
+        this.onClickListener = onClickListener
+    }
+
+    // onClickListener Interface
+    interface OnClickListener {
+        fun onClick(position: Int, model: Hospital)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentitem = customerList[position]
         holder.customerName.setText(currentitem.name)
         holder.customerAddress.setText(currentitem.address)
+        holder.itemView.setOnClickListener {
+            if (onClickListener != null) {
+                onClickListener!!.onClick(position, currentitem )
+            }
+        }
 
     }
 
