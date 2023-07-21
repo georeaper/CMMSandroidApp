@@ -27,6 +27,14 @@ class RepoCustomer {
             }
         }
 
+        fun delete(context: Context,hospital: Hospital){
+            userDatabase= intialiseDB(context)
+            CoroutineScope(Dispatchers.IO).launch {
+                userDatabase!!.hospitalDAO().deleteHospital(hospital)
+            }
+
+        }
+
         fun getAllCustomerData(context: Context): LiveData<List<Hospital>>
         {
             userDatabase= intialiseDB(context)

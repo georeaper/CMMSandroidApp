@@ -59,7 +59,11 @@ class EditCustomerFragment : Fragment() {
 
         btnsave.setOnClickListener {
             val customer = Hospital(null,name.toString(),address.toString(),phone1.toString(),city.toString(),vat.toString(),email.toString(), comments.toString())
-            this.context?.let { it1 -> customerViewModel.insert(it1,customer) }
+            GlobalScope.launch(Dispatchers.IO) {
+                context?.let { it1 -> customerViewModel.insert(it1,customer) }
+//                this.context?.let { it1 -> customerViewModel.insert(it1,customer) }
+            }
+
 
             val name  =view.findViewById<EditText>(R.id.et_customerName).text.clear()
             val address =view.findViewById<EditText>(R.id.et_address).text.clear()

@@ -2,30 +2,29 @@ package com.gkprojects.cmmsandroidapp.Fragments
 
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
-import android.widget.SearchView.OnQueryTextListener
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gkprojects.cmmsandroidapp.Adapter.CustomerAdapter
-import com.gkprojects.cmmsandroidapp.Adapter.EquipmentAdapter
-import com.gkprojects.cmmsandroidapp.DataClasses.Equipment
 import com.gkprojects.cmmsandroidapp.DataClasses.Hospital
 import com.gkprojects.cmmsandroidapp.Models.CustomerVM
-import com.gkprojects.cmmsandroidapp.Models.EquipmentVM
 import com.gkprojects.cmmsandroidapp.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 private lateinit var customerRecyclerView: RecyclerView
@@ -33,6 +32,8 @@ private lateinit var customerRecyclerView: RecyclerView
 private var templist =ArrayList<Hospital>()
 private lateinit var customerAdapter: CustomerAdapter
 private lateinit var customerViewModel: CustomerVM
+private lateinit var intent :Intent
+
 
 
 class CustomerFragment : Fragment() {
@@ -58,7 +59,7 @@ class CustomerFragment : Fragment() {
     }
 
 
-    @SuppressLint("UseRequireInsteadOfGet")
+    @SuppressLint("UseRequireInsteadOfGet", "SuspiciousIndentation")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         customerRecyclerView = view.findViewById(R.id.customer_recyclerview)
@@ -73,17 +74,16 @@ class CustomerFragment : Fragment() {
           context?.let {
             customerViewModel.getAllCustomerData(it).observe(viewLifecycleOwner, Observer {
                 customerAdapter.setData(it as ArrayList<Hospital>)
+                templist.clear()
+                for(i in it.indices)(
+                        templist.add(it[i])
+                        )
+                Log.d("templist", templist.size.toString())
             })
         }
 
-        context?.let { it ->
-            customerViewModel.getAllCustomerData(it).observe(viewLifecycleOwner, Observer {
-                for(i in it.indices)(
-                        templist.add(it[i])
-                )
-            })
-        }
-        Log.d("datacustomer", templist.toString())
+
+        //Log.d("datacustomer", templist.size.toString())
 
         val searchView = view.findViewById<SearchView>(R.id.searchView_customers)
         searchView.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
@@ -104,7 +104,10 @@ class CustomerFragment : Fragment() {
 
         customerAdapter.setOnClickListener(object : CustomerAdapter.OnClickListener{
             override fun onClick(position: Int, model: Hospital) {
+//                var temp: java.io.Serializable = model as java.io.Serializable
                 Toast.makeText(context,model.toString(),Toast.LENGTH_LONG).show()
+
+//                intent?.putExtra("key",model)
             }
         })
 
@@ -117,6 +120,42 @@ class CustomerFragment : Fragment() {
             transaction?.commit()
         }
 
+        val myCallback = object: ItemTouchHelper.SimpleCallback(0,
+            ItemTouchHelper.RIGHT) {
+
+            // More code here
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+
+//                templist.removeAt(viewHolder.adapterPosition)
+//                customerAdapter.notifyItemRemoved(viewHolder.adapterPosition)
+
+
+                GlobalScope.launch(Dispatchers.IO) {
+//                    noteDatabase.deleteNote(removeNote)
+                    context?.let { customerViewModel.deleteCustomer(it, templist[viewHolder.absoluteAdapterPosition]) }
+                   // context?.let { customerViewModel.deleteCustomer(it, ) }
+                }
+
+                context?.let {
+                    customerViewModel.getAllCustomerData(it).observe(viewLifecycleOwner, Observer {
+                        customerAdapter.setData(it as ArrayList<Hospital>)
+
+                    })
+                }
+            }
+
+
+        }
+        val myHelper = ItemTouchHelper(myCallback)
+        myHelper.attachToRecyclerView(customerRecyclerView)
 
     }
 
@@ -139,18 +178,18 @@ class CustomerFragment : Fragment() {
 
  }
 
-    private fun filter(text: String) {
-        val filteredlist: ArrayList<Hospital> = ArrayList()
-        for (item in templist) {
-            // checking if the entered string matched with any item of our recycler view.
-            if (item.name.toLowerCase().contains(text.toLowerCase())) {
-                // if the item is matched we are
-                // adding it to our filtered list.
-                filteredlist.add(item)
-            }
-        }
-
-    }
+//    private fun filter(text: String) {
+//        val filteredlist: ArrayList<Hospital> = ArrayList()
+//        for (item in templist) {
+//            // checking if the entered string matched with any item of our recycler view.
+//            if (item.name.toLowerCase().contains(text.toLowerCase())) {
+//                // if the item is matched we are
+//                // adding it to our filtered list.
+//                filteredlist.add(item)
+//            }
+//        }
+//
+//    }
 
 
 

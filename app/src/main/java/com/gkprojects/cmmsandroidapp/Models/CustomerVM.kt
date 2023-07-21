@@ -12,13 +12,16 @@ class CustomerVM : ViewModel() {
 
 
 
-    fun insert(context: Context, customer: Hospital)
+    suspend fun insert(context: Context, customer: Hospital)
     {
         RepoCustomer.insert(context,customer)
     }
 
-    fun getAllCustomerData(context: Context): LiveData<List<Hospital>>
+     fun getAllCustomerData(context: Context): LiveData<List<Hospital>>
     {
         return RepoCustomer.getAllCustomerData(context)
+    }
+   suspend fun deleteCustomer(context: Context, customer: Hospital){
+        RepoCustomer.delete(context,customer)
     }
 }

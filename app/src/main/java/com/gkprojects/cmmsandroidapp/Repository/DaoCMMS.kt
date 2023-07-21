@@ -13,7 +13,7 @@ interface HospitalDAO {
     @Update
     fun updateHospital(hospital: Hospital)
     @Delete
-    fun deleteHospital(hospital: Hospital)
+     fun deleteHospital(hospital: Hospital)
 }
 @Dao
 interface EquipmentDAO {
