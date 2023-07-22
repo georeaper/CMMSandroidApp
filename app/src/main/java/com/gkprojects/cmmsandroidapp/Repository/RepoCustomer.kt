@@ -40,6 +40,14 @@ class RepoCustomer {
             userDatabase= intialiseDB(context)
             return userDatabase!!.hospitalDAO().getAllHospitals()
         }
+
+        fun updateCustomerData(context: Context,hospital: Hospital){
+            userDatabase= intialiseDB(context)
+            CoroutineScope(Dispatchers.IO).launch {
+                userDatabase!!.hospitalDAO().updateHospital(hospital)
+            }
+
+        }
     }
 
 }

@@ -24,4 +24,7 @@ class CustomerVM : ViewModel() {
    suspend fun deleteCustomer(context: Context, customer: Hospital){
         RepoCustomer.delete(context,customer)
     }
+    suspend fun updateCustomer(context: Context,customer:Hospital){
+        RepoCustomer.updateCustomerData(context,customer)
+    }
 }

@@ -32,7 +32,8 @@ private lateinit var customerRecyclerView: RecyclerView
 private var templist =ArrayList<Hospital>()
 private lateinit var customerAdapter: CustomerAdapter
 private lateinit var customerViewModel: CustomerVM
-private lateinit var intent :Intent
+//private lateinit var intent :Intent
+
 
 
 
@@ -106,8 +107,9 @@ class CustomerFragment : Fragment() {
             override fun onClick(position: Int, model: Hospital) {
 //                var temp: java.io.Serializable = model as java.io.Serializable
                 Toast.makeText(context,model.toString(),Toast.LENGTH_LONG).show()
+                passDataCustomer(model)
 
-//                intent?.putExtra("key",model)
+                //passDataCustomer()
             }
         })
 
@@ -131,6 +133,7 @@ class CustomerFragment : Fragment() {
             ): Boolean {
                 return false
             }
+
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
 
@@ -178,18 +181,29 @@ class CustomerFragment : Fragment() {
 
  }
 
-//    private fun filter(text: String) {
-//        val filteredlist: ArrayList<Hospital> = ArrayList()
-//        for (item in templist) {
-//            // checking if the entered string matched with any item of our recycler view.
-//            if (item.name.toLowerCase().contains(text.toLowerCase())) {
-//                // if the item is matched we are
-//                // adding it to our filtered list.
-//                filteredlist.add(item)
-//            }
-//        }
-//
-//    }
+
+    private fun passDataCustomer(data : Hospital){
+        //var temp: java.io.Serializable = data as java.io.Serializable
+        val bundle = Bundle()
+        data.hospitalID?.let { bundle.putInt("id", it.toInt()) }
+        //bundle.putString("id", data.hospitalID.toString())
+        bundle.putString("name", data.name)
+        bundle.putString("address", data.address)
+        bundle.putString("city", data.city)
+        bundle.putString("email", data.contactEmail)
+        bundle.putString("contactPerson", data.contactPerson)
+        bundle.putString("phone", data.contactPhone)
+        bundle.putString("zipcode", data.zipCode)
+
+        val fragmentManager =parentFragmentManager
+        val fragmentTransaction=fragmentManager.beginTransaction()
+        val fragment =EditCustomerFragment()
+        fragment.arguments = bundle
+        fragmentTransaction.replace(R.id.frameLayout1,fragment)
+        fragmentTransaction.commit()
+
+    }
+
 
 
 

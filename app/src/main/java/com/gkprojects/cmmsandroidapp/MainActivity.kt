@@ -6,6 +6,8 @@ import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
+import com.gkprojects.cmmsandroidapp.DataClasses.Hospital
 import com.gkprojects.cmmsandroidapp.Fragments.*
 
 import com.google.android.material.navigation.NavigationView
@@ -72,6 +74,7 @@ private fun replaceFragment(fragment : Fragment , title :String){
         }
         return super.onOptionsItemSelected(item)
     }
+
 
 
 
