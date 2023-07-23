@@ -41,9 +41,7 @@ class CustomerAdapter(private val context: Context, private var customerList:Arr
     interface OnClickListener {
         fun onClick(position: Int, model: Hospital)
     }
-//    fun getPosition(position :Int){
-//        return
-//    }
+
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentitem = customerList[position]

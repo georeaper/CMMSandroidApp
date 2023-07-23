@@ -75,7 +75,7 @@ class CustomerFragment : Fragment() {
           context?.let {
             customerViewModel.getAllCustomerData(it).observe(viewLifecycleOwner, Observer {
                 customerAdapter.setData(it as ArrayList<Hospital>)
-                templist.clear()
+                templist.clear() // clear the templist,because it keeps populate everytime we open and close Customer Drawer
                 for(i in it.indices)(
                         templist.add(it[i])
                         )
@@ -84,7 +84,7 @@ class CustomerFragment : Fragment() {
         }
 
 
-        //Log.d("datacustomer", templist.size.toString())
+
 
         val searchView = view.findViewById<SearchView>(R.id.searchView_customers)
         searchView.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
@@ -94,7 +94,7 @@ class CustomerFragment : Fragment() {
 
             override fun onQueryTextChange(p0: String?): Boolean {
                 if (p0 != null) {
-                    filterList(p0)
+                    filterList(p0.lowercase(Locale.ROOT))
                 }
                 return true
             }

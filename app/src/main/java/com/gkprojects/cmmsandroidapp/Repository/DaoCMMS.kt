@@ -19,6 +19,9 @@ interface HospitalDAO {
 interface EquipmentDAO {
     @Query("Select * from equipment")
     fun getAllEquipment(): LiveData<List<Equipment>>
+
+    @Query("Select hospitalID,name from hospitals")
+     fun getCustomersForEquipment(): LiveData<List<EquipmentCustomerSelect>>
     @Insert
     fun addEquipment(equipment: Equipment)
     @Update
