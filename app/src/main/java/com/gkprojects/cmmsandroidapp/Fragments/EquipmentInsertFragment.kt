@@ -1,6 +1,7 @@
 package com.gkprojects.cmmsandroidapp.Fragments
 
 import android.app.AlertDialog
+import android.app.Dialog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,15 +11,28 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+
+import com.gkprojects.cmmsandroidapp.Adapter.RvAdapterFindCustomers
 import com.gkprojects.cmmsandroidapp.DataClasses.Equipment
 import com.gkprojects.cmmsandroidapp.DataClasses.EquipmentCustomerSelect
+
 import com.gkprojects.cmmsandroidapp.Models.EquipmentVM
 import com.gkprojects.cmmsandroidapp.R
+import java.time.Duration
+import java.util.*
 
 
 class EquipmentInsertFragment : Fragment() {
-    //private lateinit var AppDb : CMMSDatabase
+
     private lateinit var equipmentViewModel:EquipmentVM
+    var dialog: Dialog? = null
+    private var rvAdapter: RvAdapterFindCustomers? = null
+    lateinit var filterText : SearchView
+    var hospId : Int?= null
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +59,7 @@ class EquipmentInsertFragment : Fragment() {
 
         }) }
 
+
         var stringCustomArray=ArrayList<String>()
         var idCustomArray = ArrayList<Int>()
         for (i in customerSearch.indices){
@@ -62,7 +77,7 @@ class EquipmentInsertFragment : Fragment() {
         val installation=view.findViewById<EditText>(R.id.et_equipment_installation)
         val status=view.findViewById<EditText>(R.id.et_equipment_status)
         val version_equipment=view.findViewById<EditText>(R.id.et_equipment_version)
-        val customerNameSp=view.findViewById<Spinner>(R.id.spinner_select_customer)
+        val customerNameTV=view.findViewById<TextView>(R.id.tv_select_customer)
 
 
 
@@ -82,7 +97,71 @@ class EquipmentInsertFragment : Fragment() {
         equipmentID=id
 
 
-        Log.d("editFragment",id.toString())
+        //Log.d("editFragment",id.toString())
+
+
+            customerNameTV.setOnClickListener {
+
+                val builder =AlertDialog.Builder(context)
+
+                builder.setView(R.layout.dialog_searchable_spinner)
+
+                dialog?.getWindow()?.setLayout(650,800);
+
+                // set transparent background
+                dialog?.getWindow()?.setBackgroundDrawableResource(com.google.android.material.R.drawable.m3_tabs_transparent_background)
+
+
+                dialog=builder.create()
+                // show dialog
+                dialog?.show();
+
+
+                val recycleView: RecyclerView = dialog!!.findViewById(R.id.rv_searchable_TextView)
+                 filterText= dialog!!.findViewById(R.id.searchView_rv_customers)
+
+                rvAdapter = context?.let { it1 -> RvAdapterFindCustomers(it1, customerSearch) }
+                recycleView.apply {
+                    setHasFixedSize(true)
+                    layoutManager = LinearLayoutManager(this.context)
+                    adapter = rvAdapter
+                }
+                filterText?.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
+                    override fun onQueryTextSubmit(p0: String?): Boolean {
+                        return false
+                    }
+
+                    override fun onQueryTextChange(p0: String?): Boolean {
+                        if (p0 != null) {
+                            filterList(p0.lowercase(Locale.ROOT),customerSearch)
+                        }
+                        return true
+                    }
+
+                })
+
+                rvAdapter!!.setOnClickListener(object :RvAdapterFindCustomers.OnClickListener{
+                    override fun onClick(position: Int, model: EquipmentCustomerSelect) {
+                        var strtemp: String = model.name
+                        hospId = model.hospitalID
+
+                        customerNameTV.text = strtemp
+                        dialog!!.dismiss();
+
+                    }
+
+                })
+
+
+            }
+
+
+
+
+
+
+
+
 
 
 
@@ -91,23 +170,53 @@ class EquipmentInsertFragment : Fragment() {
         val btnsubmit : Button = view.findViewById(R.id.btn_equipment_submit)
         val btnclear : Button =view.findViewById(R.id.btn_equipment_clear)
         btnsubmit.setOnClickListener {
-            var equipment=Equipment(null,33,category.text.toString(),manufacturer.text.toString(),model.text.toString(),serialNumber.text.toString(),installation.text.toString(),warranty.text.toString(),version_equipment.text.toString(),"null",status.text.toString())
-            if(equipmentID==null) {
-                this.context?.let { it1 -> equipmentViewModel.insert(it1, equipment) }
+            if(hospId!=null) {
+                var equipment = Equipment(
+                    null,
+                    hospId,
+                    category.text.toString(),
+                    manufacturer.text.toString(),
+                    model.text.toString(),
+                    serialNumber.text.toString(),
+                    installation.text.toString(),
+                    warranty.text.toString(),
+                    version_equipment.text.toString(),
+                    "null",
+                    status.text.toString()
+                )
+                if (equipmentID == null) {
+                    this.context?.let { it1 -> equipmentViewModel.insert(it1, equipment) }
 
-                serialNumber.text.clear()
-                model.text.clear()
-                manufacturer.text.clear()
-                warranty.text.clear()
-                category.text.clear()
-                installation.text.clear()
-                status.text.clear()
-                version_equipment.text.clear()
-            }else{
+                    serialNumber.text.clear()
+                    model.text.clear()
+                    manufacturer.text.clear()
+                    warranty.text.clear()
+                    category.text.clear()
+                    installation.text.clear()
+                    status.text.clear()
+                    version_equipment.text.clear()
+                    customerNameTV.text="Select Customer"
+                } else {
 
-                equipment=Equipment(equipmentID,fgId,category.text.toString(),manufacturer.text.toString(),model.text.toString(),serialNumber.text.toString(),installation.text.toString(),warranty.text.toString(),version_equipment.text.toString(),"null",status.text.toString())
-                this.context?.let { it1 -> equipmentViewModel.updateEquipment(it1, equipment) }
-                Toast.makeText(context,"Updated",Toast.LENGTH_SHORT).show()
+                    equipment = Equipment(
+                        equipmentID,
+                        fgId,
+                        category.text.toString(),
+                        manufacturer.text.toString(),
+                        model.text.toString(),
+                        serialNumber.text.toString(),
+                        installation.text.toString(),
+                        warranty.text.toString(),
+                        version_equipment.text.toString(),
+                        "null",
+                        status.text.toString()
+                    )
+                    this.context?.let { it1 -> equipmentViewModel.updateEquipment(it1, equipment) }
+                    Toast.makeText(context, "Updated", Toast.LENGTH_SHORT).show()
+                }
+            }
+            else{
+                Toast.makeText(context,"Select Customer",Toast.LENGTH_SHORT).show()
             }
 
 
@@ -131,4 +240,31 @@ class EquipmentInsertFragment : Fragment() {
     }
 
 
+
+    private fun filterList(query: String,searchCustomer : ArrayList<EquipmentCustomerSelect>) {
+        val filteredList= java.util.ArrayList<EquipmentCustomerSelect>()
+        for (i in searchCustomer){
+            if (i.name.lowercase(Locale.ROOT).contains(query))
+                filteredList.add(i)
+            Log.d("datafilterDialog", filteredList.toString())
+        }
+        if (filteredList.isEmpty() ){
+            Toast.makeText(context,"Empty List", Toast.LENGTH_SHORT).show()
+
+        }else{
+
+            rvAdapter?.filterList(filteredList)
+        }
+
+    }
+
+
+
+
 }
+
+
+
+
+
+

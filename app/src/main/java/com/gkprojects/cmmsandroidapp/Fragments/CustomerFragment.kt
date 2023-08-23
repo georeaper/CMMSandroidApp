@@ -75,6 +75,7 @@ class CustomerFragment : Fragment() {
           context?.let {
             customerViewModel.getAllCustomerData(it).observe(viewLifecycleOwner, Observer {
                 customerAdapter.setData(it as ArrayList<Hospital>)
+                Log.d("debug123",it.toString())
                 templist.clear() // clear the templist,because it keeps populate everytime we open and close Customer Drawer
                 for(i in it.indices)(
                         templist.add(it[i])
