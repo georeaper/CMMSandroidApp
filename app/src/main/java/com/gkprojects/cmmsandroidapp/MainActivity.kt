@@ -44,11 +44,15 @@ class MainActivity : AppCompatActivity() {
             it.isChecked=true
             when(it.itemId){
                 R.id.home_item -> replaceFragment(HomeFragment(),it.title.toString())
-                R.id.settings_item -> replaceFragment(SettingsFragment(),it.title.toString())
-                R.id.cases_item -> replaceFragment(CasesFragment(),it.title.toString())
-                R.id.equipment_item -> replaceFragment(EquipmentFragment(),it.title.toString())
                 R.id.customer_item -> replaceFragment(CustomerFragment(),it.title.toString())
+                R.id.equipment_item -> replaceFragment(EquipmentFragment(),it.title.toString())
+                R.id.cases_item -> replaceFragment(CasesFragment(),it.title.toString())
                 R.id.contract_item -> replaceFragment(ContractFragment(),it.title.toString())
+                R.id.settings_item -> replaceFragment(SettingsFragment(),it.title.toString())
+
+
+
+
 
             }
             true

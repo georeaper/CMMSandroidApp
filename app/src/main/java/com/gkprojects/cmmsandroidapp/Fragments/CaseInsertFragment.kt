@@ -48,8 +48,8 @@ class CaseInsertFragment : Fragment() {
             statusCase.adapter = adapter
         } }
 
-        val context= getActivity()?.getApplicationContext()
-        //AppDb= context?.let { CMMSDatabase.getCMMSDatabase(it) }!!
+        //val context= getActivity()?.getApplicationContext()
+
         val btnsubmit : Button = view.findViewById(R.id.btn_submit_cases)
         val btnclear :Button =view.findViewById(R.id.btn_clear_cases)
 

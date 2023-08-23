@@ -3,6 +3,7 @@ package com.gkprojects.cmmsandroidapp.Repository
 import android.content.Context
 import androidx.lifecycle.LiveData
 import com.gkprojects.cmmsandroidapp.CMMSDatabase
+import com.gkprojects.cmmsandroidapp.DataClasses.CustomerSelect
 import com.gkprojects.cmmsandroidapp.DataClasses.Equipment
 import com.gkprojects.cmmsandroidapp.DataClasses.Hospital
 import kotlinx.coroutines.CoroutineScope
@@ -46,6 +47,11 @@ class RepoCustomer {
             CoroutineScope(Dispatchers.IO).launch {
                 userDatabase!!.hospitalDAO().updateHospital(hospital)
             }
+
+        }
+        fun getCustomerIdData(context: Context):LiveData<List<CustomerSelect>>{
+            userDatabase= intialiseDB(context)
+            return userDatabase!!.hospitalDAO().getIdFromHospital()
 
         }
     }

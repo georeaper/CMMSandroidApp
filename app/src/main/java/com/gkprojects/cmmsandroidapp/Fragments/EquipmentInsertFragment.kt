@@ -1,5 +1,6 @@
 package com.gkprojects.cmmsandroidapp.Fragments
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
@@ -47,6 +48,7 @@ class EquipmentInsertFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_equipment_insert, container, false)
     }
 
+    @SuppressLint("SuspiciousIndentation")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         equipmentViewModel= ViewModelProvider(this)[EquipmentVM::class.java]
@@ -54,7 +56,7 @@ class EquipmentInsertFragment : Fragment() {
         var customerSearch =ArrayList<EquipmentCustomerSelect>()
         context?.let { equipmentViewModel.getCustomersEquipment(it).observe(viewLifecycleOwner,
             Observer{
-                Log.d("CustomerArray",it.toString())
+
                 customerSearch= it as ArrayList<EquipmentCustomerSelect>
 
         }) }
@@ -66,7 +68,7 @@ class EquipmentInsertFragment : Fragment() {
             stringCustomArray.add(customerSearch[i].name)
             idCustomArray.add((customerSearch[i].hospitalID))
         }
-        Log.d("CustomerArray",customerSearch.toString())
+
 
         var equipmentID :Int? = null
         val serialNumber=view.findViewById<EditText>(R.id.et_equipment_sn)

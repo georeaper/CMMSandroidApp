@@ -55,21 +55,7 @@ abstract class CMMSDatabase : RoomDatabase() {
            return instance
        }
 
-//        fun getCMMSDatabase(context: Context): CMMSDatabase {
-//            val tempInstance = INSTANCE
-//            if(tempInstance!=null){
-//                return tempInstance
-//
-//
-//            }
-//            synchronized(this){
-//                val instance=Room.databaseBuilder(context.applicationContext,
-//                    CMMSDatabase::class.java,
-//                    "cmms_database2").build()
-//                INSTANCE=instance
-//                return instance
-//            }
-//        }
+
     }
 
 }

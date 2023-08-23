@@ -87,7 +87,7 @@ class EditCustomerFragment : Fragment() {
                 )
                 GlobalScope.launch(Dispatchers.IO) {
                     context?.let { it1 -> customerViewModel.insert(it1, customer) }
-//                this.context?.let { it1 -> customerViewModel.insert(it1,customer) }
+
                 }
 
 

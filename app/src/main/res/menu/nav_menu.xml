@@ -1,35 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-
-
-
     <group android:checkableBehavior="single">
 
     <item
         android:id="@+id/home_item"
         android:title="Home"
         android:icon="@drawable/baseline_home_24"/>
+        <item
+            android:id="@+id/customer_item"
+            android:title="Customer"
+            android:icon="@drawable/baseline_download_for_offline_24"/>
+        <item
+            android:id="@+id/equipment_item"
+            android:title="Equipment"
+            android:icon="@drawable/baseline_download_for_offline_24"/>
+        <item
+            android:id="@+id/cases_item"
+            android:title="Cases"
+            android:icon="@drawable/baseline_download_for_offline_24"/>
+        <item
+            android:id="@+id/contract_item"
+            android:title="Contract"
+            android:icon="@drawable/baseline_download_for_offline_24"/>
     <item
         android:id="@+id/settings_item"
         android:title="Settings"
         android:icon="@drawable/baseline_download_for_offline_24"/>
-    <item
-        android:id="@+id/contract_item"
-        android:title="Contract"
-        android:icon="@drawable/baseline_download_for_offline_24"/>
-    <item
-    android:id="@+id/equipment_item"
-    android:title="Equipment"
-    android:icon="@drawable/baseline_download_for_offline_24"/>
-    <item
-    android:id="@+id/customer_item"
-    android:title="Customer"
-    android:icon="@drawable/baseline_download_for_offline_24"/>
-    <item
-    android:id="@+id/cases_item"
-    android:title="Cases"
-    android:icon="@drawable/baseline_download_for_offline_24"/>
+
+
+
+
     </group>
 
 

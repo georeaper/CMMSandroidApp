@@ -3,6 +3,7 @@ package com.gkprojects.cmmsandroidapp.Models
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import com.gkprojects.cmmsandroidapp.DataClasses.CustomerSelect
 import com.gkprojects.cmmsandroidapp.DataClasses.Equipment
 import com.gkprojects.cmmsandroidapp.DataClasses.Hospital
 import com.gkprojects.cmmsandroidapp.Repository.RepoCustomer
@@ -26,5 +27,8 @@ class CustomerVM : ViewModel() {
     }
     suspend fun updateCustomer(context: Context,customer:Hospital){
         RepoCustomer.updateCustomerData(context,customer)
+    }
+    suspend fun getCustomerId(context: Context,customer: Hospital): LiveData<List<CustomerSelect>>{
+        return RepoCustomer.getCustomerIdData(context)
     }
 }

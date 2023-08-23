@@ -8,6 +8,8 @@ import com.gkprojects.cmmsandroidapp.DataClasses.*
 interface HospitalDAO {
     @Query("Select * from hospitals")
     fun getAllHospitals(): LiveData<List<Hospital>>
+    @Query("Select hospitalID,name from hospitals")
+    fun getIdFromHospital(): LiveData<List<CustomerSelect>>
     @Insert
     fun addHospital(hospital: Hospital)
     @Update
