@@ -28,7 +28,7 @@ class CustomerVM : ViewModel() {
     suspend fun updateCustomer(context: Context,customer:Hospital){
         RepoCustomer.updateCustomerData(context,customer)
     }
-    suspend fun getCustomerId(context: Context,customer: Hospital): LiveData<List<CustomerSelect>>{
+     fun getCustomerId(context: Context): LiveData<List<CustomerSelect>>{
         return RepoCustomer.getCustomerIdData(context)
     }
 }

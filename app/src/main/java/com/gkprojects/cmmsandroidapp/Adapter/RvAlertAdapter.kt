@@ -6,41 +6,32 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.gkprojects.cmmsandroidapp.DataClasses.Equipment
+import com.gkprojects.cmmsandroidapp.DataClasses.CustomerSelect
 import com.gkprojects.cmmsandroidapp.DataClasses.EquipmentCustomerSelect
-import com.gkprojects.cmmsandroidapp.DataClasses.Hospital
 import com.gkprojects.cmmsandroidapp.R
 
+class RvAlertAdapter(private val context: Context, private var customerList : ArrayList<CustomerSelect>):RecyclerView.Adapter<RvAlertAdapter.rvViewholder>() {
+    private var onClickListener: RvAlertAdapter.OnClickListener? = null
 
-class RvAdapterFindCustomers(private val context: Context, private var customerList:ArrayList<EquipmentCustomerSelect>): RecyclerView.Adapter<RvAdapterFindCustomers.MyViewHolder>() {
-    private var onClickListener: RvAdapterFindCustomers.OnClickListener? = null
-
-    class MyViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
+    class rvViewholder(itemView: View):RecyclerView.ViewHolder(itemView) {
         val rv_id = itemView.findViewById<TextView>(R.id.list_tv_customer_id)
         val rv_customerName = itemView.findViewById<TextView>(R.id.list_tv_customer_name)
 
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val itemView=
-            LayoutInflater.from(parent.context).inflate(R.layout.list_of_rv_customer_find,parent,false)
-        return MyViewHolder(itemView)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): rvViewholder {
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.list_of_rv_customer_find,parent,false)
+        return rvViewholder(itemView)
     }
 
     override fun getItemCount(): Int {
         return customerList.size
     }
-    fun setData(customerlist:ArrayList<EquipmentCustomerSelect>)
-    {
-        this.customerList=customerlist
-        notifyDataSetChanged()
-    }
 
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: rvViewholder, position: Int) {
         val currentItem=customerList[position]
-        holder.rv_id.setText(currentItem.hospitalID.toString())
-        holder.rv_customerName.setText(currentItem.name)
-
+        holder.rv_id.text = currentItem.hospitalID.toString()
+        holder.rv_customerName.text = currentItem.name
         holder.itemView.setOnClickListener {
             if (onClickListener != null) {
                 onClickListener!!.onClick(position, currentItem )
@@ -48,7 +39,7 @@ class RvAdapterFindCustomers(private val context: Context, private var customerL
         }
 
     }
-    fun filterList(filterlist: ArrayList<EquipmentCustomerSelect>) {
+    fun filterList(filterlist: ArrayList<CustomerSelect>) {
         // below line is to add our filtered
         // list in our course array list.
         customerList = filterlist
@@ -63,6 +54,7 @@ class RvAdapterFindCustomers(private val context: Context, private var customerL
 
     // onClickListener Interface
     interface OnClickListener {
-        fun onClick(position: Int, model: EquipmentCustomerSelect)
+        fun onClick(position: Int, model: CustomerSelect)
     }
+
 }

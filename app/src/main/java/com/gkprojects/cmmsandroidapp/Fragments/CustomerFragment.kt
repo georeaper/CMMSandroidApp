@@ -27,18 +27,18 @@ import kotlinx.coroutines.launch
 import java.util.*
 
 
-private lateinit var customerRecyclerView: RecyclerView
 
-private var templist =ArrayList<Hospital>()
-private lateinit var customerAdapter: CustomerAdapter
-private lateinit var customerViewModel: CustomerVM
 //private lateinit var intent :Intent
 
 
 
 
 class CustomerFragment : Fragment() {
+    private lateinit var customerRecyclerView: RecyclerView
 
+    private var templist =ArrayList<Hospital>()
+    private lateinit var customerAdapter: CustomerAdapter
+    private lateinit var customerViewModel: CustomerVM
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -138,14 +138,11 @@ class CustomerFragment : Fragment() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
 
-//                templist.removeAt(viewHolder.adapterPosition)
-//                customerAdapter.notifyItemRemoved(viewHolder.adapterPosition)
-
 
                 GlobalScope.launch(Dispatchers.IO) {
-//                    noteDatabase.deleteNote(removeNote)
+
                     context?.let { customerViewModel.deleteCustomer(it, templist[viewHolder.absoluteAdapterPosition]) }
-                   // context?.let { customerViewModel.deleteCustomer(it, ) }
+
                 }
 
                 context?.let {
@@ -183,7 +180,7 @@ class CustomerFragment : Fragment() {
  }
 
 
-    private fun passDataCustomer(data : Hospital){
+ private fun passDataCustomer(data : Hospital){
         //var temp: java.io.Serializable = data as java.io.Serializable
         val bundle = Bundle()
         data.hospitalID?.let { bundle.putInt("id", it.toInt()) }

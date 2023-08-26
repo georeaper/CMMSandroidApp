@@ -34,7 +34,9 @@ interface EquipmentDAO {
 @Dao
 interface ContractDAO {
     @Query("Select * from contracts")
-    fun getAllContracts(): List<Contract>
+    fun getAllContracts(): LiveData<List<Contract>>
+    @Query("Select hospitalID,name from hospitals")
+    fun getIdFromHospital(): LiveData<List<CustomerSelect>>
     @Insert
     fun addContract(contract: Contract)
     @Update
@@ -55,7 +57,9 @@ interface ContractEquipmentDAO {
 @Dao
 interface MaintenanceDAO {
    @Query("Select * from maintenance")
-    fun getAllMaintenance(): List<Maintenance>
+    fun getAllMaintenance(): LiveData<List<Maintenance>>
+    @Query("Select hospitalID,name from hospitals")
+    fun getIdFromHospital(): LiveData<List<CustomerSelect>>
     @Insert
     fun addMaintenance(maintenance: Maintenance)
     @Update
@@ -66,7 +70,9 @@ interface MaintenanceDAO {
 @Dao
 interface SparePartDAO {
     @Query("Select * from spare_parts")
-    fun getAllSpareParts(): List<SparePart>
+    fun getAllSpareParts(): LiveData<List<SparePart>>
+    @Query("Select hospitalID,name from hospitals")
+    fun getIdFromHospital(): LiveData<List<CustomerSelect>>
     @Insert
     fun addSparePart(sparePart: SparePart)
     @Update
@@ -77,7 +83,12 @@ interface SparePartDAO {
 @Dao
 interface CasesDao{
     @Query("Select * from cases")
-    fun getAllCases(): List<Cases>
+    fun getAllCases(): LiveData<List<Cases>>
+    @Query("Select name from hospitals where hospitalId = :id")
+    fun getCustomerNameWhereId(id :Int) : String
+
+    @Query("Select hospitalID,name from hospitals")
+    fun getIdFromHospital(): LiveData<List<CustomerSelect>>
     @Insert
     fun addCases(cases: Cases)
     @Update

@@ -54,6 +54,7 @@ class EquipmentInsertFragment : Fragment() {
         equipmentViewModel= ViewModelProvider(this)[EquipmentVM::class.java]
         // in the below Line i am trying to fetch customer Data id and Name so i can use pass it as a FgnKey in the table
         var customerSearch =ArrayList<EquipmentCustomerSelect>()
+
         context?.let { equipmentViewModel.getCustomersEquipment(it).observe(viewLifecycleOwner,
             Observer{
 
@@ -99,7 +100,7 @@ class EquipmentInsertFragment : Fragment() {
         equipmentID=id
 
 
-        //Log.d("editFragment",id.toString())
+
 
 
             customerNameTV.setOnClickListener {

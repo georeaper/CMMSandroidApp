@@ -39,7 +39,7 @@ private var templist = ArrayList<Equipment>()
 class EquipmentFragment : Fragment() {
 
 
-    //@SuppressLint("SuspiciousIndentation")
+
     @SuppressLint("SuspiciousIndentation", "UseRequireInsteadOfGet")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -77,8 +77,8 @@ class EquipmentFragment : Fragment() {
         })
         equipmentAdapter.setOnClickListener(object : EquipmentAdapter.OnClickListener{
             override fun onClick(position: Int, model: Equipment) {
-//                var temp: java.io.Serializable = model as java.io.Serializable
-                Toast.makeText(context,model.toString(),Toast.LENGTH_LONG).show()
+
+                //Toast.makeText(context,model.toString(),Toast.LENGTH_LONG).show()
                 passDataEquipment(model)
 
 
@@ -107,19 +107,18 @@ class EquipmentFragment : Fragment() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
 
-//                templist.removeAt(viewHolder.adapterPosition)
-//                customerAdapter.notifyItemRemoved(viewHolder.adapterPosition)
+
 
             try {
                 GlobalScope.launch(Dispatchers.IO) {
-//                    noteDatabase.deleteNote(removeNote)
+
                     context?.let {
                         equipmentViewModel.deleteEquipment(
                             it,
                             templist[viewHolder.absoluteAdapterPosition]
                         )
                     }
-                    // context?.let { customerViewModel.deleteCustomer(it, ) }
+
                 }
             }catch (e:java.lang.Exception){
                 Log.d("deleteEquipment",e.toString())
