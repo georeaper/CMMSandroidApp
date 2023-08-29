@@ -35,6 +35,8 @@ interface EquipmentDAO {
 interface ContractDAO {
     @Query("Select * from contracts")
     fun getAllContracts(): LiveData<List<Contract>>
+    @Query("Select name from hospitals where hospitalId = :id")
+    fun getCustomerNameWhereId(id :Int) : String
     @Query("Select hospitalID,name from hospitals")
     fun getIdFromHospital(): LiveData<List<CustomerSelect>>
     @Insert

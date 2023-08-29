@@ -65,6 +65,7 @@ class CustomerFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         customerRecyclerView = view.findViewById(R.id.customer_recyclerview)
         customerAdapter = this.context?.let { CustomerAdapter(it, ArrayList<Hospital>()) }!!
+
         customerRecyclerView.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(this.context)

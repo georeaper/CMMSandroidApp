@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.ContractInsertFragment"
+    tools:context=".Fragments.Contracts.ContractInsertFragment"
     android:orientation="vertical">
 <LinearLayout
     android:layout_width="match_parent"
@@ -14,49 +14,99 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/etTitleContracts"
+            android:hint="Simvasi Metropolitan 34/2"
+            android:textSize="20sp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            />
 
         <TextView
             android:id="@+id/tv_contract_date_start"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Starting Date"
-            android:textSize="26sp" />
+            android:textSize="20sp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"/>
 
 
         <EditText
             android:id="@+id/et_date_contract_start"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="date"
-            android:textSize="26sp"
+            android:textSize="20sp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             />
         <TextView
             android:id="@+id/tv_contract_date_end"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="END Date"
-            android:textSize="26sp" />
+            android:text="End Date"
+            android:textSize="20sp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"/>
 
 
         <EditText
             android:id="@+id/et_date_contract_end"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="date"
-            android:textSize="26sp"/>
+            android:textSize="20sp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"/>
+        <TextView
+            android:id="@+id/tv_customerName_contract"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="Select Customer"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@color/lightGreyBlue"/>
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Select type of Contract" />
+            android:text="Select type of Contract"
+            android:textSize="20sp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+
+            />
 
         <Spinner
-            android:id="@+id/sp_type_contract"
+            android:id="@+id/contractTypeSpinner"
             android:layout_width="match_parent"
-            android:layout_height="20dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             />
 
         <TextView
@@ -64,19 +114,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Contract Status"
-            android:textSize="26sp"/>
+            android:textSize="20sp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"/>
 
         <Spinner
-            android:id="@+id/spinner2"
+            android:id="@+id/contractStatusSpinner"
             android:layout_width="match_parent"
-            android:layout_height="69dp" />
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"/>
 
-<AutoCompleteTextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/autoComp_customerName_contract"
-    android:hint="Customer"
-    android:textSize="26sp"/>
+
     </LinearLayout>
 
 

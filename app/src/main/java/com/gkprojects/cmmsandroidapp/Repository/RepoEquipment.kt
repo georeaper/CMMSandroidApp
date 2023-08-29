@@ -20,9 +20,9 @@ class RepoEquipment {
             return CMMSDatabase.getInstance(context)!!
         }
         fun delete(context: Context,equipment: Equipment){
-            RepoEquipment.userDatabase = RepoEquipment.intialiseDB(context)
+            userDatabase = intialiseDB(context)
             CoroutineScope(Dispatchers.IO).launch {
-                RepoEquipment.userDatabase!!.equipmentDAO().deleteEquipment(equipment)
+                userDatabase!!.equipmentDAO().deleteEquipment(equipment)
             }
 
         }
@@ -47,9 +47,9 @@ class RepoEquipment {
             return userDatabase!!.equipmentDAO().getAllEquipment()
         }
         fun updateCustomerData(context: Context,equipment: Equipment){
-            RepoEquipment.userDatabase = RepoEquipment.intialiseDB(context)
+            userDatabase = intialiseDB(context)
             CoroutineScope(Dispatchers.IO).launch {
-                RepoEquipment.userDatabase!!.equipmentDAO().updateEquipment(equipment)
+                userDatabase!!.equipmentDAO().updateEquipment(equipment)
             }
 
         }

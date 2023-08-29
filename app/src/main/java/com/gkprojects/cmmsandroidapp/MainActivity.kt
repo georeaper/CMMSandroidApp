@@ -6,9 +6,8 @@ import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
-import com.gkprojects.cmmsandroidapp.DataClasses.Hospital
 import com.gkprojects.cmmsandroidapp.Fragments.*
+import com.gkprojects.cmmsandroidapp.Fragments.Contracts.ContractFragment
 
 import com.google.android.material.navigation.NavigationView
 
