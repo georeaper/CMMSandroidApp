@@ -12,12 +12,13 @@ import android.widget.*
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.gkprojects.cmmsandroidapp.Adapter.RvAdapterFindCustomers
+
 import com.gkprojects.cmmsandroidapp.Adapter.RvAlertAdapter
-import com.gkprojects.cmmsandroidapp.DataClasses.Contract
+
+import com.gkprojects.cmmsandroidapp.DataClasses.Contracts
 import com.gkprojects.cmmsandroidapp.DataClasses.CustomerSelect
-import com.gkprojects.cmmsandroidapp.DataClasses.EquipmentCustomerSelect
-import com.gkprojects.cmmsandroidapp.Models.CustomerVM
+
+
 import com.gkprojects.cmmsandroidapp.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -107,8 +108,8 @@ class ContractInsertFragment : Fragment() {
 
             rvAdapter!!.setOnClickListener(object :RvAlertAdapter.OnClickListener{
                 override fun onClick(position: Int, model: CustomerSelect) {
-                    var strtemp: String = model.name
-                    hospId = model.hospitalID
+                    var strtemp: String = model.CustomerName
+                    hospId = model.CustomerID
 
                     contractCustomer.text = strtemp
                     dialog!!.dismiss();
@@ -135,7 +136,7 @@ class ContractInsertFragment : Fragment() {
 
         btnsave.setOnClickListener {
             if(hospId!=null){
-                var contract= Contract(contractId,hospId.toString(),startDate.text.toString(),endDate.text.toString(),"GO",2.00,"try")
+                var contract= Contracts(contractId,hospId.toString(),title.toString(),startDate.text.toString(),endDate.text.toString(),null,"try",null,typeContract,contractStatus,null,null,null,null,hospId)
 
                 Log.d("contract",contract.toString())
                 if(contractId==null){
@@ -170,7 +171,7 @@ class ContractInsertFragment : Fragment() {
     private fun filterList(query: String,searchCustomer : ArrayList<CustomerSelect>) {
         val filteredList= java.util.ArrayList<CustomerSelect>()
         for (i in searchCustomer){
-            if (i.name.lowercase(Locale.ROOT).contains(query))
+            if (i.CustomerName.lowercase(Locale.ROOT).contains(query))
                 filteredList.add(i)
             Log.d("datafilterDialogContract", filteredList.toString())
         }

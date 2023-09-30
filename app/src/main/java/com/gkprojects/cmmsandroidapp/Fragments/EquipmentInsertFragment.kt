@@ -16,8 +16,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 import com.gkprojects.cmmsandroidapp.Adapter.RvAdapterFindCustomers
+import com.gkprojects.cmmsandroidapp.DataClasses.CustomerSelect
 import com.gkprojects.cmmsandroidapp.DataClasses.Equipment
-import com.gkprojects.cmmsandroidapp.DataClasses.EquipmentCustomerSelect
+import com.gkprojects.cmmsandroidapp.DataClasses.Equipments
+
 
 import com.gkprojects.cmmsandroidapp.Models.EquipmentVM
 import com.gkprojects.cmmsandroidapp.R
@@ -53,21 +55,23 @@ class EquipmentInsertFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         equipmentViewModel= ViewModelProvider(this)[EquipmentVM::class.java]
         // in the below Line i am trying to fetch customer Data id and Name so i can use pass it as a FgnKey in the table
-        var customerSearch =ArrayList<EquipmentCustomerSelect>()
+        var customerSearch =ArrayList<CustomerSelect>()
 
-        context?.let { equipmentViewModel.getCustomersEquipment(it).observe(viewLifecycleOwner,
+        context?.let { equipmentViewModel.getCustomerId(it).observe(viewLifecycleOwner,
             Observer{
 
-                customerSearch= it as ArrayList<EquipmentCustomerSelect>
+                customerSearch= it as ArrayList<CustomerSelect>
 
         }) }
 
+        Log.d("customerSelect",customerSearch.toString())
 
-        var stringCustomArray=ArrayList<String>()
-        var idCustomArray = ArrayList<Int>()
+
+        val stringCustomArray=ArrayList<String>()
+        val idCustomArray = ArrayList<Int>()
         for (i in customerSearch.indices){
-            stringCustomArray.add(customerSearch[i].name)
-            idCustomArray.add((customerSearch[i].hospitalID))
+            stringCustomArray.add(customerSearch[i].CustomerName)
+            idCustomArray.add((customerSearch[i].CustomerID))
         }
 
 
@@ -90,11 +94,12 @@ class EquipmentInsertFragment : Fragment() {
         serialNumber.setText(args?.getString("sn"))
         model.setText(args?.getString("model"))
         manufacturer.setText(args?.getString("manufacturer"))
-        warranty.setText(args?.getString("ExpirationDate"))
+        warranty.setText(args?.getString("Warranty"))
         category.setText(args?.getString("category"))
         installation.setText(args?.getString("installationDate"))
         status.setText(args?.getString("status"))
-        version_equipment.setText(args?.getString("lastMaintenance"))
+        version_equipment.setText(args?.getString("EquipmentVersion"))
+        val description = args?.getString("Description")
 
         //________________________________________________
         equipmentID=id
@@ -109,10 +114,10 @@ class EquipmentInsertFragment : Fragment() {
 
                 builder.setView(R.layout.dialog_searchable_spinner)
 
-                dialog?.getWindow()?.setLayout(650,800);
+                dialog?.window?.setLayout(650,800);
 
                 // set transparent background
-                dialog?.getWindow()?.setBackgroundDrawableResource(com.google.android.material.R.drawable.m3_tabs_transparent_background)
+                dialog?.window?.setBackgroundDrawableResource(com.google.android.material.R.drawable.m3_tabs_transparent_background)
 
 
                 dialog=builder.create()
@@ -121,7 +126,7 @@ class EquipmentInsertFragment : Fragment() {
 
 
                 val recycleView: RecyclerView = dialog!!.findViewById(R.id.rv_searchable_TextView)
-                 filterText= dialog!!.findViewById(R.id.searchView_rv_customers)
+                 this.filterText = dialog!!.findViewById(R.id.searchView_rv_customers)
 
                 rvAdapter = context?.let { it1 -> RvAdapterFindCustomers(it1, customerSearch) }
                 recycleView.apply {
@@ -129,7 +134,7 @@ class EquipmentInsertFragment : Fragment() {
                     layoutManager = LinearLayoutManager(this.context)
                     adapter = rvAdapter
                 }
-                filterText?.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
+                filterText.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
                     override fun onQueryTextSubmit(p0: String?): Boolean {
                         return false
                     }
@@ -144,9 +149,9 @@ class EquipmentInsertFragment : Fragment() {
                 })
 
                 rvAdapter!!.setOnClickListener(object :RvAdapterFindCustomers.OnClickListener{
-                    override fun onClick(position: Int, model: EquipmentCustomerSelect) {
-                        var strtemp: String = model.name
-                        hospId = model.hospitalID
+                    override fun onClick(position: Int, model: CustomerSelect) {
+                        var strtemp: String = model.CustomerName
+                        hospId = model.CustomerID
 
                         customerNameTV.text = strtemp
                         dialog!!.dismiss();
@@ -174,18 +179,22 @@ class EquipmentInsertFragment : Fragment() {
         val btnclear : Button =view.findViewById(R.id.btn_equipment_clear)
         btnsubmit.setOnClickListener {
             if(hospId!=null) {
-                var equipment = Equipment(
+                var equipment = Equipments(
                     null,
-                    hospId,
-                    category.text.toString(),
-                    manufacturer.text.toString(),
-                    model.text.toString(),
+                    null,
+                    null,
                     serialNumber.text.toString(),
-                    installation.text.toString(),
-                    warranty.text.toString(),
+                    model.text.toString(),
+                    manufacturer.text.toString(),
+                    null,
+                    description.toString(),
                     version_equipment.text.toString(),
-                    "null",
-                    status.text.toString()
+                    category.text.toString(),
+                    warranty.text.toString(),
+                    status.text.toString(),
+                    installation.text.toString(),
+                    null,null,null,hospId
+
                 )
                 if (equipmentID == null) {
                     this.context?.let { it1 -> equipmentViewModel.insert(it1, equipment) }
@@ -201,18 +210,18 @@ class EquipmentInsertFragment : Fragment() {
                     customerNameTV.text="Select Customer"
                 } else {
 
-                    equipment = Equipment(
+                    equipment = Equipments(
                         equipmentID,
-                        fgId,
-                        category.text.toString(),
-                        manufacturer.text.toString(),
-                        model.text.toString(),
-                        serialNumber.text.toString(),
-                        installation.text.toString(),
-                        warranty.text.toString(),
+                        null,
+                        null,serialNumber.text.toString(),model.text.toString(),manufacturer.text.toString(),
+                        null,null,
                         version_equipment.text.toString(),
-                        "null",
-                        status.text.toString()
+                        category.text.toString(),
+                        warranty.text.toString(),
+                        status.text.toString(),
+                        installation.text.toString(),
+                        "null",null,null,
+                        fgId
                     )
                     this.context?.let { it1 -> equipmentViewModel.updateEquipment(it1, equipment) }
                     Toast.makeText(context, "Updated", Toast.LENGTH_SHORT).show()
@@ -244,10 +253,10 @@ class EquipmentInsertFragment : Fragment() {
 
 
 
-    private fun filterList(query: String,searchCustomer : ArrayList<EquipmentCustomerSelect>) {
-        val filteredList= java.util.ArrayList<EquipmentCustomerSelect>()
+    private fun filterList(query: String,searchCustomer : ArrayList<CustomerSelect>) {
+        val filteredList= java.util.ArrayList<CustomerSelect>()
         for (i in searchCustomer){
-            if (i.name.lowercase(Locale.ROOT).contains(query))
+            if (i.CustomerName.lowercase(Locale.ROOT).contains(query))
                 filteredList.add(i)
             Log.d("datafilterDialog", filteredList.toString())
         }

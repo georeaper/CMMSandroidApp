@@ -7,10 +7,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.gkprojects.cmmsandroidapp.DataClasses.Equipment
+import com.gkprojects.cmmsandroidapp.DataClasses.Equipments
 import com.gkprojects.cmmsandroidapp.DataClasses.Hospital
 import com.gkprojects.cmmsandroidapp.R
 
-class EquipmentAdapter(private val context: Context, private var equipmentlist:List<Equipment>):RecyclerView.Adapter<EquipmentAdapter.MyViewHolder>() {
+class EquipmentAdapter(private val context: Context, private var equipmentlist:List<Equipments>):RecyclerView.Adapter<EquipmentAdapter.MyViewHolder>() {
 
     private var onClickListener: EquipmentAdapter.OnClickListener? = null
 
@@ -26,7 +27,7 @@ class EquipmentAdapter(private val context: Context, private var equipmentlist:L
     override fun getItemCount(): Int {
         return equipmentlist.size
     }
-    fun setData(equipmentlist:ArrayList<Equipment>)
+    fun setData(equipmentlist:ArrayList<Equipments>)
     {
         this.equipmentlist=equipmentlist
         notifyDataSetChanged()
@@ -37,15 +38,15 @@ class EquipmentAdapter(private val context: Context, private var equipmentlist:L
 
     // onClickListener Interface
     interface OnClickListener {
-        fun onClick(position: Int, model: Equipment)
+        fun onClick(position: Int, model: Equipments)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
        val currentitem = equipmentlist[position]
-        holder.titlesn?.text = currentitem.serialNumber
-        holder.model?.text = currentitem.model
-        holder.category?.text = currentitem.category
-        holder.customer?.text=(currentitem.hospitalID.toString())
+        holder.titlesn.text = currentitem.SerialNumber
+        holder.model.text = currentitem.Model
+        holder.category.text = currentitem.EquipmentCategory
+        holder.customer.text =(currentitem.CustomerID.toString())
         holder.itemView.setOnClickListener {
             if (onClickListener != null) {
                 onClickListener!!.onClick(position, currentitem )

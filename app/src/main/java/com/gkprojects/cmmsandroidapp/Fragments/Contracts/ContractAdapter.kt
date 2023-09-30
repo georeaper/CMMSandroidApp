@@ -8,10 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.gkprojects.cmmsandroidapp.Adapter.CustomerAdapter
 import com.gkprojects.cmmsandroidapp.DataClasses.Contract
+import com.gkprojects.cmmsandroidapp.DataClasses.Contracts
 import com.gkprojects.cmmsandroidapp.DataClasses.Hospital
 import com.gkprojects.cmmsandroidapp.R
 
-class ContractAdapter(private var contractList :ArrayList<Contract> ) :RecyclerView.Adapter<ContractAdapter.MyViewHolder>() {
+class ContractAdapter(private var contractList :ArrayList<Contracts> ) :RecyclerView.Adapter<ContractAdapter.MyViewHolder>() {
     private var onClickListener: ContractAdapter.OnClickListener? = null
 
     class MyViewHolder(itemView :View) :RecyclerView.ViewHolder( itemView) {
@@ -30,7 +31,7 @@ class ContractAdapter(private var contractList :ArrayList<Contract> ) :RecyclerV
     override fun getItemCount(): Int {
         return contractList.size
     }
-    fun setData(contractList: ArrayList<Contract>)
+    fun setData(contractList: ArrayList<Contracts>)
     {
         this.contractList=contractList
         notifyDataSetChanged()
@@ -39,15 +40,15 @@ class ContractAdapter(private var contractList :ArrayList<Contract> ) :RecyclerV
         this.onClickListener = onClickListener
     }
     interface OnClickListener {
-        fun onClick(position: Int, model: Contract)
+        fun onClick(position: Int, model: Contracts)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem = contractList[position]
-        holder.customerName.text=currentItem.hospitalID
-        holder.title.text=currentItem.contractType
-        holder.endDate.text=currentItem.endDate
-        holder.startDate.text=currentItem.startDate
+        holder.customerName.text=currentItem.CustomerID.toString()
+        holder.title.text=currentItem.ContractType
+        holder.endDate.text=currentItem.DateEnd
+        holder.startDate.text=currentItem.DateStart
 
         holder.itemView.setOnClickListener {
             if (onClickListener != null) {

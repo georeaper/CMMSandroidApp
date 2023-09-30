@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import com.gkprojects.cmmsandroidapp.CMMSDatabase
 import com.gkprojects.cmmsandroidapp.DataClasses.Cases
 import com.gkprojects.cmmsandroidapp.DataClasses.Contract
+import com.gkprojects.cmmsandroidapp.DataClasses.Contracts
 import com.gkprojects.cmmsandroidapp.DataClasses.CustomerSelect
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -20,49 +21,45 @@ class RepoContracts {
             return CMMSDatabase.getInstance(context)!!
         }
 
-        fun insert(context: Context, contract: Contract)
+        fun insert(context: Context, contracts: Contracts)
         {
             userDatabase= intialiseDB(context)
 
             CoroutineScope(Dispatchers.IO).launch {
-                userDatabase!!.contractDAO().addContract(contract)
+                userDatabase!!.ContractsDao().addContracts(contracts)
 
             }
         }
 
-        fun delete(context: Context, contract: Contract){
+        fun delete(context: Context, contracts: Contracts){
             userDatabase= intialiseDB(context)
             CoroutineScope(Dispatchers.IO).launch {
 
-                userDatabase!!.contractDAO().deleteContract(contract)
+                userDatabase!!.ContractsDao().deleteContracts(contracts)
             }
 
         }
 
-        fun getAllContractData(context: Context): LiveData<List<Contract>>
+        fun getAllContractData(context: Context): LiveData<List<Contracts>>
         {
             userDatabase= intialiseDB(context)
             //return userDatabase!!.hospitalDAO().getAllHospitals()
-            return userDatabase!!.contractDAO().getAllContracts()
+            return userDatabase!!.ContractsDao().getAllContracts()
         }
 
-        fun updateContractData(context: Context, contract: Contract){
+        fun updateContractData(context: Context, contract: Contracts){
             userDatabase= intialiseDB(context)
             CoroutineScope(Dispatchers.IO).launch {
-                userDatabase!!.contractDAO().updateContract(contract)
+                userDatabase!!.ContractsDao().updateContracts(contract)
             }
 
         }
         fun getCustomerIdData(context: Context): LiveData<List<CustomerSelect>> {
 
 
-            return userDatabase!!.contractDAO().getIdFromHospital()
+            return userDatabase!!.ContractsDao().getCustomerID()
 
         }
-//        fun getCustomerNameWhereId(id :Int) : String{
-//
-//
-//            return userDatabase!!.contractDAO().
-//        }
+
     }
 }

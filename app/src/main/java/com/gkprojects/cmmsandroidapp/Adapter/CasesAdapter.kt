@@ -8,9 +8,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.gkprojects.cmmsandroidapp.DataClasses.Cases
 import com.gkprojects.cmmsandroidapp.DataClasses.Hospital
+import com.gkprojects.cmmsandroidapp.DataClasses.Tickets
 import com.gkprojects.cmmsandroidapp.R
 
-class CasesAdapter(private var context :Context , private var casesList : ArrayList<Cases>): RecyclerView.Adapter<CasesAdapter.MyViewholder>() {
+class CasesAdapter(private var context :Context , private var casesList : ArrayList<Tickets>): RecyclerView.Adapter<CasesAdapter.MyViewholder>() {
     private var onClickListener: CasesAdapter.OnClickListener? = null
 
     class MyViewholder(itemView : View):RecyclerView.ViewHolder(itemView) {
@@ -30,7 +31,7 @@ class CasesAdapter(private var context :Context , private var casesList : ArrayL
     override fun getItemCount(): Int {
         return casesList.size
     }
-    fun setData(casesList:ArrayList<Cases>)
+    fun setData(casesList:ArrayList<Tickets>)
     {
         this.casesList=casesList
         notifyDataSetChanged()
@@ -38,10 +39,10 @@ class CasesAdapter(private var context :Context , private var casesList : ArrayL
 
     override fun onBindViewHolder(holder: MyViewholder, position: Int) {
         val currentitem = casesList[position]
-        holder.name.text=currentitem.customerID.toString()
-        holder.title.text=currentitem.title
-        holder.startDate.text=currentitem.startDate
-        holder.status.text=currentitem.status
+        holder.name.text=currentitem.CustomerID.toString()
+        holder.title.text=currentitem.Title
+        holder.startDate.text=currentitem.DateStart
+        holder.status.text=currentitem.Active
 
         holder.itemView.setOnClickListener {
             if (onClickListener != null) {
@@ -55,7 +56,7 @@ class CasesAdapter(private var context :Context , private var casesList : ArrayL
 
     // onClickListener Interface
     interface OnClickListener {
-        fun onClick(position: Int, model: Cases)
+        fun onClick(position: Int, model: Tickets)
     }
 
 }

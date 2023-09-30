@@ -6,13 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.gkprojects.cmmsandroidapp.DataClasses.Equipment
-import com.gkprojects.cmmsandroidapp.DataClasses.EquipmentCustomerSelect
-import com.gkprojects.cmmsandroidapp.DataClasses.Hospital
+import com.gkprojects.cmmsandroidapp.DataClasses.CustomerSelect
+
 import com.gkprojects.cmmsandroidapp.R
 
 
-class RvAdapterFindCustomers(private val context: Context, private var customerList:ArrayList<EquipmentCustomerSelect>): RecyclerView.Adapter<RvAdapterFindCustomers.MyViewHolder>() {
+class RvAdapterFindCustomers(private val context: Context, private var customerList:ArrayList<CustomerSelect>): RecyclerView.Adapter<RvAdapterFindCustomers.MyViewHolder>() {
     private var onClickListener: RvAdapterFindCustomers.OnClickListener? = null
 
     class MyViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
@@ -30,16 +29,16 @@ class RvAdapterFindCustomers(private val context: Context, private var customerL
     override fun getItemCount(): Int {
         return customerList.size
     }
-    fun setData(customerlist:ArrayList<EquipmentCustomerSelect>)
-    {
-        this.customerList=customerlist
-        notifyDataSetChanged()
-    }
+//    fun setData(customerlist:ArrayList<CustomerSelect>)
+//    {
+//        this.customerList=customerlist
+//        notifyDataSetChanged()
+//    }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem=customerList[position]
-        holder.rv_id.setText(currentItem.hospitalID.toString())
-        holder.rv_customerName.setText(currentItem.name)
+        holder.rv_id.text = currentItem.CustomerID.toString()
+        holder.rv_customerName.text = currentItem.CustomerName
 
         holder.itemView.setOnClickListener {
             if (onClickListener != null) {
@@ -48,7 +47,7 @@ class RvAdapterFindCustomers(private val context: Context, private var customerL
         }
 
     }
-    fun filterList(filterlist: ArrayList<EquipmentCustomerSelect>) {
+    fun filterList(filterlist: ArrayList<CustomerSelect>) {
         // below line is to add our filtered
         // list in our course array list.
         customerList = filterlist
@@ -63,6 +62,6 @@ class RvAdapterFindCustomers(private val context: Context, private var customerL
 
     // onClickListener Interface
     interface OnClickListener {
-        fun onClick(position: Int, model: EquipmentCustomerSelect)
+        fun onClick(position: Int, model: CustomerSelect)
     }
 }

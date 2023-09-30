@@ -18,6 +18,7 @@ import com.gkprojects.cmmsandroidapp.Adapter.CasesAdapter
 import com.gkprojects.cmmsandroidapp.Adapter.CustomerAdapter
 import com.gkprojects.cmmsandroidapp.DataClasses.Cases
 import com.gkprojects.cmmsandroidapp.DataClasses.Hospital
+import com.gkprojects.cmmsandroidapp.DataClasses.Tickets
 import com.gkprojects.cmmsandroidapp.Models.CasesVM
 import com.gkprojects.cmmsandroidapp.Models.CustomerVM
 import com.gkprojects.cmmsandroidapp.R
@@ -30,7 +31,7 @@ import java.util.*
 class CasesFragment : Fragment() {
     private lateinit var casesRecyclerView: RecyclerView
 
-    private var templist = ArrayList<Cases>()
+    private var templist = ArrayList<Tickets>()
     private lateinit var casesAdapter: CasesAdapter
     private lateinit var casesViewModel: CasesVM
 
@@ -51,7 +52,7 @@ class CasesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         casesRecyclerView = view.findViewById(R.id.cases_recyclerview)
-        casesAdapter = this.context?.let { CasesAdapter(it, ArrayList<Cases>()) }!!
+        casesAdapter = this.context?.let { CasesAdapter(it, ArrayList<Tickets>()) }!!
 
         casesRecyclerView.apply {
             setHasFixedSize(true)
@@ -63,7 +64,7 @@ class CasesFragment : Fragment() {
         context?.let { it ->
             casesViewModel.getAllCasesData(it).observe(viewLifecycleOwner, Observer {
 
-                casesAdapter.setData(it as ArrayList<Cases>)
+                casesAdapter.setData(it as ArrayList<Tickets>)
 
 
 
@@ -95,7 +96,7 @@ class CasesFragment : Fragment() {
         })
 
         casesAdapter.setOnClickListener(object : CasesAdapter.OnClickListener {
-            override fun onClick(position: Int, model: Cases) {
+            override fun onClick(position: Int, model: Tickets) {
 //                var temp: java.io.Serializable = model as java.io.Serializable
                 Toast.makeText(context, model.toString(), Toast.LENGTH_LONG).show()
                 passDataCustomer(model)
@@ -144,7 +145,7 @@ class CasesFragment : Fragment() {
 
                 context?.let {
                     casesViewModel.getAllCasesData(it).observe(viewLifecycleOwner, Observer {
-                        casesAdapter.setData(it as ArrayList<Cases>)
+                        casesAdapter.setData(it as ArrayList<Tickets>)
 
                     })
                 }
@@ -161,9 +162,9 @@ class CasesFragment : Fragment() {
     private fun filterList(query:String){
         Log.d("query",query)
         if (query!=null){
-            val filteredList= ArrayList<Cases>()
+            val filteredList= ArrayList<Tickets>()
             for (i in templist){
-                if (i.title.lowercase(Locale.ROOT).contains(query))
+                if (i.Title?.lowercase(Locale.ROOT)?.contains(query) == true)
                     filteredList.add(i)
                 Log.d("filteredCases", filteredList.toString())
             }
@@ -178,18 +179,20 @@ class CasesFragment : Fragment() {
 
     }
 
-    private fun passDataCustomer(data : Cases){
+    private fun passDataCustomer(data : Tickets){
 
         val bundle = Bundle()
-        data.caseID?.let { bundle.putInt("id", it.toInt()) }
-        bundle.putString("title", data.title)
-        bundle.putString("startDate", data.startDate)
-        bundle.putString("endDate", data.endDate)
-        bundle.putString("comments", data.comments)
-        bundle.putString("active", data.active)
-        bundle.putString("status", data.status)
-        data.userID.let { bundle.putInt("userId", it.toInt()) }
-        data.customerID.let { bundle.putInt("customerId", it.toInt()) }
+        data.TicketID?.let { bundle.putInt("id", it.toInt()) }
+        bundle.putString("title", data.Title)
+        bundle.putString("startDate", data.DateStart)
+        bundle.putString("endDate", data.DateEnd)
+        bundle.putString("comments", data.Notes)
+        bundle.putString("active", data.Active)
+        bundle.putString("status", data.Urgency)
+        bundle.putString("userId",data.UserID)
+        bundle.putString("customerId",data.CustomerID)
+
+
 
         val fragmentManager =parentFragmentManager
         val fragmentTransaction=fragmentManager.beginTransaction()

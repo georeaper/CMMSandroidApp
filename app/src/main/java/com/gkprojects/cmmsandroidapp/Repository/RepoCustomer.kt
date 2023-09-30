@@ -3,6 +3,7 @@ package com.gkprojects.cmmsandroidapp.Repository
 import android.content.Context
 import androidx.lifecycle.LiveData
 import com.gkprojects.cmmsandroidapp.CMMSDatabase
+import com.gkprojects.cmmsandroidapp.DataClasses.Customer
 import com.gkprojects.cmmsandroidapp.DataClasses.CustomerSelect
 import com.gkprojects.cmmsandroidapp.DataClasses.Equipment
 import com.gkprojects.cmmsandroidapp.DataClasses.Hospital
@@ -19,41 +20,41 @@ class RepoCustomer {
             return CMMSDatabase.getInstance(context)!!
         }
 
-        fun insert(context: Context, hospital: Hospital)
+        fun insert(context: Context, customer : Customer)
         {
             userDatabase= intialiseDB(context)
 
             CoroutineScope(Dispatchers.IO).launch {
-                userDatabase!!.hospitalDAO().addHospital(hospital)
+                userDatabase!!.CustomerDao().addCustomer(customer)
             }
         }
 
-        fun delete(context: Context,hospital: Hospital){
+        fun delete(context: Context,customer: Customer){
             userDatabase= intialiseDB(context)
             CoroutineScope(Dispatchers.IO).launch {
-                userDatabase!!.hospitalDAO().deleteHospital(hospital)
+                userDatabase!!.CustomerDao().deleteCustomer(customer)
             }
 
         }
 
-        fun getAllCustomerData(context: Context): LiveData<List<Hospital>>
+        fun getAllCustomerData(context: Context): LiveData<List<Customer>>
         {
             userDatabase= intialiseDB(context)
-            return userDatabase!!.hospitalDAO().getAllHospitals()
+            return userDatabase!!.CustomerDao().getAllCustomer()
         }
 
-        fun updateCustomerData(context: Context,hospital: Hospital){
+        fun updateCustomerData(context: Context,customer: Customer){
             userDatabase= intialiseDB(context)
             CoroutineScope(Dispatchers.IO).launch {
-                userDatabase!!.hospitalDAO().updateHospital(hospital)
+                userDatabase!!.CustomerDao().updateCustomer(customer )
             }
 
         }
-        fun getCustomerIdData(context: Context):LiveData<List<CustomerSelect>>{
-            userDatabase= intialiseDB(context)
-            return userDatabase!!.hospitalDAO().getIdFromHospital()
-
-        }
+//        fun getCustomerIdData(context: Context):LiveData<List<CustomerSelect>>{
+//            userDatabase= intialiseDB(context)
+//            return userDatabase!!.hospitalDAO().getIdFromHospital()
+//
+//        }
     }
 
 }

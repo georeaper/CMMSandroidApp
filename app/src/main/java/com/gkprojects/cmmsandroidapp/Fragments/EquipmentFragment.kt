@@ -19,6 +19,7 @@ import com.gkprojects.cmmsandroidapp.Adapter.CustomerAdapter
 import com.gkprojects.cmmsandroidapp.Adapter.EquipmentAdapter
 import com.gkprojects.cmmsandroidapp.CMMSDatabase
 import com.gkprojects.cmmsandroidapp.DataClasses.Equipment
+import com.gkprojects.cmmsandroidapp.DataClasses.Equipments
 import com.gkprojects.cmmsandroidapp.DataClasses.Hospital
 import com.gkprojects.cmmsandroidapp.Models.EquipmentVM
 
@@ -34,7 +35,7 @@ import kotlin.collections.ArrayList
 private lateinit var equipmentRecyclerView: RecyclerView
 private lateinit var equipmentAdapter: EquipmentAdapter
 private lateinit var equipmentViewModel: EquipmentVM
-private var templist = ArrayList<Equipment>()
+private var templist = ArrayList<Equipments>()
 
 class EquipmentFragment : Fragment() {
 
@@ -45,7 +46,7 @@ class EquipmentFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         equipmentRecyclerView=view.findViewById(R.id.equipment_recyclerview)
-        equipmentAdapter= this.context?.let { EquipmentAdapter(it, ArrayList<Equipment>()) }!!
+        equipmentAdapter= this.context?.let { EquipmentAdapter(it, ArrayList<Equipments>()) }!!
         equipmentRecyclerView.apply {
             setHasFixedSize(true)
             layoutManager=LinearLayoutManager(this.context)
@@ -53,8 +54,8 @@ class EquipmentFragment : Fragment() {
         }
         equipmentViewModel= ViewModelProvider(this).get(EquipmentVM::class.java)
         context?.let {
-            equipmentViewModel.getAllUserData(it).observe(viewLifecycleOwner, Observer {
-                equipmentAdapter.setData(it as ArrayList<Equipment>)
+            equipmentViewModel.getAllEquipmentData(it).observe(viewLifecycleOwner, Observer {
+                equipmentAdapter.setData(it as ArrayList<Equipments>)
                 templist.clear() // clear the templist,because it keeps populate everytime we open and close Customer Drawer
                 for(i in it.indices)(
                         templist.add(it[i])
@@ -76,7 +77,7 @@ class EquipmentFragment : Fragment() {
             }
         })
         equipmentAdapter.setOnClickListener(object : EquipmentAdapter.OnClickListener{
-            override fun onClick(position: Int, model: Equipment) {
+            override fun onClick(position: Int, model: Equipments) {
 
                 //Toast.makeText(context,model.toString(),Toast.LENGTH_LONG).show()
                 passDataEquipment(model)
@@ -125,8 +126,8 @@ class EquipmentFragment : Fragment() {
             }
 
                 context?.let {
-                    equipmentViewModel.getAllUserData(it).observe(viewLifecycleOwner, Observer {
-                        equipmentAdapter.setData(it as java.util.ArrayList<Equipment>)
+                    equipmentViewModel.getAllEquipmentData(it).observe(viewLifecycleOwner, Observer {
+                        equipmentAdapter.setData(it as java.util.ArrayList<Equipments>)
 
                     })
                 }
@@ -140,10 +141,10 @@ class EquipmentFragment : Fragment() {
     }
     private fun filterList(query:String){
         if (query!=null){
-            val filteredList= java.util.ArrayList<Equipment>()
+            val filteredList= java.util.ArrayList<Equipments>()
             for (i in templist){
-                if(i.model.lowercase(Locale.ROOT).contains(query))
-                //if (i..lowercase(Locale.ROOT).contains(query))
+                if(i.Model?.lowercase(Locale.ROOT)?.contains(query)==true)
+
                     filteredList.add(i)
                 Log.d("dataEquipment", filteredList.toString())
             }
@@ -158,21 +159,21 @@ class EquipmentFragment : Fragment() {
 
     }
 
-    private fun passDataEquipment(data : Equipment){
+    private fun passDataEquipment(data : Equipments){
         //var temp: java.io.Serializable = data as java.io.Serializable
         val bundle = Bundle()
-        data.hospitalID?.let { bundle.putInt("HospitalId", it.toInt()) }
-        data.equipmentID?.let{bundle.putInt("EquipmentId",it.toInt())}
+        data.CustomerID?.let { bundle.putInt("HospitalId", it.toInt()) }
+        data.EquipmentID?.let{bundle.putInt("EquipmentId",it.toInt())}
         //bundle.putString("id", data.hospitalID.toString())
-        bundle.putString("model", data.model)
-        bundle.putString("category", data.category)
-        bundle.putString("manufacturer", data.manufacturer)
-        bundle.putString("sn", data.serialNumber)
-        bundle.putString("status", data.status)
-        bundle.putString("installationDate", data.installationDate)
-        bundle.putString("ExpirationDate", data.warrantyExpirationDate)
-        bundle.putString("nextMaintenance", data.nextMaintenanceDueDate)
-        bundle.putString("lastMaintenance", data.lastMaintenanceDate)//version
+        bundle.putString("model", data.Model)
+        bundle.putString("category", data.EquipmentCategory)
+        bundle.putString("manufacturer", data.Manufacturer)
+        bundle.putString("sn", data.SerialNumber)
+        bundle.putString("status", data.EquipmentStatus)
+        bundle.putString("installationDate", data.InstallationDate)
+        bundle.putString("Warranty", data.Warranty)
+        bundle.putString("Description", data.Description)
+        bundle.putString("EquipmentVersion", data.EquipmentVersion)//version
 
 
 

@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.gkprojects.cmmsandroidapp.DataClasses.CustomerSelect
-import com.gkprojects.cmmsandroidapp.DataClasses.EquipmentCustomerSelect
+
 import com.gkprojects.cmmsandroidapp.R
 
 class RvAlertAdapter(private val context: Context, private var customerList : ArrayList<CustomerSelect>):RecyclerView.Adapter<RvAlertAdapter.rvViewholder>() {
@@ -30,8 +30,8 @@ class RvAlertAdapter(private val context: Context, private var customerList : Ar
 
     override fun onBindViewHolder(holder: rvViewholder, position: Int) {
         val currentItem=customerList[position]
-        holder.rv_id.text = currentItem.hospitalID.toString()
-        holder.rv_customerName.text = currentItem.name
+        holder.rv_id.text = currentItem.CustomerID.toString()
+        holder.rv_customerName.text = currentItem.CustomerName
         holder.itemView.setOnClickListener {
             if (onClickListener != null) {
                 onClickListener!!.onClick(position, currentItem )

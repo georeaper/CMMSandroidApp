@@ -1,6 +1,6 @@
 package com.gkprojects.cmmsandroidapp.Fragments
 
-import android.content.Context
+
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -9,16 +9,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
+
 import androidx.lifecycle.ViewModelProvider
 
-import com.gkprojects.cmmsandroidapp.CMMSDatabase
+import com.gkprojects.cmmsandroidapp.DataClasses.Customer
 
-import com.gkprojects.cmmsandroidapp.DataClasses.Hospital
+
 import com.gkprojects.cmmsandroidapp.Models.CustomerVM
-import com.gkprojects.cmmsandroidapp.Models.EquipmentVM
-import com.gkprojects.cmmsandroidapp.R
 
+import com.gkprojects.cmmsandroidapp.R
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -29,29 +29,26 @@ class EditCustomerFragment : Fragment() {
     private lateinit var customerViewModel:CustomerVM
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
-
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle? ): View?
     {
-        val v=inflater.inflate(R.layout.fragment_edit_customer, container, false)
 
 
-        return v
+
+        return inflater.inflate(R.layout.fragment_edit_customer, container, false)
     }
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var hospitalID :Int? = null
-        var name  =view.findViewById<EditText>(R.id.et_customerName)
-        var address =view.findViewById<EditText>(R.id.et_address)
-        var phone1 =view.findViewById<EditText>(R.id.et_phone1)
-        var city =view.findViewById<EditText>(R.id.et_phone2)
-        var vat =view.findViewById<EditText>(R.id.et_vatNumber)
-        var email =view.findViewById<EditText>(R.id.et_email)
-        var comments =view.findViewById<EditText>(R.id.et_notes)
+        val hospitalID: Int?
+        val name  =view.findViewById<EditText>(R.id.et_customerName)
+        val address =view.findViewById<EditText>(R.id.et_address)
+        val phone1 =view.findViewById<EditText>(R.id.et_phone1)
+        val city =view.findViewById<EditText>(R.id.et_phone2)
+        val vat =view.findViewById<EditText>(R.id.et_vatNumber)
+        val email =view.findViewById<EditText>(R.id.et_email)
+        val comments =view.findViewById<EditText>(R.id.et_notes)
         customerViewModel= ViewModelProvider(this)[CustomerVM::class.java]
 
         val btnsave :Button= view.findViewById(R.id.btn_save)
@@ -75,16 +72,21 @@ class EditCustomerFragment : Fragment() {
 
         btnsave.setOnClickListener {
             if(hospitalID==null) {
-                var customer = Hospital(
-                    hospitalID,
+                val customer = Customer(
+                    null,//hospitalID
+                    null,
                     name.text.toString(),
-                    address.text.toString(),
                     phone1.text.toString(),
+                    email.text.toString(),
+                    address.text.toString(),
+                    comments.text.toString(),
                     city.text.toString(),
                     vat.text.toString(),
-                    email.text.toString(),
-                    comments.text.toString()
-                )
+                    null,
+                    null,
+                    null,
+                    null,
+                    null )
                 GlobalScope.launch(Dispatchers.IO) {
                     context?.let { it1 -> customerViewModel.insert(it1, customer) }
 
@@ -100,16 +102,22 @@ class EditCustomerFragment : Fragment() {
                  comments.text.clear()// = view.findViewById<EditText>(R.id.et_notes).text.clear()
             }else{
                 Log.d("here","i am here")
-                var customer = Hospital(
+                val customer = Customer(
                     hospitalID,
+                    null,
                     name.text.toString(),
-                    address.text.toString(),
                     phone1.text.toString(),
+                    email.text.toString(),
+                    address.text.toString(),
+                    comments.text.toString(),
                     city.text.toString(),
                     vat.text.toString(),
-                    email.text.toString(),
-                    comments.text.toString()
-                )
+                    null,
+                    null,
+                    null,
+                    null,
+                    null )
+
                 Log.d("updateFun",customer.toString())
                 GlobalScope.launch(Dispatchers.IO) {
                     context?.let { it1 -> customerViewModel.updateCustomer(it1,customer) }
@@ -126,13 +134,13 @@ class EditCustomerFragment : Fragment() {
 
 
         btnclear.setOnClickListener {
-            val name  =view.findViewById<EditText>(R.id.et_customerName).text.clear()
-            val address =view.findViewById<EditText>(R.id.et_address).text.clear()
-            val phone1 =view.findViewById<EditText>(R.id.et_phone1).text.clear()
-            val city =view.findViewById<EditText>(R.id.et_phone2).text.clear()
-            val vat =view.findViewById<EditText>(R.id.et_vatNumber).text.clear()
-            val email =view.findViewById<EditText>(R.id.et_email).text.clear()
-            val comments =view.findViewById<EditText>(R.id.et_notes).text.clear()
+             name.text.clear()
+             address.text.clear()
+             phone1.text.clear()
+             city.text.clear()
+             vat.text.clear()
+             email.text.clear()
+             comments.text.clear()
         }
 
         }

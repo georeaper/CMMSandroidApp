@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 import com.gkprojects.cmmsandroidapp.DataClasses.Contract
+import com.gkprojects.cmmsandroidapp.DataClasses.Contracts
 import com.gkprojects.cmmsandroidapp.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.Dispatchers
@@ -27,7 +28,7 @@ import java.util.*
 class ContractFragment : Fragment() {
     private lateinit var contractRecyclerView: RecyclerView
 
-    private var templist = ArrayList<Contract>()
+    private var templist = ArrayList<Contracts>()
     private lateinit var contractAdapter: ContractAdapter
     private lateinit var contractViewModel: ContractsVM
 
@@ -45,7 +46,7 @@ class ContractFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         contractRecyclerView=view.findViewById(R.id.contract_recyclerview)
-        contractAdapter = this.context?.let { ContractAdapter( ArrayList<Contract>()) }!!
+        contractAdapter = this.context?.let { ContractAdapter( ArrayList<Contracts>()) }!!
         contractRecyclerView.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(this.context)
@@ -55,7 +56,7 @@ class ContractFragment : Fragment() {
 
         context?.let {
             contractViewModel.getAllContractData(it).observe(viewLifecycleOwner, Observer {
-                contractAdapter.setData(it as ArrayList<Contract>)
+                contractAdapter.setData(it as ArrayList<Contracts>)
                 Log.d("debug123",it.toString())
                 templist.clear() // clear the templist,because it keeps populate everytime we open and close Customer Drawer
                 for(i in it.indices)(
@@ -78,7 +79,7 @@ class ContractFragment : Fragment() {
             }
         })
         contractAdapter.setOnClickListener(object : ContractAdapter.OnClickListener{
-            override fun onClick(position: Int, model: Contract) {
+            override fun onClick(position: Int, model: Contracts) {
 //                var temp: java.io.Serializable = model as java.io.Serializable
                 Toast.makeText(context,model.toString(),Toast.LENGTH_LONG).show()
                 passDataCustomer(model)
@@ -121,7 +122,7 @@ class ContractFragment : Fragment() {
                 context?.let {
 
                     contractViewModel.getAllContractData(it).observe(viewLifecycleOwner, Observer {
-                        contractAdapter.setData(it as ArrayList<Contract>)
+                        contractAdapter.setData(it as ArrayList<Contracts>)
 
                     })
                 }
@@ -143,9 +144,9 @@ class ContractFragment : Fragment() {
     }
     private fun filterList(query:String){
         if (query!=null){
-            val filteredList= ArrayList<Contract>()
+            val filteredList= ArrayList<Contracts>()
             for (i in templist){
-                if (i.contractType.lowercase(Locale.ROOT).contains(query))
+                if (i.ContractType?.lowercase(Locale.ROOT)?.contains(query) == true)
                     filteredList.add(i)
                 Log.d("datacustomer", filteredList.toString())
             }
@@ -159,17 +160,17 @@ class ContractFragment : Fragment() {
 
 
     }
-    private fun passDataCustomer(data : Contract){
+    private fun passDataCustomer(data : Contracts){
 
         val bundle = Bundle()
-        data.contractID?.let { bundle.putInt("id", it.toInt()) }
+        data.ContractID?.let { bundle.putInt("id", it.toInt()) }
 
-        bundle.putString("hospitalId", data.hospitalID)
-        bundle.putString("contractType", data.contractType)
-        bundle.putString("contractStatus", data.contractStatus)
-        bundle.putString("endDate", data.endDate)
-        bundle.putString("startDate", data.startDate)
-        bundle.putDouble("contractValue", data.contractValue)
+        bundle.putString("hospitalId", data.CustomerID.toString())
+        bundle.putString("contractType", data.ContractType)
+        bundle.putString("contractStatus", data.ContractStatus)
+        bundle.putString("endDate", data.DateEnd)
+        bundle.putString("startDate", data.DateStart)
+        data.Value?.toDouble()?.let { bundle.putDouble("contractValue", it) }
         val fragmentManager =parentFragmentManager
         val fragmentTransaction=fragmentManager.beginTransaction()
         val fragment = ContractInsertFragment()

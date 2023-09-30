@@ -3,9 +3,10 @@ package com.gkprojects.cmmsandroidapp.Repository
 import android.content.Context
 import androidx.lifecycle.LiveData
 import com.gkprojects.cmmsandroidapp.CMMSDatabase
-import com.gkprojects.cmmsandroidapp.DataClasses.Equipment
-import com.gkprojects.cmmsandroidapp.DataClasses.EquipmentCustomerSelect
-import com.gkprojects.cmmsandroidapp.DataClasses.Hospital
+import com.gkprojects.cmmsandroidapp.DataClasses.CustomerSelect
+
+import com.gkprojects.cmmsandroidapp.DataClasses.Equipments
+
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
@@ -19,39 +20,43 @@ class RepoEquipment {
         {
             return CMMSDatabase.getInstance(context)!!
         }
-        fun delete(context: Context,equipment: Equipment){
+        fun delete(context: Context,equipment: Equipments){
             userDatabase = intialiseDB(context)
             CoroutineScope(Dispatchers.IO).launch {
-                userDatabase!!.equipmentDAO().deleteEquipment(equipment)
+                userDatabase!!.EquipmentsDAO().deleteEquipments(equipment)
             }
 
         }
 
-        fun insert(context: Context,equipment: Equipment)
+        fun insert(context: Context,equipment: Equipments)
         {
             userDatabase= intialiseDB(context)
 
             CoroutineScope(IO).launch {
-                userDatabase!!.equipmentDAO().addEquipment(equipment)
+                userDatabase!!.EquipmentsDAO().addEquipments(equipment)
             }
         }
-        fun getCustomers(context: Context):LiveData<List<EquipmentCustomerSelect>>
-        {
-            userDatabase= intialiseDB(context)
-            return userDatabase!!.equipmentDAO().getCustomersForEquipment()
-        }
+//        fun getCustomers(context: Context):LiveData<List<EquipmentCustomerSelect>>
+//        {
+//            userDatabase= intialiseDB(context)
+//            return userDatabase!!.EquipmentsDAO().getCustomersForEquipment()
+//        }
 
-        fun getAllEquipmentrData(context: Context): LiveData<List<Equipment>>
+        fun getAllEquipmentData(context: Context): LiveData<List<Equipments>>
         {
             userDatabase= intialiseDB(context)
-            return userDatabase!!.equipmentDAO().getAllEquipment()
+            return userDatabase!!.EquipmentsDAO().getAllEquipments()
         }
-        fun updateCustomerData(context: Context,equipment: Equipment){
+        fun updateEquipmentData(context: Context,equipments: Equipments){
             userDatabase = intialiseDB(context)
             CoroutineScope(Dispatchers.IO).launch {
-                userDatabase!!.equipmentDAO().updateEquipment(equipment)
+                userDatabase!!.EquipmentsDAO().updateEquipments(equipments)
             }
 
+        }
+        fun getCustomerID(context: Context):LiveData<List<CustomerSelect>>{
+            userDatabase = intialiseDB(context)
+            return userDatabase!!.EquipmentsDAO().getCustomerID()
         }
     }
 

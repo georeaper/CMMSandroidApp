@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gkprojects.cmmsandroidapp.Adapter.CustomerAdapter
+import com.gkprojects.cmmsandroidapp.DataClasses.Customer
 import com.gkprojects.cmmsandroidapp.DataClasses.Hospital
 import com.gkprojects.cmmsandroidapp.Models.CustomerVM
 import com.gkprojects.cmmsandroidapp.R
@@ -28,7 +29,7 @@ import java.util.*
 
 
 
-//private lateinit var intent :Intent
+
 
 
 
@@ -36,7 +37,7 @@ import java.util.*
 class CustomerFragment : Fragment() {
     private lateinit var customerRecyclerView: RecyclerView
 
-    private var templist =ArrayList<Hospital>()
+    private var templist =ArrayList<Customer>()
     private lateinit var customerAdapter: CustomerAdapter
     private lateinit var customerViewModel: CustomerVM
 
@@ -64,7 +65,7 @@ class CustomerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         customerRecyclerView = view.findViewById(R.id.customer_recyclerview)
-        customerAdapter = this.context?.let { CustomerAdapter(it, ArrayList<Hospital>()) }!!
+        customerAdapter = this.context?.let { CustomerAdapter(it, ArrayList<Customer>()) }!!
 
         customerRecyclerView.apply {
             setHasFixedSize(true)
@@ -75,7 +76,7 @@ class CustomerFragment : Fragment() {
 
           context?.let {
             customerViewModel.getAllCustomerData(it).observe(viewLifecycleOwner, Observer {
-                customerAdapter.setData(it as ArrayList<Hospital>)
+                customerAdapter.setData(it as ArrayList<Customer>)
                 Log.d("debug123",it.toString())
                 templist.clear() // clear the templist,because it keeps populate everytime we open and close Customer Drawer
                 for(i in it.indices)(
@@ -106,7 +107,7 @@ class CustomerFragment : Fragment() {
         val openbtn =view.findViewById<FloatingActionButton>(R.id.openCustomerFragment)
 
         customerAdapter.setOnClickListener(object : CustomerAdapter.OnClickListener{
-            override fun onClick(position: Int, model: Hospital) {
+            override fun onClick(position: Int, model: Customer) {
 //                var temp: java.io.Serializable = model as java.io.Serializable
                 Toast.makeText(context,model.toString(),Toast.LENGTH_LONG).show()
                 passDataCustomer(model)
@@ -148,7 +149,7 @@ class CustomerFragment : Fragment() {
 
                 context?.let {
                     customerViewModel.getAllCustomerData(it).observe(viewLifecycleOwner, Observer {
-                        customerAdapter.setData(it as ArrayList<Hospital>)
+                        customerAdapter.setData(it as ArrayList<Customer>)
 
                     })
                 }
@@ -163,9 +164,9 @@ class CustomerFragment : Fragment() {
 
  private fun filterList(query:String){
      if (query!=null){
-        val filteredList= ArrayList<Hospital>()
+        val filteredList= ArrayList<Customer>()
          for (i in templist){
-             if (i.name.lowercase(Locale.ROOT).contains(query))
+             if (i.Name?.lowercase(Locale.ROOT)?.contains(query)==true)
                  filteredList.add(i)
              Log.d("datacustomer", filteredList.toString())
          }
@@ -181,18 +182,18 @@ class CustomerFragment : Fragment() {
  }
 
 
- private fun passDataCustomer(data : Hospital){
+ private fun passDataCustomer(data : Customer){
         //var temp: java.io.Serializable = data as java.io.Serializable
         val bundle = Bundle()
-        data.hospitalID?.let { bundle.putInt("id", it.toInt()) }
+        data.CustomerID?.let { bundle.putInt("id", it.toInt()) }
         //bundle.putString("id", data.hospitalID.toString())
-        bundle.putString("name", data.name)
-        bundle.putString("address", data.address)
-        bundle.putString("city", data.city)
-        bundle.putString("email", data.contactEmail)
-        bundle.putString("contactPerson", data.contactPerson)
-        bundle.putString("phone", data.contactPhone)
-        bundle.putString("zipcode", data.zipCode)
+        bundle.putString("name", data.Name)
+        bundle.putString("address", data.Address)
+        bundle.putString("city", data.City)
+        bundle.putString("email", data.Email)
+        bundle.putString("contactPerson", data.Description)
+        bundle.putString("phone", data.Phone)
+        bundle.putString("zipcode", data.ZipCode)
 
         val fragmentManager =parentFragmentManager
         val fragmentTransaction=fragmentManager.beginTransaction()

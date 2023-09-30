@@ -6,6 +6,7 @@ import com.gkprojects.cmmsandroidapp.CMMSDatabase
 import com.gkprojects.cmmsandroidapp.DataClasses.Cases
 import com.gkprojects.cmmsandroidapp.DataClasses.CustomerSelect
 import com.gkprojects.cmmsandroidapp.DataClasses.Hospital
+import com.gkprojects.cmmsandroidapp.DataClasses.Tickets
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,49 +21,49 @@ class RepoCases {
             return CMMSDatabase.getInstance(context)!!
         }
 
-        fun insert(context: Context, cases: Cases)
+        fun insert(context: Context, tickets: Tickets)
         {
             userDatabase= intialiseDB(context)
 
             CoroutineScope(Dispatchers.IO).launch {
                 //userDatabase!!.hospitalDAO().addHospital(hospital)
-                userDatabase!!.casesDAO().addCases(cases)
+                userDatabase!!.TicketsDao().addTickets(tickets)
             }
         }
-
-        fun delete(context: Context, cases: Cases){
+//
+        fun delete(context: Context, tickets: Tickets){
             userDatabase= intialiseDB(context)
             CoroutineScope(Dispatchers.IO).launch {
 
-                userDatabase!!.casesDAO().deleteCases(cases)
+                userDatabase!!.TicketsDao().deleteTickets(tickets)
             }
 
         }
-
-        fun getAllCustomerData(context: Context): LiveData<List<Cases>>
+//
+        fun getAllCustomerData(context: Context): LiveData<List<Tickets>>
         {
             userDatabase= intialiseDB(context)
             //return userDatabase!!.hospitalDAO().getAllHospitals()
-            return userDatabase!!.casesDAO().getAllCases()
+            return userDatabase!!.TicketsDao().getAllTickets()
         }
-
-        fun updateCustomerData(context: Context, cases: Cases){
+//
+        fun updateCustomerData(context: Context, tickets: Tickets){
             userDatabase= intialiseDB(context)
             CoroutineScope(Dispatchers.IO).launch {
-                userDatabase!!.casesDAO().updateCases(cases)
+                userDatabase!!.TicketsDao().updateTickets(tickets)
             }
 
         }
         fun getCustomerIdData(context: Context): LiveData<List<CustomerSelect>> {
 
             //return userDatabase!!.hospitalDAO().getIdFromHospital()
-            return userDatabase!!.casesDAO().getIdFromHospital()
+            return userDatabase!!.TicketsDao().getCustomerID()
 
         }
-        fun getCustomerNameWhereId(id :Int) : String{
-
-
-            return userDatabase!!.casesDAO().getCustomerNameWhereId(id)
-        }
+//        fun getCustomerNameWhereId(id :Int) : String{
+//
+//
+//            return userDatabase!!.casesDAO().getCustomerNameWhereId(id)
+//        }
     }
 }

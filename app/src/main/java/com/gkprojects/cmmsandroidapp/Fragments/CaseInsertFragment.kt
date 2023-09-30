@@ -12,15 +12,15 @@ import android.widget.*
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.gkprojects.cmmsandroidapp.Adapter.RvAdapterFindCustomers
+
 import com.gkprojects.cmmsandroidapp.Adapter.RvAlertAdapter
 import com.gkprojects.cmmsandroidapp.CMMSDatabase
-import com.gkprojects.cmmsandroidapp.DataClasses.Cases
+
 import com.gkprojects.cmmsandroidapp.DataClasses.CustomerSelect
-import com.gkprojects.cmmsandroidapp.DataClasses.EquipmentCustomerSelect
+
+import com.gkprojects.cmmsandroidapp.DataClasses.Tickets
 import com.gkprojects.cmmsandroidapp.Models.CasesVM
-import com.gkprojects.cmmsandroidapp.Models.CustomerVM
-import com.gkprojects.cmmsandroidapp.Models.EquipmentVM
+
 import com.gkprojects.cmmsandroidapp.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -29,14 +29,14 @@ import java.util.*
 
 
 class CaseInsertFragment : Fragment() {
-    private lateinit var AppDb : CMMSDatabase
+
     private lateinit var casesViewModel : CasesVM
     var dialog: Dialog? = null
     var check : String? = null
     private var rvAdapter: RvAlertAdapter? = null
 
     lateinit var filterText : SearchView
-    //var hospId : Int?= null
+
 
 
 
@@ -125,7 +125,7 @@ class CaseInsertFragment : Fragment() {
 
             dialog=builder.create()
             // show dialog
-            dialog?.show();
+            dialog?.show()
 
 
             val recycleView: RecyclerView = dialog!!.findViewById(R.id.rv_searchable_TextView)
@@ -153,8 +153,8 @@ class CaseInsertFragment : Fragment() {
 
             rvAdapter!!.setOnClickListener(object : RvAlertAdapter.OnClickListener{
                 override fun onClick(position: Int, model: CustomerSelect) {
-                    var strtemp: String = model.name
-                    customerId = model.hospitalID
+                    var strtemp: String = model.CustomerName
+                    customerId = model.CustomerID
 
                     customer.text = strtemp
                     dialog!!.dismiss();
@@ -180,23 +180,29 @@ class CaseInsertFragment : Fragment() {
                 " Not Checked"
 
             if(customerId!=null) {
-                val case = Cases(
-                    casesID,
+                val case = Tickets(
+                    null,
+                    null,
                     title.text.toString(),
+                    null,
+                    commentCase.text.toString(),
+                    null,
+                    check!!,
                     startDate.text.toString(),
                     endDate.text.toString(),
-                    commentCase.text.toString(),
-                    rnds,
-                    customerId!!,
-                    check!!,
-                    statusCase.selectedItem.toString()
+                    null,
+                    null,
+                    null,
+                    null,
+                    customerId.toString(),
+                    null
                 )
                 Log.d("debugCasesInsert", case.toString())
 
 
                 if (casesID == null) {
 
-                    //this.context?.let { it1 -> ca.insert(it1, cases) }
+
                     GlobalScope.launch(Dispatchers.IO) {
                         context?.let { it1 -> casesViewModel.insert(it1, case) }
 
@@ -241,7 +247,7 @@ class CaseInsertFragment : Fragment() {
     private fun filterList(query: String,searchCustomer : ArrayList<CustomerSelect>) {
         val filteredList= ArrayList<CustomerSelect>()
         for (i in searchCustomer){
-            if (i.name.lowercase(Locale.ROOT).contains(query))
+            if (i.CustomerName.lowercase(Locale.ROOT).contains(query))
                 filteredList.add(i)
 
         }

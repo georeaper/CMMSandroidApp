@@ -6,11 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.gkprojects.cmmsandroidapp.DataClasses.Equipment
-import com.gkprojects.cmmsandroidapp.DataClasses.Hospital
+import com.gkprojects.cmmsandroidapp.DataClasses.Customer
 import com.gkprojects.cmmsandroidapp.R
 
-class CustomerAdapter(private val context: Context, private var customerList:ArrayList<Hospital>): RecyclerView.Adapter<CustomerAdapter.MyViewHolder>() {
+class CustomerAdapter(private val context: Context, private var customerList:ArrayList<Customer>): RecyclerView.Adapter<CustomerAdapter.MyViewHolder>() {
 
     private var onClickListener: OnClickListener? = null
 
@@ -28,7 +27,7 @@ class CustomerAdapter(private val context: Context, private var customerList:Arr
         return customerList.size
     }
 
-    fun setData(customerList:ArrayList<Hospital>)
+    fun setData(customerList:ArrayList<Customer>)
     {
         this.customerList=customerList
         notifyDataSetChanged()
@@ -39,14 +38,14 @@ class CustomerAdapter(private val context: Context, private var customerList:Arr
 
     // onClickListener Interface
     interface OnClickListener {
-        fun onClick(position: Int, model: Hospital)
+        fun onClick(position: Int, model: Customer)
     }
 
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentitem = customerList[position]
-        holder.customerName.setText(currentitem.name)
-        holder.customerAddress.setText(currentitem.address)
+        holder.customerName.text = currentitem.Name
+        holder.customerAddress.text = currentitem.Address
         val pos=holder.absoluteAdapterPosition
         holder.itemView.setOnClickListener {
             if (onClickListener != null) {

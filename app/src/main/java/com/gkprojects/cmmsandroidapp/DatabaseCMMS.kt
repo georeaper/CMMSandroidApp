@@ -9,33 +9,48 @@ import com.gkprojects.cmmsandroidapp.DataClasses.*
 import com.gkprojects.cmmsandroidapp.Repository.*
 
 @Database(
-    entities = [Hospital::class,
-        Equipment::class,
-       Contract::class,
-        ContractEquipment::class,
-        Maintenance::class, SparePart::class,
-        Cases::class
-       ],
+    entities = [Customer::class,
+        Inventory::class,
+        Contracts::class,
+        ContractEquipments::class,
+        Departments::class,
+        Equipments::class,
+        FieldReportEquipment::class,
+        FieldReportInventory::class,
+        FieldReports::class,
+        Maintenances::class,
+        MaintenanceFieldForm::class,
+        MaintenanceInventory::class,
+        Tickets::class,
+        Users::class
+               ],
     version =1,
     exportSchema = true,
     //autoMigrations = [AutoMigration (from = 1, to = 2) ]
 )
 abstract class CMMSDatabase : RoomDatabase() {
 
-    abstract fun hospitalDAO(): HospitalDAO
-    abstract fun equipmentDAO(): EquipmentDAO
-    abstract fun contractDAO(): ContractDAO
-    abstract fun contractEquipmentDAO(): ContractEquipmentDAO
-    abstract fun maintenanceDAO(): MaintenanceDAO
-    abstract fun sparePartDAO(): SparePartDAO
-    abstract fun casesDAO():CasesDao
+    abstract fun CustomerDao(): CustomerDao
+   abstract fun EquipmentsDAO(): EquipmentsDao
+    abstract fun DepartmentsDao(): DepartmentsDao
+    abstract fun ContractEquipmentsDao(): ContractEquipmentsDao
+    abstract fun ContractsDao(): ContractsDao
+    abstract fun FieldReportEquipmentDao(): FieldReportEquipmentDao
+    abstract fun FieldReportsDao():FieldReportsDao
+    abstract fun InventoryDao():InventoryDao
+    abstract fun MaintenanceFieldFormDao():MaintenanceFieldFormDao
+    abstract fun MaintenanceInventoryDao():MaintenanceInventoryDao
+    abstract fun MaintenancesDao():MaintenancesDao
+    abstract fun TicketsDao():TicketsDao
+    abstract fun UsersDao():UsersDao
+    abstract fun FieldReportInventoryDao():FieldReportInventoryDao
 
 
    //companion object CMMSDatabaseProvider {
        companion object  {
        @Volatile
        private var instance: CMMSDatabase? = null
-       private const val DATABASE_NAME="cmms_database2"
+       private const val DATABASE_NAME="CmmsDb"
        fun getInstance(context: Context):CMMSDatabase?
        {
            if(instance == null)
