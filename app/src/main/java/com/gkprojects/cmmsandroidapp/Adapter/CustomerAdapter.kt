@@ -45,7 +45,9 @@ class CustomerAdapter(private val context: Context, private var customerList:Arr
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentitem = customerList[position]
         holder.customerName.text = currentitem.Name
-        holder.customerAddress.text = currentitem.Address
+//        holder.customerAddress.text = currentitem.Address
+//        holder.customerEmail.text=currentitem.Email
+//        holder.customerPhone.text=currentitem.Phone
         val pos=holder.absoluteAdapterPosition
         holder.itemView.setOnClickListener {
             if (onClickListener != null) {
@@ -57,7 +59,9 @@ class CustomerAdapter(private val context: Context, private var customerList:Arr
 
     class MyViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
         val customerName = itemView.findViewById<TextView>(R.id.tv_customer)
-        val customerAddress =itemView.findViewById<TextView>(R.id.tv_detail1)
+//        val customerAddress =itemView.findViewById<TextView>(R.id.tv_detail1)
+//        val customerPhone=itemView.findViewById<TextView>(R.id.tv_detail3)
+//        val customerEmail=itemView.findViewById<TextView>(R.id.tv_detail2)
 
 
     }

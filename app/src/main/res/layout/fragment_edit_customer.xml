@@ -5,108 +5,158 @@
     android:layout_height="match_parent"
     android:id="@+id/edit_customer_fLayout"
     tools:context=".Fragments.EditCustomerFragment">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-    <LinearLayout
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/BackgroundAppColor">
 
-    <EditText
-        android:layout_width="180dp"
-        android:layout_height="50dp"
-        android:textSize="16sp"
-        android:id="@+id/et_customerName"
-        android:hint="Enter Customer name"
-        android:layout_margin="10dp"
-        android:padding="5dp"/>
-        <EditText
-            android:layout_width="180dp"
-            android:layout_height="50dp"
-            android:textSize="16sp"
-            android:id="@+id/et_vatNumber"
-            android:hint="Enter Vat Number"
-            android:layout_margin="10dp"
-            android:padding="5dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
 
-    </LinearLayout>
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:id="@+id/et_email"
-        android:layout_margin="10dp"
-        android:hint="Enter Customer email"
-        android:padding="5dp"/>
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:id="@+id/et_address"
-        android:lines="3"
-        android:minLines="3"
-        android:maxLines="3"
-        android:layout_margin="10dp"
-        android:hint="Enter Address Information"
-        android:padding="5dp"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/et_customerName"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:hint="Enter Customer name"
+                android:background="@color/BackgroundElementsColor"
+                android:padding="5dp"
+                android:textSize="14sp"
+                android:gravity="bottom"/>
 
-        <EditText
-            android:layout_width="180dp"
-            android:layout_height="50dp"
-            android:textSize="16sp"
-            android:id="@+id/et_phone1"
-            android:hint="Enter Phone Number 1"
-            android:layout_margin="10dp"
-            android:padding="5dp"/>
-        <EditText
-            android:layout_width="180dp"
-            android:layout_height="50dp"
-            android:textSize="16sp"
-            android:id="@+id/et_phone2"
-            android:hint="Enter Phone Number 2"
-            android:layout_margin="10dp"
-            android:padding="5dp"/>
+            <EditText
+                android:id="@+id/et_description"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:hint="Description"
+                android:gravity="bottom"
+                android:padding="5dp"
+                android:textSize="14sp"
+                android:background="@color/BackgroundElementsColor"/>
 
-    </LinearLayout>
+            <EditText
+                android:id="@+id/et_email"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:gravity="bottom"
+                android:textSize="14sp"
+                android:background="@color/BackgroundElementsColor"
+                android:hint="Enter Customer email"
+                android:padding="5dp" />
+            <EditText
+                android:id="@+id/et_phone1"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:hint="Enter Phone Number 1"
+                android:gravity="bottom"
+                android:padding="5dp"
+                android:textSize="14sp"
+                android:background="@color/BackgroundElementsColor"
+                />
+
+            <EditText
+                android:id="@+id/et_address"
+                android:layout_width="match_parent"
+                android:gravity="bottom"
+                android:layout_height="80dp"
+                android:layout_margin="10dp"
+                android:textSize="14sp"
+                android:hint="Enter Address Information"
+                android:lines="2"
+                android:maxLines="2"
+                android:minLines="2"
+                android:padding="5dp"
+                android:background="@color/BackgroundElementsColor"/>
+            <EditText
+                android:id="@+id/et_city"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:hint="Enter City"
+                android:gravity="bottom"
+                android:padding="5dp"
+                android:textSize="14sp"
+                android:background="@color/BackgroundElementsColor"
+                />
 
 
-    <EditText
-        android:id="@+id/et_notes"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_margin="10dp"
-        android:hint="Type Any notes about the Customer"
-        android:lines="6"
-        android:maxLines="6"
-        android:minLines="6"
-        android:padding="5dp" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-        <Button
-            android:layout_width="180dp"
-            android:layout_height="50dp"
-            android:textSize="16sp"
-            android:id="@+id/btn_clear"
-            android:text="clear"
-            android:layout_margin="10dp"
-            android:padding="5dp"/>
-        <Button
-            android:layout_width="180dp"
-            android:layout_height="50dp"
-            android:textSize="16sp"
-            android:id="@+id/btn_save"
-            android:text="Save"
-            android:layout_margin="10dp"
-            android:padding="5dp"/>
+            <EditText
+                android:id="@+id/et_zipcode"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:hint="Zip Code"
+                android:gravity="bottom"
+                android:padding="5dp"
+                android:textSize="14sp"
+                android:background="@color/BackgroundElementsColor"/>
 
-    </LinearLayout>
+            <EditText
+                android:id="@+id/et_notes"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_margin="10dp"
+                android:hint="Type Any notes about the Customer"
+                android:gravity="bottom"
+                android:lines="3"
+                android:maxLines="3"
+                android:minLines="3"
+                android:textSize="14sp"
+                android:padding="5dp"
+                android:background="@color/BackgroundElementsColor"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Status"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textSize="14sp"
+                    android:background="@color/BackgroundElementsColor"/>
+                <CheckBox
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/checkBoxStatusCustomer"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:background="@color/BackgroundElementsColor"/>
+            </LinearLayout>
 
-</LinearLayout>
+
+            <Button
+                android:id="@+id/btn_clear"
+                android:layout_width="180dp"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:padding="5dp"
+                android:text="clear"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/btn_save"
+                android:layout_width="180dp"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:padding="5dp"
+                android:text="Save"
+                android:textSize="14sp" />
+
+
+        </LinearLayout>
+
+    </ScrollView>
 
 
 </FrameLayout>

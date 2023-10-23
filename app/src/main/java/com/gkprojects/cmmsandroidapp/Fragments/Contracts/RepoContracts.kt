@@ -1,12 +1,12 @@
 package com.gkprojects.cmmsandroidapp.Fragments.Contracts
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.gkprojects.cmmsandroidapp.CMMSDatabase
-import com.gkprojects.cmmsandroidapp.DataClasses.Cases
-import com.gkprojects.cmmsandroidapp.DataClasses.Contract
-import com.gkprojects.cmmsandroidapp.DataClasses.Contracts
-import com.gkprojects.cmmsandroidapp.DataClasses.CustomerSelect
+import com.gkprojects.cmmsandroidapp.DataClasses.*
+import com.gkprojects.cmmsandroidapp.Repository.RepoEquipment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -61,5 +61,17 @@ class RepoContracts {
 
         }
 
+        fun getListContracts(context: Context): LiveData<List<ContractsCustomerName>>{
+            userDatabase =intialiseDB(context)
+                var tempLog =userDatabase!!.ContractsDao().getContractsCustomerNames()
+
+                    Log.d("tag34",tempLog.toString())
+
+            return  tempLog
+
+        }
+
     }
+
+
 }

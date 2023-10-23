@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -109,7 +110,7 @@ class CustomerFragment : Fragment() {
         customerAdapter.setOnClickListener(object : CustomerAdapter.OnClickListener{
             override fun onClick(position: Int, model: Customer) {
 //                var temp: java.io.Serializable = model as java.io.Serializable
-                Toast.makeText(context,model.toString(),Toast.LENGTH_LONG).show()
+                //Toast.makeText(context,model.toString(),Toast.LENGTH_LONG).show()
                 passDataCustomer(model)
 
                 //passDataCustomer()
@@ -141,7 +142,7 @@ class CustomerFragment : Fragment() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
 
 
-                GlobalScope.launch(Dispatchers.IO) {
+                lifecycleScope.launch(Dispatchers.IO) {
 
                     context?.let { customerViewModel.deleteCustomer(it, templist[viewHolder.absoluteAdapterPosition]) }
 
@@ -183,17 +184,28 @@ class CustomerFragment : Fragment() {
 
 
  private fun passDataCustomer(data : Customer){
-        //var temp: java.io.Serializable = data as java.io.Serializable
+
         val bundle = Bundle()
         data.CustomerID?.let { bundle.putInt("id", it.toInt()) }
-        //bundle.putString("id", data.hospitalID.toString())
         bundle.putString("name", data.Name)
         bundle.putString("address", data.Address)
         bundle.putString("city", data.City)
         bundle.putString("email", data.Email)
-        bundle.putString("contactPerson", data.Description)
+        bundle.putString("description", data.Description)
         bundle.putString("phone", data.Phone)
         bundle.putString("zipcode", data.ZipCode)
+        bundle.putString("status", data.CustomerStatus)
+        bundle.putString("notes", data.Notes)
+
+
+
+
+
+
+
+
+
+
 
         val fragmentManager =parentFragmentManager
         val fragmentTransaction=fragmentManager.beginTransaction()

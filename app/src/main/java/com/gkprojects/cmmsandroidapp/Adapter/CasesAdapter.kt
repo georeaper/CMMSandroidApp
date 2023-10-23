@@ -8,10 +8,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.gkprojects.cmmsandroidapp.DataClasses.Cases
 import com.gkprojects.cmmsandroidapp.DataClasses.Hospital
+import com.gkprojects.cmmsandroidapp.DataClasses.TicketCustomerName
 import com.gkprojects.cmmsandroidapp.DataClasses.Tickets
 import com.gkprojects.cmmsandroidapp.R
 
-class CasesAdapter(private var context :Context , private var casesList : ArrayList<Tickets>): RecyclerView.Adapter<CasesAdapter.MyViewholder>() {
+class CasesAdapter(private var context :Context , private var casesList : ArrayList<TicketCustomerName>): RecyclerView.Adapter<CasesAdapter.MyViewholder>() {
     private var onClickListener: CasesAdapter.OnClickListener? = null
 
     class MyViewholder(itemView : View):RecyclerView.ViewHolder(itemView) {
@@ -31,7 +32,7 @@ class CasesAdapter(private var context :Context , private var casesList : ArrayL
     override fun getItemCount(): Int {
         return casesList.size
     }
-    fun setData(casesList:ArrayList<Tickets>)
+    fun setData(casesList:ArrayList<TicketCustomerName>)
     {
         this.casesList=casesList
         notifyDataSetChanged()
@@ -39,7 +40,7 @@ class CasesAdapter(private var context :Context , private var casesList : ArrayL
 
     override fun onBindViewHolder(holder: MyViewholder, position: Int) {
         val currentitem = casesList[position]
-        holder.name.text=currentitem.CustomerID.toString()
+        holder.name.text=currentitem.CustomerName
         holder.title.text=currentitem.Title
         holder.startDate.text=currentitem.DateStart
         holder.status.text=currentitem.Active
@@ -56,7 +57,7 @@ class CasesAdapter(private var context :Context , private var casesList : ArrayL
 
     // onClickListener Interface
     interface OnClickListener {
-        fun onClick(position: Int, model: Tickets)
+        fun onClick(position: Int, model: TicketCustomerName)
     }
 
 }

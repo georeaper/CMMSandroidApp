@@ -2,6 +2,8 @@ package com.gkprojects.cmmsandroidapp.Fragments
 
 
 import android.annotation.SuppressLint
+import android.content.Context
+
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,35 +12,38 @@ import android.view.ViewGroup
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.gkprojects.cmmsandroidapp.Adapter.CustomerAdapter
+
 import com.gkprojects.cmmsandroidapp.Adapter.EquipmentAdapter
-import com.gkprojects.cmmsandroidapp.CMMSDatabase
-import com.gkprojects.cmmsandroidapp.DataClasses.Equipment
+import com.gkprojects.cmmsandroidapp.DataClasses.EquipmentSelectCustomerName
+
 import com.gkprojects.cmmsandroidapp.DataClasses.Equipments
-import com.gkprojects.cmmsandroidapp.DataClasses.Hospital
+
 import com.gkprojects.cmmsandroidapp.Models.EquipmentVM
 
 import com.gkprojects.cmmsandroidapp.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+
 import java.util.*
 import kotlin.collections.ArrayList
 
 private lateinit var equipmentRecyclerView: RecyclerView
+@SuppressLint("StaticFieldLeak")
 private lateinit var equipmentAdapter: EquipmentAdapter
 private lateinit var equipmentViewModel: EquipmentVM
-private var templist = ArrayList<Equipments>()
+private var templist = ArrayList<EquipmentSelectCustomerName>()
+private var dataItems = ArrayList<EquipmentSelectCustomerName>()
+//private var eq = ArrayList<Equipments>()
+private var eq = Equipments(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
 
 class EquipmentFragment : Fragment() {
-
 
 
     @SuppressLint("SuspiciousIndentation", "UseRequireInsteadOfGet")
@@ -46,23 +51,38 @@ class EquipmentFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         equipmentRecyclerView=view.findViewById(R.id.equipment_recyclerview)
-        equipmentAdapter= this.context?.let { EquipmentAdapter(it, ArrayList<Equipments>()) }!!
+        equipmentAdapter= this.context?.let { EquipmentAdapter(it, ArrayList<EquipmentSelectCustomerName>()) }!!
         equipmentRecyclerView.apply {
             setHasFixedSize(true)
             layoutManager=LinearLayoutManager(this.context)
             adapter= equipmentAdapter
         }
         equipmentViewModel= ViewModelProvider(this).get(EquipmentVM::class.java)
-        context?.let {
-            equipmentViewModel.getAllEquipmentData(it).observe(viewLifecycleOwner, Observer {
-                equipmentAdapter.setData(it as ArrayList<Equipments>)
-                templist.clear() // clear the templist,because it keeps populate everytime we open and close Customer Drawer
-                for(i in it.indices)(
-                        templist.add(it[i])
-                        )
-                Log.d("templistEquip", templist.size.toString())
-            })
+
+
+        try{
+            lifecycleScope.launch {
+                withContext(Dispatchers.Main){
+                    context?.let { equipmentViewModel.getCustomerName(it).observe(viewLifecycleOwner,
+                        Observer {
+                            equipmentAdapter.setData(it as ArrayList<EquipmentSelectCustomerName>)
+                            templist.clear()
+                            for(i in it.indices){
+                                templist.add(it[i])
+                                //dataItems.add(it[i])
+
+                            }
+                            Log.d("dataItems", dataItems.toString())
+                        }) }
+                }
+            }
+
+            reloadData(context!!)
+
+        }catch (e:java.lang.Exception){
+            Log.d("debugE",e.toString())
         }
+
         val searchView = view.findViewById<SearchView>(R.id.searchView_equipment)
        searchView.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(p0: String?): Boolean {
@@ -77,7 +97,7 @@ class EquipmentFragment : Fragment() {
             }
         })
         equipmentAdapter.setOnClickListener(object : EquipmentAdapter.OnClickListener{
-            override fun onClick(position: Int, model: Equipments) {
+            override fun onClick(position: Int, model: EquipmentSelectCustomerName) {
 
                 //Toast.makeText(context,model.toString(),Toast.LENGTH_LONG).show()
                 passDataEquipment(model)
@@ -107,63 +127,64 @@ class EquipmentFragment : Fragment() {
 
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                //var eq = ArrayList<Equipments>()
+                val pos= templist[viewHolder.absoluteAdapterPosition]
+
+                Toast.makeText(context,pos.EquipmentID.toString(),Toast.LENGTH_SHORT).show()
 
 
-
-            try {
-                GlobalScope.launch(Dispatchers.IO) {
-
-                    context?.let {
-                        equipmentViewModel.deleteEquipment(
-                            it,
-                            templist[viewHolder.absoluteAdapterPosition]
-                        )
+                try{
+                    lifecycleScope.launch {
+                        withContext(Dispatchers.Main){
+                        equipmentViewModel.getRecordById(context!!,pos.EquipmentID!!.toInt()).observe(viewLifecycleOwner,
+                            Observer {
+                                if(it!=null) {
+                                    eq = it
+                                    Log.d("anorthodox", eq.toString())
+                                    if (eq.EquipmentID != null) {
+                                        deleteRecord(context!!, eq)
+                                    }
+                                }
+                            })
+                        Log.d("anorthodox2",eq.toString())
+                        }
                     }
-
+                    Log.d("anorthodox3",eq.toString())
                 }
-            }catch (e:java.lang.Exception){
-                Log.d("deleteEquipment",e.toString())
-            }
 
-                context?.let {
-                    equipmentViewModel.getAllEquipmentData(it).observe(viewLifecycleOwner, Observer {
-                        equipmentAdapter.setData(it as java.util.ArrayList<Equipments>)
 
-                    })
+                catch (e:java.lang.Exception){
+                   Log.d("deleteDebug",e.toString())
                 }
             }
-
-
         }
         val myHelper = ItemTouchHelper(myCallback)
         myHelper.attachToRecyclerView(equipmentRecyclerView)
 
     }
     private fun filterList(query:String){
-        if (query!=null){
-            val filteredList= java.util.ArrayList<Equipments>()
-            for (i in templist){
-                if(i.Model?.lowercase(Locale.ROOT)?.contains(query)==true)
+        val filteredList= java.util.ArrayList<EquipmentSelectCustomerName>()
+        for (i in templist){
+            if(i.Model?.lowercase(Locale.ROOT)?.contains(query)==true)
 
-                    filteredList.add(i)
-                Log.d("dataEquipment", filteredList.toString())
-            }
-            if (filteredList.isEmpty() ){
-                Toast.makeText(context,"Empty List", Toast.LENGTH_SHORT).show()
+                filteredList.add(i)
+            Log.d("dataEquipment", filteredList.toString())
+        }
+        if (filteredList.isEmpty() ){
+            Toast.makeText(context,"Empty List", Toast.LENGTH_SHORT).show()
 
-            }else{
-                equipmentAdapter.setData(filteredList)
-            }
+        }else{
+            equipmentAdapter.setData(filteredList)
         }
 
 
     }
 
-    private fun passDataEquipment(data : Equipments){
+    private fun passDataEquipment(data : EquipmentSelectCustomerName){
         //var temp: java.io.Serializable = data as java.io.Serializable
         val bundle = Bundle()
-        data.CustomerID?.let { bundle.putInt("HospitalId", it.toInt()) }
-        data.EquipmentID?.let{bundle.putInt("EquipmentId",it.toInt())}
+        data.CustomerID?.let { bundle.putInt("HospitalId", it) }
+        data.EquipmentID?.let{bundle.putInt("EquipmentId",it)}
         //bundle.putString("id", data.hospitalID.toString())
         bundle.putString("model", data.Model)
         bundle.putString("category", data.EquipmentCategory)
@@ -185,11 +206,29 @@ class EquipmentFragment : Fragment() {
         fragmentTransaction.commit()
 
     }
+     fun deleteRecord(context: Context, equipments: Equipments){
+        lifecycleScope.launch(Dispatchers.Main){
+            equipmentViewModel.deleteEquipment(context,equipments)
+        }
+    }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    fun reloadData(context: Context){
+        lifecycleScope.launch(Dispatchers.Main){
+            equipmentViewModel.getCustomerName(context).observe(viewLifecycleOwner, Observer {
+                equipmentAdapter.setData(it as ArrayList<EquipmentSelectCustomerName>)
+                templist.clear()
+                for(i in it.indices){
+                    templist.add(it[i])
+                    //dataItems.add(it[i])
+
+                }
+            })
+        }
+
 
     }
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

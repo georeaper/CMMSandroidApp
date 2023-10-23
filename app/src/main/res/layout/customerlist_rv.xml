@@ -1,29 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
+
     >
+<androidx.cardview.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+
+
+    >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@color/AppColor">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+
+            >
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:padding="5dp"
             android:textSize="20sp"
             android:id="@+id/tv_customer"
             android:gravity="center"
+            android:textColor="@color/AppColorText"
+            android:background="@color/BackgroundElementsColor"
             android:text="To onoma tou pelati"/>
+</LinearLayout>
 
-
-        <TextView
-            android:id="@+id/tv_detail1"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:gravity="center"
-            android:text="i dieuthinsi einai"
-            android:padding="5dp" />
+            android:padding="5dp">
+
+                        <ImageView
+                            android:id="@+id/imageViewLocation"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginRight="40dp"
+                            android:background="@color/BackgroundElementsColor"
+                            android:padding="5dp"
+
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/location_icon" />
+
+                        <ImageView
+                            android:id="@+id/ImageViewEmail"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:background="@color/BackgroundElementsColor"
+                            app:layout_constraintEnd_toStartOf="@+id/imageViewLocation"
+                            app:layout_constraintStart_toEndOf="@+id/ImageViewPhone"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/emai_icon" />
+
+                        <ImageView
+                            android:id="@+id/ImageViewPhone"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:padding="5dp"
+                            android:background="@color/BackgroundElementsColor"
+                            android:layout_marginLeft="40dp"
+
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/phone_icon" />
 
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>
 </LinearLayout>

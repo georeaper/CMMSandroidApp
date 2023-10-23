@@ -8,4 +8,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="lightGreyBlue">#ccdae6 </color>
+    <color name="AppColor">#3498db</color>
+    <color name="AppColorText">#333333</color>
+    <color name="BackgroundAppColor">#d5d8dc</color>
+    <color name="BackgroundElementsColor">#f5f5f5</color>
 </resources>

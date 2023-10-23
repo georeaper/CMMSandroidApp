@@ -9,10 +9,11 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.gkprojects.cmmsandroidapp.Adapter.CustomerAdapter
 import com.gkprojects.cmmsandroidapp.DataClasses.Contract
 import com.gkprojects.cmmsandroidapp.DataClasses.Contracts
+import com.gkprojects.cmmsandroidapp.DataClasses.ContractsCustomerName
 import com.gkprojects.cmmsandroidapp.DataClasses.Hospital
 import com.gkprojects.cmmsandroidapp.R
 
-class ContractAdapter(private var contractList :ArrayList<Contracts> ) :RecyclerView.Adapter<ContractAdapter.MyViewHolder>() {
+class ContractAdapter(private var contractList :ArrayList<ContractsCustomerName> ) :RecyclerView.Adapter<ContractAdapter.MyViewHolder>() {
     private var onClickListener: ContractAdapter.OnClickListener? = null
 
     class MyViewHolder(itemView :View) :RecyclerView.ViewHolder( itemView) {
@@ -31,7 +32,7 @@ class ContractAdapter(private var contractList :ArrayList<Contracts> ) :Recycler
     override fun getItemCount(): Int {
         return contractList.size
     }
-    fun setData(contractList: ArrayList<Contracts>)
+    fun setData(contractList: ArrayList<ContractsCustomerName>)
     {
         this.contractList=contractList
         notifyDataSetChanged()
@@ -40,13 +41,14 @@ class ContractAdapter(private var contractList :ArrayList<Contracts> ) :Recycler
         this.onClickListener = onClickListener
     }
     interface OnClickListener {
-        fun onClick(position: Int, model: Contracts)
+        fun onClick(position: Int, model: ContractsCustomerName)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem = contractList[position]
-        holder.customerName.text=currentItem.CustomerID.toString()
-        holder.title.text=currentItem.ContractType
+        //holder.customerName.text=currentItem.CustomerID.toString()
+        holder.customerName.text=currentItem.CustomerName
+        holder.title.text=currentItem.Title
         holder.endDate.text=currentItem.DateEnd
         holder.startDate.text=currentItem.DateStart
 

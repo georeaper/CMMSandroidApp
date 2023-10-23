@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,6 +19,7 @@ import com.gkprojects.cmmsandroidapp.Adapter.CasesAdapter
 import com.gkprojects.cmmsandroidapp.Adapter.CustomerAdapter
 import com.gkprojects.cmmsandroidapp.DataClasses.Cases
 import com.gkprojects.cmmsandroidapp.DataClasses.Hospital
+import com.gkprojects.cmmsandroidapp.DataClasses.TicketCustomerName
 import com.gkprojects.cmmsandroidapp.DataClasses.Tickets
 import com.gkprojects.cmmsandroidapp.Models.CasesVM
 import com.gkprojects.cmmsandroidapp.Models.CustomerVM
@@ -26,12 +28,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.*
+import kotlin.collections.ArrayList
 
 class CasesFragment : Fragment() {
     private lateinit var casesRecyclerView: RecyclerView
 
-    private var templist = ArrayList<Tickets>()
+    private var templist = ArrayList<TicketCustomerName>()
     private lateinit var casesAdapter: CasesAdapter
     private lateinit var casesViewModel: CasesVM
 
@@ -52,7 +56,7 @@ class CasesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         casesRecyclerView = view.findViewById(R.id.cases_recyclerview)
-        casesAdapter = this.context?.let { CasesAdapter(it, ArrayList<Tickets>()) }!!
+        casesAdapter = this.context?.let { CasesAdapter(it, ArrayList<TicketCustomerName>()) }!!
 
         casesRecyclerView.apply {
             setHasFixedSize(true)
@@ -61,25 +65,45 @@ class CasesFragment : Fragment() {
         }
         casesViewModel = ViewModelProvider(this)[CasesVM::class.java]
 
-        context?.let { it ->
-            casesViewModel.getAllCasesData(it).observe(viewLifecycleOwner, Observer {
+//        context?.let { it ->
+//            casesViewModel.getAllCasesData(it).observe(viewLifecycleOwner, Observer {
+//
+//                casesAdapter.setData(it as ArrayList<TicketCustomerName>)
+//
+//
+//
+//                Log.d("debug12367", it.toString())
+//                templist.clear() // clear the templist,because it keeps populate everytime we open and close Customer Drawer
+//                for (i in it.indices) {
+//                    templist.add(it[i])
+//
+//                       // casesViewModel.getCustomerNameWhereId(it[i].customerID)
+//
+//
+//                }
+//                Log.d("templistCases", templist.size.toString())
+//            })
+//        }
+        try{
+            lifecycleScope.launch { withContext(Dispatchers.Main){
+                casesViewModel.getCustomerName(context!!).observe(viewLifecycleOwner, Observer {
 
-                casesAdapter.setData(it as ArrayList<Tickets>)
+                    casesAdapter.setData(it as ArrayList<TicketCustomerName>)
+                    templist.clear()
+                    for(i in it.indices){
+                        templist.add(it[i])
 
 
+                    }
+                    Log.d("casesItems", templist.toString())
+                })
 
-                Log.d("debug12367", it.toString())
-                templist.clear() // clear the templist,because it keeps populate everytime we open and close Customer Drawer
-                for (i in it.indices) {
-                    templist.add(it[i])
+            } }
 
-                       // casesViewModel.getCustomerNameWhereId(it[i].customerID)
-
-
-                }
-                Log.d("templistCases", templist.size.toString())
-            })
+        }catch (e:Exception){
+            Log.d("casesDebug",e.toString())
         }
+
 
         val searchView = view.findViewById<SearchView>(R.id.searchView_cases)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -96,7 +120,7 @@ class CasesFragment : Fragment() {
         })
 
         casesAdapter.setOnClickListener(object : CasesAdapter.OnClickListener {
-            override fun onClick(position: Int, model: Tickets) {
+            override fun onClick(position: Int, model: TicketCustomerName) {
 //                var temp: java.io.Serializable = model as java.io.Serializable
                 Toast.makeText(context, model.toString(), Toast.LENGTH_LONG).show()
                 passDataCustomer(model)
@@ -132,23 +156,7 @@ class CasesFragment : Fragment() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
 
 
-                GlobalScope.launch(Dispatchers.IO) {
-
-                    context?.let {
-                        casesViewModel.deleteCustomer(
-                            it,
-                            templist[viewHolder.absoluteAdapterPosition]
-                        )
-                    }
-
-                }
-
-                context?.let {
-                    casesViewModel.getAllCasesData(it).observe(viewLifecycleOwner, Observer {
-                        casesAdapter.setData(it as ArrayList<Tickets>)
-
-                    })
-                }
+//DELETE METHOD needed
             }
 
 
@@ -162,7 +170,7 @@ class CasesFragment : Fragment() {
     private fun filterList(query:String){
         Log.d("query",query)
         if (query!=null){
-            val filteredList= ArrayList<Tickets>()
+            val filteredList= ArrayList<TicketCustomerName>()
             for (i in templist){
                 if (i.Title?.lowercase(Locale.ROOT)?.contains(query) == true)
                     filteredList.add(i)
@@ -179,16 +187,15 @@ class CasesFragment : Fragment() {
 
     }
 
-    private fun passDataCustomer(data : Tickets){
+    private fun passDataCustomer(data : TicketCustomerName){
 
         val bundle = Bundle()
         data.TicketID?.let { bundle.putInt("id", it.toInt()) }
         bundle.putString("title", data.Title)
         bundle.putString("startDate", data.DateStart)
-        bundle.putString("endDate", data.DateEnd)
-        bundle.putString("comments", data.Notes)
-        bundle.putString("active", data.Active)
-        bundle.putString("status", data.Urgency)
+        bundle.putString("endDate", data.CustomerID)
+        bundle.putString("comments", data.Active)
+        bundle.putString("active", data.EquipmentID)
         bundle.putString("userId",data.UserID)
         bundle.putString("customerId",data.CustomerID)
 

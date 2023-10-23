@@ -3,10 +3,7 @@ package com.gkprojects.cmmsandroidapp.Repository
 import android.content.Context
 import androidx.lifecycle.LiveData
 import com.gkprojects.cmmsandroidapp.CMMSDatabase
-import com.gkprojects.cmmsandroidapp.DataClasses.Cases
-import com.gkprojects.cmmsandroidapp.DataClasses.CustomerSelect
-import com.gkprojects.cmmsandroidapp.DataClasses.Hospital
-import com.gkprojects.cmmsandroidapp.DataClasses.Tickets
+import com.gkprojects.cmmsandroidapp.DataClasses.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -60,10 +57,12 @@ class RepoCases {
             return userDatabase!!.TicketsDao().getCustomerID()
 
         }
-//        fun getCustomerNameWhereId(id :Int) : String{
-//
-//
-//            return userDatabase!!.casesDAO().getCustomerNameWhereId(id)
-//        }
+        fun getCustomerNameTickets(context: Context):LiveData<List<TicketCustomerName>>{
+
+            userDatabase= intialiseDB(context)
+                return userDatabase!!.TicketsDao().getCustomerName()
+
+        }
+
     }
 }

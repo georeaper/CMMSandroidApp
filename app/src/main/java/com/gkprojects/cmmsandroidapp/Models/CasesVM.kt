@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.gkprojects.cmmsandroidapp.DataClasses.CustomerSelect
 import com.gkprojects.cmmsandroidapp.DataClasses.Cases
+import com.gkprojects.cmmsandroidapp.DataClasses.TicketCustomerName
 import com.gkprojects.cmmsandroidapp.DataClasses.Tickets
 import com.gkprojects.cmmsandroidapp.Repository.RepoCases
 
@@ -29,7 +30,7 @@ class CasesVM : ViewModel() {
     fun getCustomerId(context: Context): LiveData<List<CustomerSelect>> {
         return RepoCases.getCustomerIdData(context)
     }
-//    fun getCustomerNameWhereId(id :Int) :String{
-//        return RepoCases.getCustomerNameWhereId(id)
-//    }
+    fun getCustomerName(context: Context) :LiveData<List<TicketCustomerName>>{
+        return RepoCases.getCustomerNameTickets(context)
+   }
 }

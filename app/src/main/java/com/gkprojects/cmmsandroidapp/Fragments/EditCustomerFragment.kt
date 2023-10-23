@@ -3,11 +3,10 @@ package com.gkprojects.cmmsandroidapp.Fragments
 
 import android.os.Bundle
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.EditText
 
 import androidx.lifecycle.ViewModelProvider
@@ -31,7 +30,7 @@ class EditCustomerFragment : Fragment() {
 
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle? ): View?
+    override  fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle? ): View?
     {
 
 
@@ -41,15 +40,23 @@ class EditCustomerFragment : Fragment() {
     @OptIn(DelicateCoroutinesApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
+
         val hospitalID: Int?
         val name  =view.findViewById<EditText>(R.id.et_customerName)
         val address =view.findViewById<EditText>(R.id.et_address)
         val phone1 =view.findViewById<EditText>(R.id.et_phone1)
-        val city =view.findViewById<EditText>(R.id.et_phone2)
-        val vat =view.findViewById<EditText>(R.id.et_vatNumber)
+        val zipcode =view.findViewById<EditText>(R.id.et_zipcode)
+        val description =view.findViewById<EditText>(R.id.et_description)
         val email =view.findViewById<EditText>(R.id.et_email)
-        val comments =view.findViewById<EditText>(R.id.et_notes)
+        val notes =view.findViewById<EditText>(R.id.et_notes)
+        val status =view.findViewById<CheckBox>(R.id.checkBoxStatusCustomer)
+        val city =view.findViewById<EditText>(R.id.et_city)
+        //status =view?.findViewById<CheckBox>(R.id.checkBoxStatusCustomer)
+        var statusStr =""
+
         customerViewModel= ViewModelProvider(this)[CustomerVM::class.java]
+
 
         val btnsave :Button= view.findViewById(R.id.btn_save)
         val btnclear :Button =view.findViewById(R.id.btn_clear)
@@ -58,19 +65,30 @@ class EditCustomerFragment : Fragment() {
         val id= args?.getInt("id")
         name.setText(args?.getString("name"))
         phone1.setText(args?.getString("phone"))
-        city.setText(args?.getString("city"))
+        description.setText(args?.getString("description"))
         address.setText(args?.getString("address"))
-        vat.setText(args?.getString("vat"))
+        zipcode.setText(args?.getString("zipcode"))
         email.setText(args?.getString("email"))
-        comments.setText(args?.getString("zipcode"))
-        Log.d("editFragment",id.toString())
+        notes.setText(args?.getString("notes"))
+        city.setText(args?.getString("city"))
+        statusStr=args?.getString("status").toString()
+
+         if (statusStr=="Active"){
+            status.isChecked=true
+
+        }
+
 
         hospitalID= id
         Log.d("editFragment3",hospitalID.toString())
 
-
-
         btnsave.setOnClickListener {
+            statusStr = if (status.isChecked){
+                "Active"
+            }else{
+                "NotActive"
+            }
+
             if(hospitalID==null) {
                 val customer = Customer(
                     null,//hospitalID
@@ -79,11 +97,11 @@ class EditCustomerFragment : Fragment() {
                     phone1.text.toString(),
                     email.text.toString(),
                     address.text.toString(),
-                    comments.text.toString(),
+                    zipcode.text.toString(),
                     city.text.toString(),
-                    vat.text.toString(),
-                    null,
-                    null,
+                    notes.text.toString(),
+                    description.text.toString(),
+                    statusStr,
                     null,
                     null,
                     null )
@@ -93,13 +111,13 @@ class EditCustomerFragment : Fragment() {
                 }
 
 
-                 name.text.clear()
-                 address.text.clear()// = view.findViewById<EditText>(R.id.et_address).text.clear()
-                 phone1.text.clear()// = view.findViewById<EditText>(R.id.et_phone1).text.clear()
-                 city.text.clear()// = view.findViewById<EditText>(R.id.et_phone2).text.clear()
-                 vat.text.clear()// = view.findViewById<EditText>(R.id.et_vatNumber).text.clear()
-                 email.text.clear()// = view.findViewById<EditText>(R.id.et_email).text.clear()
-                 comments.text.clear()// = view.findViewById<EditText>(R.id.et_notes).text.clear()
+//                 name.text.clear()
+//                 address.text.clear()// = view.findViewById<EditText>(R.id.et_address).text.clear()
+//                 phone1.text.clear()// = view.findViewById<EditText>(R.id.et_phone1).text.clear()
+//                 city.text.clear()// = view.findViewById<EditText>(R.id.et_phone2).text.clear()
+//                 vat.text.clear()// = view.findViewById<EditText>(R.id.et_vatNumber).text.clear()
+//                 email.text.clear()// = view.findViewById<EditText>(R.id.et_email).text.clear()
+//                 comments.text.clear()// = view.findViewById<EditText>(R.id.et_notes).text.clear()
             }else{
                 Log.d("here","i am here")
                 val customer = Customer(
@@ -109,11 +127,11 @@ class EditCustomerFragment : Fragment() {
                     phone1.text.toString(),
                     email.text.toString(),
                     address.text.toString(),
-                    comments.text.toString(),
+                    zipcode.text.toString(),
                     city.text.toString(),
-                    vat.text.toString(),
-                    null,
-                    null,
+                    notes.text.toString(),
+                    description.text.toString(),
+                    statusStr,
                     null,
                     null,
                     null )
@@ -134,16 +152,33 @@ class EditCustomerFragment : Fragment() {
 
 
         btnclear.setOnClickListener {
-             name.text.clear()
-             address.text.clear()
-             phone1.text.clear()
-             city.text.clear()
-             vat.text.clear()
-             email.text.clear()
-             comments.text.clear()
+//             name.text.clear()
+//             address.text.clear()
+//             phone1.text.clear()
+//             city.text.clear()
+//             vat.text.clear()
+//             email.text.clear()
+//             comments.text.clear()
         }
 
         }
+
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_main, menu)
+    }
+    override fun onPrepareOptionsMenu(menu: Menu){
+        super.onPrepareOptionsMenu(menu)
+        val item = menu.findItem(R.id.menu_dynamic_button)
+        var status =view?.findViewById<CheckBox>(R.id.checkBoxStatusCustomer)
+
+        if (status != null) {
+            item.isVisible=status.isChecked
+        }
+
+    }
+
+
 
 
 

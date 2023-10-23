@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import com.gkprojects.cmmsandroidapp.CMMSDatabase
 import com.gkprojects.cmmsandroidapp.DataClasses.CustomerSelect
+import com.gkprojects.cmmsandroidapp.DataClasses.EquipmentSelectCustomerName
 
 import com.gkprojects.cmmsandroidapp.DataClasses.Equipments
 
@@ -20,13 +21,7 @@ class RepoEquipment {
         {
             return CMMSDatabase.getInstance(context)!!
         }
-        fun delete(context: Context,equipment: Equipments){
-            userDatabase = intialiseDB(context)
-            CoroutineScope(Dispatchers.IO).launch {
-                userDatabase!!.EquipmentsDAO().deleteEquipments(equipment)
-            }
 
-        }
 
         fun insert(context: Context,equipment: Equipments)
         {
@@ -36,11 +31,7 @@ class RepoEquipment {
                 userDatabase!!.EquipmentsDAO().addEquipments(equipment)
             }
         }
-//        fun getCustomers(context: Context):LiveData<List<EquipmentCustomerSelect>>
-//        {
-//            userDatabase= intialiseDB(context)
-//            return userDatabase!!.EquipmentsDAO().getCustomersForEquipment()
-//        }
+
 
         fun getAllEquipmentData(context: Context): LiveData<List<Equipments>>
         {
@@ -58,6 +49,26 @@ class RepoEquipment {
             userDatabase = intialiseDB(context)
             return userDatabase!!.EquipmentsDAO().getCustomerID()
         }
+        fun getCustomerNameDashboard (context: Context):LiveData<List<EquipmentSelectCustomerName>>{
+            userDatabase= intialiseDB(context)
+            return userDatabase!!.EquipmentsDAO().getCustomerName()
+        }
+
+        suspend fun delete(context: Context,equipments: Equipments){
+            userDatabase= intialiseDB(context)
+
+            CoroutineScope(Dispatchers.IO).launch{
+                userDatabase!!.EquipmentsDAO().delete(equipments)
+            }
+
+
+        }
+        fun getRecordbyId(context: Context, id :Int):LiveData<Equipments>{
+            userDatabase= intialiseDB(context)
+            return userDatabase!!.EquipmentsDAO().SelectRecordById(id)
+        }
+
+
     }
 
 }

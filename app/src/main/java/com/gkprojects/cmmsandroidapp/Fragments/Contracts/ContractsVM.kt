@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 
 import com.gkprojects.cmmsandroidapp.DataClasses.Contracts
+import com.gkprojects.cmmsandroidapp.DataClasses.ContractsCustomerName
 import com.gkprojects.cmmsandroidapp.DataClasses.CustomerSelect
 
 
@@ -34,7 +35,7 @@ class ContractsVM : ViewModel(){
         return  RepoContracts.getCustomerIdData(context)
     }
 
-//    fun getCustomerNameWhereId(id :Int) :String{
-//       // return RepoCases.getCustomerNameWhereId(id)
-//    }
+    fun getCustomerName(context: Context): LiveData<List<ContractsCustomerName>>{
+        return  RepoContracts.getListContracts(context)
+    }
 }

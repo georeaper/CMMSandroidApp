@@ -29,6 +29,20 @@ interface ContractsDao {
 
     @Query ("Select CustomerID,Name as CustomerName from Customer")
     fun getCustomerID(): LiveData<List<CustomerSelect>>
+//    @Query
+//        ("Select Contracts.CustomerID, Customer.Name AS CustomerName, Contracts.ContractID," +
+//            "Contracts.Title, Contracts.DateStart, Contracts.DateEnd, Contracts.Value,Contracts.Notes," +
+//            "Contracts.Description, Contracts.ContractType, Contracts.ContractStatus, Contracts.ContactName " +
+//            "From Contracts LEFT JOIN Customer ON Contracts.CustomerID = Customer.CustomerID"
+//    )
+    @Query("SELECT Contracts.CustomerID, Customer.Name AS CustomerName, Contracts.ContractID, " +
+            "Contracts.Title, Contracts.DateStart, Contracts.DateEnd, Contracts.Value, " +
+            "Contracts.Notes, Contracts.Description, Contracts.ContractType, " +
+            "Contracts.ContractStatus, Contracts.ContactName " +
+            "FROM Contracts LEFT JOIN Customer ON Contracts.CustomerID = Customer.CustomerID")
+    fun getContractsCustomerNames(): LiveData<List<ContractsCustomerName>>
+
+    //fun getCustomerName():LiveData<List<ContractsCustomerName>?>
 
     @Insert
     fun addContracts(contracts:Contracts)
@@ -44,6 +58,8 @@ interface ContractEquipmentsDao {
 
     @Query("Select * from ContractEquipments")
     fun getAllContractEquipment(): LiveData<List<ContractEquipments>>
+
+
 
     @Insert
     fun addContractEquipments(contracts:Contracts)
@@ -76,15 +92,26 @@ interface EquipmentsDao{
     @Query("Select * from Equipments")
     fun getAllEquipments(): LiveData<List<Equipments>>
 
-    @Query ("Select CustomerID,Name as CustomerName from Customer")
+    @Query
+    ("Select CustomerID,Name as CustomerName from Customer")
     fun getCustomerID():LiveData<List<CustomerSelect>>
-    @Insert
+    @Query
+    ("Select Equipments.CustomerID,Customer.Name AS CustomerName,Equipments.EquipmentID,Equipments.Name,Equipments.SerialNumber,Equipments.EquipmentStatus," +
+     "Equipments.Model,Equipments.Manufacturer,Equipments.InstallationDate,Equipments.EquipmentCategory,Equipments.EquipmentVersion,Equipments.Warranty,Equipments.Description "+
+     "From Equipments Left JOIN Customer ON Equipments.CustomerID = Customer.CustomerID"
+    )
+     fun getCustomerName():LiveData<List<EquipmentSelectCustomerName>>
+
+    @Query("Select * FROM Equipments WHERE EquipmentID= :id")
+     fun SelectRecordById(id :Int) : LiveData<Equipments>
+
+ @Insert
     fun addEquipments(equipments: Equipments)
 
     @Update
     fun updateEquipments(equipments: Equipments)
     @Delete
-    fun deleteEquipments(equipments: Equipments)
+    suspend fun delete(equipments: Equipments)
 
 }
 
@@ -197,6 +224,15 @@ interface TicketsDao {
 
     @Query ("Select CustomerID,Name as CustomerName from Customer")
     fun getCustomerID():LiveData<List<CustomerSelect>>
+
+    @Query("Select Tickets.TicketID,Tickets.Title,Tickets.Active,Tickets.DateStart,Customer.Name AS CustomerName,Tickets.UserID," +
+            "Tickets.CustomerID,Tickets.EquipmentID "+
+            "From Tickets " +
+            "Left JOIN Customer ON Tickets.CustomerID = Customer.CustomerID"
+    )
+    fun getCustomerName():LiveData<List<TicketCustomerName>>
+
+
     @Insert
     fun addTickets(tickets: Tickets)
 
