@@ -6,149 +6,173 @@
     android:layout_margin="5dp"
     android:layout_width="match_parent"
     android:gravity="center"
-    android:layout_height="100dp"
+    android:layout_height="200dp"
     android:orientation="vertical"
-    android:background="@drawable/bordered_rectangle">
+    android:background="@drawable/bordered_rectangle"
+    >
 
-    <LinearLayout
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
-        >
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/caseNumberCases"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="ID :434039"
+            android:textColor="@color/AppColor"
+            app:layout_constraintEnd_toStartOf="@+id/dateStartedCases"
+            app:layout_constraintStart_toStartOf="@+id/viewCasesList"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/dateStartedCases"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="Date Started : 22023 "
+            android:textColor="@color/AppColor"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+
+
+            tools:layout_editor_absoluteX="249dp" />
+
+        <View
+            android:id="@+id/viewCasesList"
+            android:layout_width="3dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"
+            android:layout_marginRight="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:layout_weight="1"
-            >
+            android:id="@+id/item1"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
 
-            <ImageView
-
-                android:id="@+id/ImageViewCustomerName"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_weight="0.5"
-                android:layout_gravity="center"
-                android:background="@color/BackgroundElementsColor"
-                app:srcCompat="@drawable/customer_name" />
-
+            android:background="@color/white"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/item2">
 
             <TextView
-                android:id="@+id/tv_list_customerName"
-                android:background="@color/BackgroundElementsColor"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:gravity="center"
-                android:padding="5dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+
                 android:text="Customer Name"
                 android:textColor="@color/AppColorText"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="10dp"
+                android:text="Metropolitan"
+                android:gravity="center_vertical"
+                android:textColor="@color/black"
+                android:id="@+id/customerNameCasesList"
+
+                android:textSize="19sp" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:dividerThickness="2dp" />
+
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            >
+            android:id="@+id/item3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:background="@color/white"
+            android:orientation="vertical"
 
-            <ImageView
-                android:id="@+id/ImageViewStartDate"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_weight="0.5"
-                android:layout_gravity="center"
-                android:background="@color/BackgroundElementsColor"
-                app:srcCompat="@drawable/start_date"
-                 />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/item1"
+            app:layout_constraintStart_toStartOf="@+id/viewCasesList"
+            app:layout_constraintTop_toBottomOf="@+id/item2">
 
             <TextView
-                android:id="@+id/tv_list_startDate"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:gravity="center"
-                android:padding="5dp"
-                android:background="@color/BackgroundElementsColor"
-                android:text="startdate"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:text="Serial Number"
                 android:textColor="@color/AppColorText"
-                android:textSize="16sp"
-                />
-        </LinearLayout>
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:layout_weight="1"
-            >
-
-            <ImageView
-                android:id="@+id/ImageViewTitleCases"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_weight="0.5"
-                android:layout_gravity="center"
-                android:background="@color/BackgroundElementsColor"
-                app:srcCompat="@drawable/title_icon_description" />
-
+                android:textSize="14sp" />
 
             <TextView
-
-                android:id="@+id/tv_list_title"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/BackgroundElementsColor"
-                android:layout_weight="2"
-                android:gravity="center"
-                android:padding="5dp"
-                android:text="title"
-                android:textColor="@color/AppColorText"
-                android:textSize="16sp" />
+                android:layout_height="50dp"
+                android:id="@+id/serialnumberCasesList"
+                android:layout_marginStart="10dp"
+                android:text="SM8766778WA"
+                android:textColor="@color/black"
+                android:gravity="center_vertical"
+                android:textSize="19sp" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:dividerThickness="2dp" />
+
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/item2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:padding="3dp"
+            android:background="@color/white"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
 
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            >
-
-            <ImageView
-                android:id="@+id/ImageViewStatus"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_weight="0.5"
-                android:background="@color/BackgroundElementsColor"
-                android:layout_gravity="center"
-                app:srcCompat="@drawable/in_progress_icon_reconstructed"
-                />
+            app:layout_constraintStart_toEndOf="@+id/viewCasesList"
+            app:layout_constraintTop_toBottomOf="@+id/caseNumberCases">
 
             <TextView
-                android:id="@+id/tv_list_status"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:background="@color/BackgroundElementsColor"
-                android:gravity="center"
-                android:padding="5dp"
-                android:text="status"
+                android:id="@+id/titleCasesList"
+                android:layout_height="20dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:text="Title"
                 android:textColor="@color/AppColorText"
-                android:textSize="16sp"
-                />
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="10dp"
+                android:text="xalasmeni E-scaio"
+                android:textColor="@color/black"
+
+                android:textSize="19sp" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:dividerThickness="2dp" />
+
         </LinearLayout>
 
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

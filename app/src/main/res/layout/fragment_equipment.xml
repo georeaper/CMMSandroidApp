@@ -3,14 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragments.EquipmentFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/BackgroundAppColor">
+        android:background="@color/white">
+
 
         <SearchView
             android:id="@+id/searchView_equipment"
@@ -18,8 +20,15 @@
             android:layout_height="90dp"
             android:layout_weight="1"
             android:layout_margin="5dp"
-            android:background="@color/BackgroundElementsColor"
 
+
+
+            />
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:dividerThickness="4dp"
+            android:id="@+id/dividerTopEquipment"
 
             />
 

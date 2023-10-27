@@ -17,10 +17,10 @@ class ContractAdapter(private var contractList :ArrayList<ContractsCustomerName>
     private var onClickListener: ContractAdapter.OnClickListener? = null
 
     class MyViewHolder(itemView :View) :RecyclerView.ViewHolder( itemView) {
-        val title = itemView.findViewById<TextView>(R.id.tvTitleListContractRv)
-        val customerName = itemView.findViewById<TextView>(R.id.tvCustomerNameListContractRv)
-        val startDate = itemView.findViewById<TextView>(R.id.tvStartDateListContractRv)
-        val endDate = itemView.findViewById<TextView>(R.id.tvEndDateListContractRv)
+        val title = itemView.findViewById<TextView>(R.id.titleContractList)
+        val customerName = itemView.findViewById<TextView>(R.id.customerNameContractList)
+        val startDate = itemView.findViewById<TextView>(R.id.startDateContractList)
+        val endDate = itemView.findViewById<TextView>(R.id.EndDateContractList)
 
     }
 
@@ -48,9 +48,9 @@ class ContractAdapter(private var contractList :ArrayList<ContractsCustomerName>
         val currentItem = contractList[position]
         //holder.customerName.text=currentItem.CustomerID.toString()
         holder.customerName.text=currentItem.CustomerName
-        holder.title.text=currentItem.Title
-        holder.endDate.text=currentItem.DateEnd
-        holder.startDate.text=currentItem.DateStart
+        holder.title.text=currentItem.Title.toString()
+        holder.endDate.text="End Date: "+currentItem.DateEnd
+        holder.startDate.text="Start Date: "+currentItem.DateStart
 
         holder.itemView.setOnClickListener {
             if (onClickListener != null) {

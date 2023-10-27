@@ -11,6 +11,7 @@ interface CustomerDao {
     @Query("Select * from Customer")
     fun getAllCustomer(): LiveData<List<Customer>>
 
+
     @Insert
     fun addCustomer(customer: Customer)
 
@@ -27,14 +28,12 @@ interface ContractsDao {
     @Query("Select * from Contracts")
     fun getAllContracts(): LiveData<List<Contracts>>
 
+    @Query("Select * from Contracts where Contracts.ContractID= :id")
+    fun getContractsById(id:Int):LiveData<List<Contracts>>
+
     @Query ("Select CustomerID,Name as CustomerName from Customer")
     fun getCustomerID(): LiveData<List<CustomerSelect>>
-//    @Query
-//        ("Select Contracts.CustomerID, Customer.Name AS CustomerName, Contracts.ContractID," +
-//            "Contracts.Title, Contracts.DateStart, Contracts.DateEnd, Contracts.Value,Contracts.Notes," +
-//            "Contracts.Description, Contracts.ContractType, Contracts.ContractStatus, Contracts.ContactName " +
-//            "From Contracts LEFT JOIN Customer ON Contracts.CustomerID = Customer.CustomerID"
-//    )
+
     @Query("SELECT Contracts.CustomerID, Customer.Name AS CustomerName, Contracts.ContractID, " +
             "Contracts.Title, Contracts.DateStart, Contracts.DateEnd, Contracts.Value, " +
             "Contracts.Notes, Contracts.Description, Contracts.ContractType, " +
@@ -221,6 +220,9 @@ interface TicketsDao {
 
     @Query("Select * from Tickets")
     fun getAllTickets(): LiveData<List<Tickets>>
+
+    @Query("Select * from Tickets where Tickets.TicketID= :id")
+    fun getTicketsById(id: Int):LiveData<List<Tickets>>
 
     @Query ("Select CustomerID,Name as CustomerName from Customer")
     fun getCustomerID():LiveData<List<CustomerSelect>>

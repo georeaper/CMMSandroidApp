@@ -10,11 +10,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 import com.gkprojects.cmmsandroidapp.Adapter.RvAlertAdapter
-import com.gkprojects.cmmsandroidapp.CMMSDatabase
 
 import com.gkprojects.cmmsandroidapp.DataClasses.CustomerSelect
 
@@ -25,7 +25,9 @@ import com.gkprojects.cmmsandroidapp.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class CaseInsertFragment : Fragment() {
@@ -54,6 +56,7 @@ class CaseInsertFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         casesViewModel= ViewModelProvider(this)[CasesVM::class.java]
+
         var casesID :Int? = null
         var customerId :Int? = null
         var rnds = (0..10).random()
@@ -86,8 +89,34 @@ class CaseInsertFragment : Fragment() {
 
             })}
 
+
         val args =this.arguments
         var id= args?.getInt("id")
+
+        var ticketById = ArrayList<Tickets>()
+
+        try{
+            lifecycleScope.launch {
+                withContext(Dispatchers.Main){
+                    if (id != null) {
+                        casesViewModel.getTicketDataById(requireContext(),id).observe(viewLifecycleOwner,
+                            androidx.lifecycle.Observer {
+                                for (i in it.indices){
+                                    ticketById.add(it[i])
+                                }
+                                setUpField(ticketById)
+                                Log.d("ticket",ticketById.toString())
+                            })
+                    }else{
+                        Log.d("ticket", "id is null")
+                    }
+                }
+            }
+
+
+        }catch (e:java.lang.Exception){
+            Log.d("caseInsert",e.toString())
+        }
 
         userId= args?.getInt("userId")
         customerId= args?.getInt("customerId")
@@ -240,6 +269,31 @@ class CaseInsertFragment : Fragment() {
             activeCase.isChecked = false
             user.text.clear()
             customer.text="Customer Select" }
+
+
+    }
+    fun setUpField(tickets: ArrayList<Tickets>){
+        val title=requireView().findViewById<EditText>(R.id.et_title_case)
+        val startDate=requireView().findViewById<EditText>(R.id.et_case_startedDate)
+        val user=requireView().findViewById<AutoCompleteTextView>(R.id.et_user_case)
+        val customer=requireView().findViewById<TextView>(R.id.tv_customer_case)
+        val endDate=requireView().findViewById<EditText>(R.id.et_case_endedDate)
+        val statusCase=requireView().findViewById<Spinner>(R.id.sp_urgent_status)
+        val activeCase=requireView().findViewById<CheckBox>(R.id.checkbox_active_case)
+        val commentCase=requireView().findViewById<EditText>(R.id.et_cases_comments)
+        val arrAdap = this.context?.let { ArrayAdapter.createFromResource(it,R.array.status_cases,
+            androidx.appcompat.R.layout.support_simple_spinner_dropdown_item).also{ adapter ->
+            // Specify the layout to use when the list of choices appears
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            // Apply the adapter to the spinner
+            statusCase.adapter = adapter
+        } }
+//        title.setText(tickets)
+//        startDate.setText(tickets.DateStart)
+//        endDate.setText(tickets.DateEnd)
+//        customer.text = tickets.CustomerID.toString()
+
+
 
 
     }

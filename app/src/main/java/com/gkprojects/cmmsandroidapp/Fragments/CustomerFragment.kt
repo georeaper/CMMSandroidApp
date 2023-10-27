@@ -200,16 +200,9 @@ class CustomerFragment : Fragment() {
 
 
 
-
-
-
-
-
-
-
         val fragmentManager =parentFragmentManager
         val fragmentTransaction=fragmentManager.beginTransaction()
-        val fragment =EditCustomerFragment()
+        val fragment =DashboardCustomerFragment()
         fragment.arguments = bundle
         fragmentTransaction.replace(R.id.frameLayout1,fragment)
         fragmentTransaction.commit()

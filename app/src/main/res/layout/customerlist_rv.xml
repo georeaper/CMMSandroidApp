@@ -11,76 +11,48 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
-
-
     >
-        <LinearLayout
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:background="@color/AppColor">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="1dp"
+            android:layout_height="40dp"
+            android:layout_margin="1dp" >
 
-            >
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:padding="5dp"
+                    android:src="@drawable/contactpage_customername"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:background="@color/BackgroundElementsColor"
+                    app:tint="#4A65AC" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="5dp"
-            android:textSize="20sp"
-            android:id="@+id/tv_customer"
-            android:gravity="center"
-            android:textColor="@color/AppColorText"
-            android:background="@color/BackgroundElementsColor"
-            android:text="To onoma tou pelati"/>
-</LinearLayout>
+                <TextView
+                    android:id="@+id/tv_customer"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/BackgroundElementsColor"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="To onoma tou pelati"
+                    android:textColor="@color/AppColorText"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toStartOf="@+id/imgButtonCustomerList"
+                    app:layout_constraintStart_toEndOf="@+id/imageView"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp">
-
-                        <ImageView
-                            android:id="@+id/imageViewLocation"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_marginRight="40dp"
-                            android:background="@color/BackgroundElementsColor"
-                            android:padding="5dp"
-
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/location_icon" />
-
-                        <ImageView
-                            android:id="@+id/ImageViewEmail"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:background="@color/BackgroundElementsColor"
-                            app:layout_constraintEnd_toStartOf="@+id/imageViewLocation"
-                            app:layout_constraintStart_toEndOf="@+id/ImageViewPhone"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/emai_icon" />
-
-                        <ImageView
-                            android:id="@+id/ImageViewPhone"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:padding="5dp"
-                            android:background="@color/BackgroundElementsColor"
-                            android:layout_marginLeft="40dp"
-
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/phone_icon" />
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-        </LinearLayout>
+                <ImageButton
+                    android:id="@+id/imgButtonCustomerList"
+                    android:layout_width="40dp"
+                    android:padding="5dp"
+                    android:layout_height="40dp"
+                    android:background="@color/BackgroundElementsColor"
+                    android:src="@drawable/more_vertical_icon"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.cardview.widget.CardView>

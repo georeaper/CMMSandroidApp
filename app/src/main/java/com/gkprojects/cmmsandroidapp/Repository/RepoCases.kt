@@ -51,6 +51,10 @@ class RepoCases {
             }
 
         }
+        fun getCustomerDataByID(context: Context,id:Int):LiveData<List<Tickets>>{
+            userDatabase= intialiseDB(context)
+            return userDatabase!!.TicketsDao().getTicketsById(id)
+        }
         fun getCustomerIdData(context: Context): LiveData<List<CustomerSelect>> {
 
             //return userDatabase!!.hospitalDAO().getIdFromHospital()

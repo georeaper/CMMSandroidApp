@@ -31,7 +31,6 @@ class ContractInsertFragment : Fragment() {
     var dialog: Dialog? = null
     private var rvAdapter: RvAlertAdapter? = null
     lateinit var filterText : SearchView
-
     var hospId : Int?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -136,7 +135,7 @@ class ContractInsertFragment : Fragment() {
 
         btnsave.setOnClickListener {
             if(hospId!=null){
-                var contract= Contracts(contractId,hospId.toString(),title.toString(),startDate.text.toString(),endDate.text.toString(),null,"try",null,typeContract,contractStatus,null,null,null,null,hospId)
+                var contract= Contracts(contractId,hospId.toString(),title.text.toString(),startDate.text.toString(),endDate.text.toString(),null,"try",null,typeContract,contractStatus,null,null,null,null,hospId)
 
                 Log.d("contract",contract.toString())
                 if(contractId==null){

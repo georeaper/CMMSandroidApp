@@ -140,16 +140,16 @@ class EquipmentFragment : Fragment() {
                             Observer {
                                 if(it!=null) {
                                     eq = it
-                                    Log.d("anorthodox", eq.toString())
+
                                     if (eq.EquipmentID != null) {
                                         deleteRecord(context!!, eq)
                                     }
                                 }
                             })
-                        Log.d("anorthodox2",eq.toString())
+
                         }
                     }
-                    Log.d("anorthodox3",eq.toString())
+
                 }
 
 
