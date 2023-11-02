@@ -61,6 +61,7 @@ class RepoContracts {
 
         }
 
+        @SuppressLint("SuspiciousIndentation")
         fun getListContracts(context: Context): LiveData<List<ContractsCustomerName>>{
             userDatabase =intialiseDB(context)
                 var tempLog =userDatabase!!.ContractsDao().getContractsCustomerNames()
@@ -71,6 +72,11 @@ class RepoContracts {
 
         }
 
+        fun getContractsOverview(context: Context):LiveData<List<OverviewMainData>>{
+
+            userDatabase= intialiseDB(context)
+            return userDatabase!!.ContractsDao().getCustomerNameOnOverview()
+        }
     }
 
 

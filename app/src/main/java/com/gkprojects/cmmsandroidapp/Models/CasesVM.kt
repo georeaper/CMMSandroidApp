@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.gkprojects.cmmsandroidapp.DataClasses.CustomerSelect
 import com.gkprojects.cmmsandroidapp.DataClasses.Cases
+import com.gkprojects.cmmsandroidapp.DataClasses.OverviewMainData
 import com.gkprojects.cmmsandroidapp.DataClasses.TicketCustomerName
 import com.gkprojects.cmmsandroidapp.DataClasses.Tickets
 import com.gkprojects.cmmsandroidapp.Repository.RepoCases
@@ -27,7 +28,7 @@ class CasesVM : ViewModel() {
     suspend fun updateCustomer(context: Context, cases: Tickets){
         RepoCases.updateCustomerData(context,cases)
     }
-    suspend fun getTicketDataById(context: Context,id:Int):LiveData<List<Tickets>>{
+    suspend fun getTicketDataById(context: Context,id:Int):LiveData<Tickets>{
 
         return RepoCases.getCustomerDataByID(context,id)
     }
@@ -37,4 +38,7 @@ class CasesVM : ViewModel() {
     fun getCustomerName(context: Context) :LiveData<List<TicketCustomerName>>{
         return RepoCases.getCustomerNameTickets(context)
    }
+    fun getOverviewData(context: Context):LiveData<List<OverviewMainData>>{
+        return RepoCases.getDataForHome(context)
+    }
 }

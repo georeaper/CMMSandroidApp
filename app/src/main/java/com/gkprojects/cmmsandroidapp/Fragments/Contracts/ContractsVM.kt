@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.gkprojects.cmmsandroidapp.DataClasses.Contracts
 import com.gkprojects.cmmsandroidapp.DataClasses.ContractsCustomerName
 import com.gkprojects.cmmsandroidapp.DataClasses.CustomerSelect
+import com.gkprojects.cmmsandroidapp.DataClasses.OverviewMainData
 
 
 class ContractsVM : ViewModel(){
@@ -37,5 +38,8 @@ class ContractsVM : ViewModel(){
 
     fun getCustomerName(context: Context): LiveData<List<ContractsCustomerName>>{
         return  RepoContracts.getListContracts(context)
+    }
+    fun getContractsOverview(context: Context):LiveData<List<OverviewMainData>>{
+        return RepoContracts.getContractsOverview(context)
     }
 }

@@ -8,6 +8,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.gkprojects.cmmsandroidapp.Fragments.*
 import com.gkprojects.cmmsandroidapp.Fragments.Contracts.ContractFragment
+import com.google.android.material.appbar.MaterialToolbar
 
 import com.google.android.material.navigation.NavigationView
 
@@ -18,26 +19,31 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_main)
 
+        drawerLayout = findViewById<DrawerLayout>(R.id.DrawLayout)
+        val navView: NavigationView = findViewById(R.id.navView)
+        val toolbar: MaterialToolbar = findViewById(R.id.topAppBar)
+//        val titleCustomer = R.
 
-
-       drawerLayout = findViewById(R.id.DrawLayout)
-        val navView :NavigationView=findViewById(R.id.navView)
-        toggle= ActionBarDrawerToggle(this,drawerLayout,R.string.open,R.string.close)
+        toggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close)
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
+
+        setSupportActionBar(toolbar)
+
 
         val startFragment = supportFragmentManager
         val firstTransactionFrag =startFragment.beginTransaction()
         firstTransactionFrag.replace(R.id.frameLayout1, HomeFragment())
         firstTransactionFrag.commit()
         drawerLayout.closeDrawers()
-        setTitle(this.title.toString())
+        toolbar.title= "Home"
+
+        //setTitle(this.title.toString())
 
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        //supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         navView.setNavigationItemSelectedListener {
             it.isChecked=true
@@ -45,15 +51,11 @@ class MainActivity : AppCompatActivity() {
                 R.id.home_item -> replaceFragment(HomeFragment(),it.title.toString())
                 R.id.customer_item -> replaceFragment(CustomerFragment(),it.title.toString())
                 R.id.equipment_item -> replaceFragment(EquipmentFragment(),it.title.toString())
+                R.id.workOrder_item ->replaceFragment(Work_Orders(),it.title.toString())
                 R.id.cases_item -> replaceFragment(CasesFragment(),it.title.toString())
                 R.id.contract_item -> replaceFragment(ContractFragment(),it.title.toString())
                 R.id.settings_item -> replaceFragment(SettingsFragment(),it.title.toString())
-
-
-
-
-
-            }
+ }
             true
         }
 
@@ -67,7 +69,8 @@ private fun replaceFragment(fragment : Fragment , title :String){
     fragmentTransaction.replace(R.id.frameLayout1,fragment)
     fragmentTransaction.commit()
     drawerLayout.closeDrawers()
-    setTitle(title)
+    val toolbar: MaterialToolbar = findViewById(R.id.topAppBar)
+    toolbar.title = title
 
 }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

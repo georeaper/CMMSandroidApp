@@ -12,12 +12,16 @@
             android:title="Customer"
             android:icon="@drawable/baseline_download_for_offline_24"/>
         <item
+            android:id="@+id/workOrder_item"
+            android:title="Work Order"
+            android:icon="@drawable/baseline_download_for_offline_24"/>
+        <item
             android:id="@+id/equipment_item"
             android:title="Equipment"
             android:icon="@drawable/baseline_download_for_offline_24"/>
         <item
             android:id="@+id/cases_item"
-            android:title="Cases"
+            android:title="Technical Cases"
             android:icon="@drawable/baseline_download_for_offline_24"/>
         <item
             android:id="@+id/contract_item"

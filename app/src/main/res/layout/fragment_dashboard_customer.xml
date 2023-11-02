@@ -46,161 +46,304 @@
             android:padding="3dp"/>
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/linearAddress"
-            android:layout_margin="5dp"
-            app:layout_constraintTop_toBottomOf="@id/linearCustomerName2">
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/materialTextfieldAddress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:hint="@string/address"
-                android:textColorHint="@color/AppColor"
-                app:startIconDrawable="@drawable/location_customerlistv2"
-                app:startIconScaleType="center"
-                app:boxStrokeColor="@color/AppColor"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:editable="false"
-                    android:text="@string/addressValue"
-                    app:boxStrokeColor="@color/AppColor"
-                    android:textColor="@color/AppColorText"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
-                    />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-    
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/linearCustomerEmail"
-
-            app:layout_constraintTop_toBottomOf="@id/linearAddress">
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/materialTextfieldEmail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/email"
-                android:textColorHint="@color/AppColor"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                app:startIconDrawable="@drawable/email_customerlist"
-                app:startIconScaleType="center"
-                app:boxStrokeColor="@color/AppColor"
-
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/emailValue"
-                    app:boxStrokeColor="@color/AppColor"
-                    android:textColor="@color/AppColorText"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
-                    />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/linearCustomerPhone"
-
-            app:layout_constraintTop_toBottomOf="@id/linearCustomerEmail">
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/materialTextfieldPhone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:hint="@string/PhoneNumber"
-                android:textColorHint="@color/AppColor"
-                android:layout_marginBottom="5dp"
-                app:startIconDrawable="@drawable/phone_customerlist"
-                app:startIconScaleType="center"
-                app:boxStrokeColor="@color/AppColor"
-
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/phone_number"
-                    app:boxStrokeColor="@color/AppColor"
-                    android:textColor="@color/AppColorText"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
-                    />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/linearCustomerName2"
-
-            app:layout_constraintTop_toBottomOf="@id/tvDashboardGeneralInformationTitle">
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/outlinedTextField"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/customer_name"
-                android:textColorHint="@color/AppColor"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                app:startIconDrawable="@drawable/streetviewlist"
-                app:startIconScaleType="center"
-                app:boxStrokeColor="@color/AppColor"
-
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Customer"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
-                    app:boxStrokeColor="@color/AppColor"
-                    android:textColor="@color/AppColorText"
-
-                    />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-
-        </LinearLayout>
         <com.google.android.material.divider.MaterialDivider
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:id="@+id/dividerFirst"
 
-            app:layout_constraintTop_toBottomOf="@+id/linearCustomerPhone"/>
+            app:layout_constraintTop_toBottomOf="@+id/tvDashboardGeneralInformationTitle"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/customerNameLayoytDashboard"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dividerFirst"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+
+                android:src="@drawable/baseline_factory_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/layoutDashboardItemCustomer"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/imageButton"
+                app:layout_constraintStart_toEndOf="@+id/imageView2"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/textviewCustomerNameDashboardCustomer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:layout_marginStart="10dp"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="1dp"
+                    android:textSize="@dimen/textSizeDashboard"
+                    android:text="General"
+
+                    android:layout_weight="1"/>
+
+                <View
+                    android:padding="1dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="1dp"
+                    android:background="@color/AppColor"
+                    />
+
+
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/imageButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@color/BackgroundElementsColor"
+                android:scaleType="fitCenter"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/phoneLayoytDashboard"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/customerNameLayoytDashboard"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                android:id="@+id/imageViewPhone"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:tint="#285B8D"
+                android:src="@drawable/phone_customerlist"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="UseAppTint" />
+
+            <LinearLayout
+                android:id="@+id/layoutDashboardItemPhone"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/imageButtonPhone"
+                app:layout_constraintStart_toEndOf="@+id/imageViewPhone"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/textviewCustomerNameDashboardPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="1dp"
+                    android:textSize="@dimen/textSizeDashboard"
+                    android:text="General"
+                    android:layout_weight="1"/>
+
+                <View
+                    android:padding="1dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/AppColor"
+                    />
+
+
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/imageButtonPhone"
+                android:layout_width="40dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:padding="5dp"
+                android:layout_height="40dp"
+                android:background="@color/BackgroundElementsColor"
+                android:scaleType="centerCrop"
+                android:src="@drawable/phone_call"
+                app:layout_constraintBottom_toBottomOf="parent"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/emailLayoytDashboard"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/phoneLayoytDashboard"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                android:id="@+id/imageViewEmail"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:tint="#285B8D"
+                android:src="@drawable/email_customerlist"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="UseAppTint" />
+
+            <LinearLayout
+                android:id="@+id/layoutDashboardItemEmail"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/imageButtonEmail"
+                app:layout_constraintStart_toEndOf="@+id/imageViewEmail"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/textviewCustomerNameDashboardEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="1dp"
+                    android:textSize="@dimen/textSizeDashboard"
+                    android:text="General"
+                    android:layout_weight="1"/>
+
+                <View
+                    android:padding="1dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/AppColor"
+                    />
+
+
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/imageButtonEmail"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@color/BackgroundElementsColor"
+                android:scaleType="centerCrop"
+                android:src="@drawable/email_icon"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:padding="1dp"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/addressLayoutDashboard"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/emailLayoytDashboard"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                android:id="@+id/imageViewAddress"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:tint="#285B8D"
+                android:src="@drawable/location_customerlistv2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="UseAppTint" />
+
+            <LinearLayout
+                android:id="@+id/layoutDashboardItemAddress"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/imageButtonAddress"
+                app:layout_constraintStart_toEndOf="@+id/imageViewAddress"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/textviewCustomerNameDashboardAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="1dp"
+                    android:textSize="@dimen/textSizeDashboard"
+                    android:text="General"
+                    android:layout_weight="1"/>
+
+                <View
+                    android:padding="1dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/AppColor"
+                    />
+
+
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/imageButtonAddress"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@color/BackgroundElementsColor"
+                android:scaleType="centerCrop"
+                android:src="@drawable/maps_location_icon"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginEnd="5dp"
+                android:padding="1dp"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:padding="5dp"
         android:id="@+id/constrainProductsID"
-        app:layout_constraintTop_toBottomOf="@+id/dividerFirst">
+        app:layout_constraintTop_toBottomOf="@+id/addressLayoutDashboard">
 
 
         <TextView
@@ -219,12 +362,13 @@
             app:layout_constraintTop_toTopOf="@+id/constrainProductsID" />
 
         <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:id="@+id/imageDashboardButonAssets"
+            android:background="@color/BackgroundElementsColor"
             android:layout_marginTop="10dp"
             android:layout_marginRight="5dp"
-            android:src="@drawable/contactpage_customername"
+            android:src="@drawable/more_vertical_icon"
             app:layout_constraintEnd_toEndOf="@id/constrainProductsID"
 
             app:layout_constraintTop_toTopOf="@id/constrainProductsID"/>
@@ -249,6 +393,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/constrainWorkOrdersID"
+            android:layout_margin="5dp"
+            android:padding="5dp"
             app:layout_constraintTop_toBottomOf="@+id/constrainProductsID">
 
 
@@ -268,12 +414,13 @@
                 app:layout_constraintTop_toTopOf="@+id/constrainWorkOrdersID" />
 
             <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:id="@+id/imageDashboardButonWorkOrders"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="5dp"
-                android:src="@drawable/contactpage_customername"
+                android:background="@color/BackgroundElementsColor"
+                android:src="@drawable/more_vertical_icon"
                 app:layout_constraintEnd_toEndOf="@id/constrainWorkOrdersID"
 
                 app:layout_constraintTop_toTopOf="@id/constrainWorkOrdersID"/>
@@ -297,6 +444,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/constrainContractsID"
+            android:layout_margin="5dp"
+            android:padding="5dp"
             app:layout_constraintTop_toBottomOf="@+id/constrainWorkOrdersID">
 
 
@@ -316,12 +465,13 @@
                 app:layout_constraintTop_toTopOf="@+id/constrainContractsID" />
 
             <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:id="@+id/imageDashboardButonContracts"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="5dp"
-                android:src="@drawable/contactpage_customername"
+                android:background="@color/BackgroundElementsColor"
+                android:src="@drawable/more_vertical_icon"
                 app:layout_constraintEnd_toEndOf="@id/constrainContractsID"
 
                 app:layout_constraintTop_toTopOf="@id/constrainContractsID"/>
@@ -345,6 +495,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/constrainTechnicalCasesID"
+            android:layout_margin="5dp"
+            android:padding="5dp"
             app:layout_constraintTop_toBottomOf="@+id/constrainContractsID">
 
 
@@ -364,12 +516,13 @@
                 app:layout_constraintTop_toTopOf="@+id/constrainTechnicalCasesID" />
 
             <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:id="@+id/imageDashboardButonTechnicalCases"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="5dp"
-                android:src="@drawable/contactpage_customername"
+                android:background="@color/BackgroundElementsColor"
+                android:src="@drawable/more_vertical_icon"
                 app:layout_constraintEnd_toEndOf="@id/constrainTechnicalCasesID"
 
                 app:layout_constraintTop_toTopOf="@id/constrainTechnicalCasesID"/>
@@ -394,6 +547,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/constrainNotesID"
+            android:layout_margin="5dp"
+            android:padding="5dp"
             app:layout_constraintTop_toBottomOf="@+id/constrainTechnicalCasesID">
 
 
@@ -413,12 +568,13 @@
                 app:layout_constraintTop_toTopOf="@+id/constrainNotesID" />
 
             <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:id="@+id/imageDashboardButonNotes"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="5dp"
-                android:src="@drawable/contactpage_customername"
+                android:background="@color/BackgroundElementsColor"
+                android:src="@drawable/more_vertical_icon"
                 app:layout_constraintEnd_toEndOf="@id/constrainNotesID"
 
                 app:layout_constraintTop_toTopOf="@id/constrainNotesID"/>

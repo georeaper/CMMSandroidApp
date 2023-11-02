@@ -1,6 +1,7 @@
 package com.gkprojects.cmmsandroidapp.Adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,23 +50,31 @@ class CasesAdapter(private var context :Context , private var casesList : ArrayL
         holder.customer.text = currentitem.CustomerName.toString()
         holder.serialNumber.text = currentitem.EquipmentID.toString()
         holder.startDate.text = "Start Date: "+ currentitem.DateStart.toString()
+        holder.title.text=currentitem.Title.toString()
+        Log.d("urgencyAdapter",currentitem.Urgency.toString())
 
-        if (currentitem.Active=="a"){
-            var backgroundColor = ContextCompat.getColor(context, R.color.BackgroundElementsColor)
+        if (currentitem.Urgency.toString()=="RED"){
+            var backgroundColor = ContextCompat.getColor(context, R.color.red)
+            Log.d("BackgroundColor", backgroundColor.toString())
             holder.status.setBackgroundColor(backgroundColor)
 
-        }else{
+
+         }
+         else if(currentitem.Urgency.toString()=="YELLOW"){
+            var backgroundColor = ContextCompat.getColor(context, R.color.orange)
+            Log.d("BackgroundColor", backgroundColor.toString())
+            holder.status.setBackgroundColor(backgroundColor)
+        }
+        else if(currentitem.Urgency.toString()=="BLUE"){
             var backgroundColor = ContextCompat.getColor(context, R.color.AppColor)
+            Log.d("BackgroundColor", backgroundColor.toString())
             holder.status.setBackgroundColor(backgroundColor)
         }
 
-        val backgroundColor = ContextCompat.getColor(context, R.color.AppColor)
-        holder.status.setBackgroundColor(backgroundColor)
+//        val backgroundColor = ContextCompat.getColor(context, R.color.AppColor)
+//        holder.status.setBackgroundColor(backgroundColor)
 
-//        holder.name.text=currentitem.CustomerName
-//        holder.title.text=currentitem.Title
-//        holder.startDate.text=currentitem.DateStart
-//        holder.status.text=currentitem.Active
+
 
         holder.itemView.setOnClickListener {
             if (onClickListener != null) {

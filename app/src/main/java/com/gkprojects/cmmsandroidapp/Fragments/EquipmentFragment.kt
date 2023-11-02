@@ -11,6 +11,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.Observer
@@ -28,7 +30,9 @@ import com.gkprojects.cmmsandroidapp.DataClasses.Equipments
 import com.gkprojects.cmmsandroidapp.Models.EquipmentVM
 
 import com.gkprojects.cmmsandroidapp.R
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.navigation.NavigationView
 import kotlinx.coroutines.*
 
 import java.util.*
@@ -44,6 +48,20 @@ private var dataItems = ArrayList<EquipmentSelectCustomerName>()
 private var eq = Equipments(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
 
 class EquipmentFragment : Fragment() {
+    override fun onResume() {
+        super.onResume()
+        var activity =requireActivity()
+
+        var drawerLayout = activity.findViewById<DrawerLayout>(R.id.DrawLayout)
+        val navView: NavigationView = activity.findViewById(R.id.navView)
+        val toolbar: MaterialToolbar = activity.findViewById(R.id.topAppBar)
+        toolbar.title="Equipments"
+
+        var toggle = ActionBarDrawerToggle(activity, drawerLayout, toolbar, R.string.open, R.string.close)
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+
+    }
 
 
     @SuppressLint("SuspiciousIndentation", "UseRequireInsteadOfGet")

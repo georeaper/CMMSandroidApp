@@ -24,6 +24,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class ContractInsertFragment : Fragment() {
@@ -32,6 +33,7 @@ class ContractInsertFragment : Fragment() {
     private var rvAdapter: RvAlertAdapter? = null
     lateinit var filterText : SearchView
     var hospId : Int?= null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,24 +51,49 @@ class ContractInsertFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        contractViewModel= ViewModelProvider(this)[ContractsVM::class.java]
-        var customerSearch =ArrayList<CustomerSelect>()
-
-        context?.let { contractViewModel.getCustomerId(it).observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-            customerSearch = it as ArrayList<CustomerSelect>
-        }) }
-
-        var startDate =view.findViewById<EditText>(R.id.et_date_contract_start)
-        var endDate =view.findViewById<EditText>(R.id.et_date_contract_end)
-        //var typeContract =view.findViewById<Spinner>(R.id.contractTypeSpinner)
-        //var contractStatus =view.findViewById<Spinner>(R.id.contractStatusSpinner)
-        var contractCustomer =view.findViewById<TextView>(R.id.tv_customerName_contract)
-        var title = view.findViewById<EditText>(R.id.etTitleContracts)
+        val customerName=view.findViewById<TextView>(R.id.tv_customerName_contract)
+        val startDate =view.findViewById<EditText>(R.id.et_date_contract_start)
+        val endDate =view.findViewById<EditText>(R.id.et_date_contract_end)
+        val contractCustomer =view.findViewById<TextView>(R.id.tv_customerName_contract)
+        val title = view.findViewById<EditText>(R.id.etTitleContracts)
 
         var contractId :Int? =null
 
         val btnsave : Button = view.findViewById(R.id.btn_submit_contract_insert)
         val btnclear : Button =view.findViewById(R.id.btn_clear_contract_insert)
+        val args =this.arguments
+        val id= args?.getInt("id")
+        title.setText(args?.getString("title"))
+        startDate.setText(args?.getString("startDate"))
+        endDate.setText(args?.getString("endDate"))
+        val typeContract : String?=args?.getString("contractType")
+        val contractStatus: String? =args?.getString("contractStatus")
+        val customerId =args?.getString("hospitalId")
+        contractCustomer.text = customerId
+
+
+        var value :Double? =args?.getDouble("value")
+
+        contractId= id
+
+
+
+        contractViewModel= ViewModelProvider(this)[ContractsVM::class.java]
+        var customerSearch =ArrayList<CustomerSelect>()
+
+
+        context?.let { contractViewModel.getCustomerId(it).observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            customerSearch = it as ArrayList<CustomerSelect>
+            Log.d("customerContract",contractId.toString())
+            getValuesFromdb(customerSearch, customerId?.toInt(),customerName)
+
+
+        }) }
+
+
+
+
+
         contractCustomer.setOnClickListener {
             val builder = AlertDialog.Builder(context)
 
@@ -118,20 +145,9 @@ class ContractInsertFragment : Fragment() {
             })
         }
 
-        val args =this.arguments
-        var id= args?.getInt("id")
-        title.setText(args?.getString("title"))
-        startDate.setText(args?.getString("startDate"))
-        endDate.setText(args?.getString("endDate"))
-        var typeContract : String?=args?.getString("contractType")
-        var contractStatus: String? =args?.getString("contractStatus")
-        contractCustomer.text = args?.getString("hospitalId")
 
-        Log.d("contractFragment",id.toString())
-        var value :Double? =args?.getDouble("value")
 
-        contractId= id
-        Log.d("contractFragment3",contractId.toString())
+
 
         btnsave.setOnClickListener {
             if(hospId!=null){
@@ -159,9 +175,9 @@ class ContractInsertFragment : Fragment() {
 
 
             }else{
-                println("I am here Contracts")
+
                 Toast.makeText(context,"Select Customer", Toast.LENGTH_SHORT).show()
-                Log.d("contractElse","hospID is NULL")
+
 
             }
 
@@ -182,6 +198,24 @@ class ContractInsertFragment : Fragment() {
             rvAdapter?.filterList(filteredList)
         }
 
+    }
+
+    fun getValuesFromdb(data : ArrayList<CustomerSelect>, id :Int?,tv :TextView){
+        var customerNameIndexed = mutableMapOf<Int, String>()
+
+        if(isInt(id)) {
+            for (i in data.indices) {
+                customerNameIndexed[data[i].CustomerID] = data[i].CustomerName
+            }
+            tv.text = customerNameIndexed[id]
+        }else
+            tv.text="empty"
+
+    }
+
+    private fun isInt(id: Int?): Boolean {
+
+        return id is Int
     }
 
 }

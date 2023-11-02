@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -24,7 +26,9 @@ import com.gkprojects.cmmsandroidapp.DataClasses.Tickets
 import com.gkprojects.cmmsandroidapp.Models.CasesVM
 import com.gkprojects.cmmsandroidapp.Models.CustomerVM
 import com.gkprojects.cmmsandroidapp.R
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.navigation.NavigationView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -52,6 +56,21 @@ class CasesFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_cases, container, false)
     }
 
+    override fun onResume() {
+        super.onResume()
+        var activity =requireActivity()
+
+        var drawerLayout = activity.findViewById<DrawerLayout>(R.id.DrawLayout)
+        val navView: NavigationView = activity.findViewById(R.id.navView)
+        val toolbar: MaterialToolbar = activity.findViewById(R.id.topAppBar)
+        toolbar.title="Technical Cases"
+
+        var toggle = ActionBarDrawerToggle(activity, drawerLayout, toolbar, R.string.open, R.string.close)
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+
+    }
+
     @SuppressLint("SuspiciousIndentation", "UseRequireInsteadOfGet")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -65,25 +84,7 @@ class CasesFragment : Fragment() {
         }
         casesViewModel = ViewModelProvider(this)[CasesVM::class.java]
 
-//        context?.let { it ->
-//            casesViewModel.getAllCasesData(it).observe(viewLifecycleOwner, Observer {
-//
-//                casesAdapter.setData(it as ArrayList<TicketCustomerName>)
-//
-//
-//
-//                Log.d("debug12367", it.toString())
-//                templist.clear() // clear the templist,because it keeps populate everytime we open and close Customer Drawer
-//                for (i in it.indices) {
-//                    templist.add(it[i])
-//
-//                       // casesViewModel.getCustomerNameWhereId(it[i].customerID)
-//
-//
-//                }
-//                Log.d("templistCases", templist.size.toString())
-//            })
-//        }
+
         try{
             lifecycleScope.launch { withContext(Dispatchers.Main){
                 casesViewModel.getCustomerName(context!!).observe(viewLifecycleOwner, Observer {
@@ -121,8 +122,7 @@ class CasesFragment : Fragment() {
 
         casesAdapter.setOnClickListener(object : CasesAdapter.OnClickListener {
             override fun onClick(position: Int, model: TicketCustomerName) {
-//                var temp: java.io.Serializable = model as java.io.Serializable
-                Toast.makeText(context, model.toString(), Toast.LENGTH_LONG).show()
+
                 passDataCustomer(model)
 
                 //passDataCustomer()
@@ -156,7 +156,6 @@ class CasesFragment : Fragment() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
 
 
-//DELETE METHOD needed
             }
 
 
@@ -206,6 +205,7 @@ class CasesFragment : Fragment() {
         val fragment =CaseInsertFragment()
         fragment.arguments = bundle
         fragmentTransaction.replace(R.id.frameLayout1,fragment)
+        fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
 
     }

@@ -10,6 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -22,7 +24,9 @@ import com.gkprojects.cmmsandroidapp.DataClasses.Customer
 import com.gkprojects.cmmsandroidapp.DataClasses.Hospital
 import com.gkprojects.cmmsandroidapp.Models.CustomerVM
 import com.gkprojects.cmmsandroidapp.R
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.navigation.NavigationView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -126,40 +130,40 @@ class CustomerFragment : Fragment() {
             transaction?.commit()
         }
 
-        val myCallback = object: ItemTouchHelper.SimpleCallback(0,
-            ItemTouchHelper.RIGHT) {
-
-            // More code here
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ): Boolean {
-                return false
-            }
-
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+//        val myCallback = object: ItemTouchHelper.SimpleCallback(0,
+//            ItemTouchHelper.RIGHT) {
+//
+//            // More code here
+//            override fun onMove(
+//                recyclerView: RecyclerView,
+//                viewHolder: RecyclerView.ViewHolder,
+//                target: RecyclerView.ViewHolder
+//            ): Boolean {
+//                return false
+//            }
 
 
-                lifecycleScope.launch(Dispatchers.IO) {
+//            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+//
+//
+//                lifecycleScope.launch(Dispatchers.IO) {
+//
+//                    context?.let { customerViewModel.deleteCustomer(it, templist[viewHolder.absoluteAdapterPosition]) }
+//
+//                }
+//
+//                context?.let {
+//                    customerViewModel.getAllCustomerData(it).observe(viewLifecycleOwner, Observer {
+//                        customerAdapter.setData(it as ArrayList<Customer>)
+//
+//                    })
+//                }
+//            }
 
-                    context?.let { customerViewModel.deleteCustomer(it, templist[viewHolder.absoluteAdapterPosition]) }
 
-                }
-
-                context?.let {
-                    customerViewModel.getAllCustomerData(it).observe(viewLifecycleOwner, Observer {
-                        customerAdapter.setData(it as ArrayList<Customer>)
-
-                    })
-                }
-            }
-
-
-        }
-        val myHelper = ItemTouchHelper(myCallback)
-        myHelper.attachToRecyclerView(customerRecyclerView)
+//        }
+//        val myHelper = ItemTouchHelper(myCallback)
+//        myHelper.attachToRecyclerView(customerRecyclerView)
 
     }
 
@@ -181,31 +185,46 @@ class CustomerFragment : Fragment() {
 
 
  }
+    override fun onResume() {
+        super.onResume()
+        var activity =requireActivity()
 
+        var drawerLayout = activity.findViewById<DrawerLayout>(R.id.DrawLayout)
+        val navView: NavigationView = activity.findViewById(R.id.navView)
+        val toolbar: MaterialToolbar = activity.findViewById(R.id.topAppBar)
+        toolbar.title="Customer"
+
+        var toggle = ActionBarDrawerToggle(activity, drawerLayout, toolbar, R.string.open, R.string.close)
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+
+    }
 
  private fun passDataCustomer(data : Customer){
 
-        val bundle = Bundle()
-        data.CustomerID?.let { bundle.putInt("id", it.toInt()) }
-        bundle.putString("name", data.Name)
-        bundle.putString("address", data.Address)
-        bundle.putString("city", data.City)
-        bundle.putString("email", data.Email)
-        bundle.putString("description", data.Description)
-        bundle.putString("phone", data.Phone)
-        bundle.putString("zipcode", data.ZipCode)
-        bundle.putString("status", data.CustomerStatus)
-        bundle.putString("notes", data.Notes)
+     val bundle = Bundle()
+     data.CustomerID?.let { bundle.putInt("id", it) }
 
+     bundle.putString("name", data.Name)
+     bundle.putString("address", data.Address)
+     bundle.putString("email", data.Email)
+     bundle.putString("phone", data.Phone)
 
+     Log.d("bundlecheck",bundle.toString())
 
+        if (bundle==null){
+            Toast.makeText(context,"Bundle is Null",Toast.LENGTH_SHORT)
 
-        val fragmentManager =parentFragmentManager
-        val fragmentTransaction=fragmentManager.beginTransaction()
-        val fragment =DashboardCustomerFragment()
-        fragment.arguments = bundle
-        fragmentTransaction.replace(R.id.frameLayout1,fragment)
-        fragmentTransaction.commit()
+        }else {
+            Log.d("YourTag", "Before fragment transaction");
+            val fragmentManager = parentFragmentManager
+            Log.d("YourTag", "After fragmentManager");
+            val fragmentTransaction = fragmentManager.beginTransaction()
+            val fragment = DashboardCustomerFragment()
+            fragment.arguments = bundle
+            fragmentTransaction.replace(R.id.frameLayout1, fragment)
+            fragmentTransaction.commit()
+        }
 
     }
 

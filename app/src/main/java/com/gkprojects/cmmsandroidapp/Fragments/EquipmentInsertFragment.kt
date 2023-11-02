@@ -54,27 +54,6 @@ class EquipmentInsertFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         equipmentViewModel= ViewModelProvider(this)[EquipmentVM::class.java]
-        // in the below Line i am trying to fetch customer Data id and Name so i can use pass it as a FgnKey in the table
-        var customerSearch =ArrayList<CustomerSelect>()
-
-        context?.let { equipmentViewModel.getCustomerId(it).observe(viewLifecycleOwner,
-            Observer{
-
-                customerSearch= it as ArrayList<CustomerSelect>
-
-        }) }
-
-        Log.d("customerSelect",customerSearch.toString())
-
-
-        val stringCustomArray=ArrayList<String>()
-        val idCustomArray = ArrayList<Int>()
-        for (i in customerSearch.indices){
-            stringCustomArray.add(customerSearch[i].CustomerName)
-            idCustomArray.add((customerSearch[i].CustomerID))
-        }
-
-
         var equipmentID :Int? = null
         val serialNumber=view.findViewById<EditText>(R.id.et_equipment_sn)
         val model=view.findViewById<EditText>(R.id.et_equipment_model)
@@ -104,8 +83,18 @@ class EquipmentInsertFragment : Fragment() {
         //________________________________________________
         equipmentID=id
 
+        // in the below Line i am trying to fetch customer Data id and Name so i can use pass it as a FgnKey in the table
+        var customerSearch =ArrayList<CustomerSelect>()
 
+        context?.let { equipmentViewModel.getCustomerId(it).observe(viewLifecycleOwner,
+            Observer{
 
+                customerSearch= it as ArrayList<CustomerSelect>
+                getValuesFromdb(customerSearch,fgId,customerNameTV)
+
+        }) }
+
+        Log.d("customerSelect",customerSearch.toString())
 
 
             customerNameTV.setOnClickListener {
@@ -162,18 +151,6 @@ class EquipmentInsertFragment : Fragment() {
 
 
             }
-
-
-
-
-
-
-
-
-
-
-
-
 
         val btnsubmit : Button = view.findViewById(R.id.btn_equipment_submit)
         val btnclear : Button =view.findViewById(R.id.btn_equipment_clear)
@@ -268,6 +245,23 @@ class EquipmentInsertFragment : Fragment() {
             rvAdapter?.filterList(filteredList)
         }
 
+    }
+    fun getValuesFromdb(data : ArrayList<CustomerSelect>, id :Int?,tv :TextView){
+        var customerNameIndexed = mutableMapOf<Int, String>()
+
+        if(isInt(id)) {
+            for (i in data.indices) {
+                customerNameIndexed[data[i].CustomerID] = data[i].CustomerName
+            }
+            tv.text = customerNameIndexed[id]
+        }else
+            tv.text="empty"
+
+    }
+
+    private fun isInt(id: Int?): Boolean {
+
+        return id is Int
     }
 
 

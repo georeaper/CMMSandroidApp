@@ -42,6 +42,7 @@ data class TicketCustomerName(
      var Title :String?,
      var Active :String?,
      var DateStart: String?,
+     var Urgency :String?,
      var CustomerName: String?,
      var UserID :String?,
      var CustomerID :String?,

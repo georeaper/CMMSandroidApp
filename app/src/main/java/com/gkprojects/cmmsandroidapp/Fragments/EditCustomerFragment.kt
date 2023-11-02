@@ -40,7 +40,7 @@ class EditCustomerFragment : Fragment() {
     @OptIn(DelicateCoroutinesApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setHasOptionsMenu(true)
+        //setHasOptionsMenu(true)
 
         val hospitalID: Int?
         val name  =view.findViewById<EditText>(R.id.et_customerName)
@@ -111,13 +111,7 @@ class EditCustomerFragment : Fragment() {
                 }
 
 
-//                 name.text.clear()
-//                 address.text.clear()// = view.findViewById<EditText>(R.id.et_address).text.clear()
-//                 phone1.text.clear()// = view.findViewById<EditText>(R.id.et_phone1).text.clear()
-//                 city.text.clear()// = view.findViewById<EditText>(R.id.et_phone2).text.clear()
-//                 vat.text.clear()// = view.findViewById<EditText>(R.id.et_vatNumber).text.clear()
-//                 email.text.clear()// = view.findViewById<EditText>(R.id.et_email).text.clear()
-//                 comments.text.clear()// = view.findViewById<EditText>(R.id.et_notes).text.clear()
+
             }else{
                 Log.d("here","i am here")
                 val customer = Customer(
@@ -140,47 +134,20 @@ class EditCustomerFragment : Fragment() {
                 GlobalScope.launch(Dispatchers.IO) {
                     context?.let { it1 -> customerViewModel.updateCustomer(it1,customer) }
                 }
-                //Toast.makeText(context,"i am here$id",Toast.LENGTH_SHORT).show()
-
-            }
-
 
 
             }
 
 
+
+            }
 
 
         btnclear.setOnClickListener {
-//             name.text.clear()
-//             address.text.clear()
-//             phone1.text.clear()
-//             city.text.clear()
-//             vat.text.clear()
-//             email.text.clear()
-//             comments.text.clear()
-        }
 
         }
 
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_main, menu)
-    }
-    override fun onPrepareOptionsMenu(menu: Menu){
-        super.onPrepareOptionsMenu(menu)
-        val item = menu.findItem(R.id.menu_dynamic_button)
-        var status =view?.findViewById<CheckBox>(R.id.checkBoxStatusCustomer)
-
-        if (status != null) {
-            item.isVisible=status.isChecked
         }
-
-    }
-
-
-
-
 
     }
 

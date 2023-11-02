@@ -1,5 +1,6 @@
 package com.gkprojects.cmmsandroidapp.Repository
 
+import android.annotation.SuppressLint
 import android.content.Context
 import androidx.lifecycle.LiveData
 import com.gkprojects.cmmsandroidapp.CMMSDatabase
@@ -51,7 +52,7 @@ class RepoCases {
             }
 
         }
-        fun getCustomerDataByID(context: Context,id:Int):LiveData<List<Tickets>>{
+        fun getCustomerDataByID(context: Context,id:Int):LiveData<Tickets>{
             userDatabase= intialiseDB(context)
             return userDatabase!!.TicketsDao().getTicketsById(id)
         }
@@ -61,11 +62,17 @@ class RepoCases {
             return userDatabase!!.TicketsDao().getCustomerID()
 
         }
+        @SuppressLint("SuspiciousIndentation")
         fun getCustomerNameTickets(context: Context):LiveData<List<TicketCustomerName>>{
 
             userDatabase= intialiseDB(context)
                 return userDatabase!!.TicketsDao().getCustomerName()
 
+        }
+
+        fun getDataForHome(context: Context):LiveData<List<OverviewMainData>>{
+            userDatabase= intialiseDB(context)
+            return userDatabase!!.TicketsDao().getDateForOverview()
         }
 
     }
