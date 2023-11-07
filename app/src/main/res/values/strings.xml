@@ -17,6 +17,7 @@
     <string name="helper_text">helping</string>
     <string name="SerialNumber">Serial Number</string>
     <string name="title">Title</string>
+    <string name="notes">Notes</string>
     <string-array name="status_cases">
         <item>Red</item>
         <item>Yellow</item>

@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import com.gkprojects.cmmsandroidapp.CMMSDatabase
 import com.gkprojects.cmmsandroidapp.DataClasses.Customer
 import com.gkprojects.cmmsandroidapp.DataClasses.CustomerSelect
+import com.gkprojects.cmmsandroidapp.DataClasses.DashboardCustomerEquipmentDataClass
 import com.gkprojects.cmmsandroidapp.DataClasses.Equipment
 import com.gkprojects.cmmsandroidapp.DataClasses.Hospital
 import kotlinx.coroutines.CoroutineScope
@@ -28,6 +29,10 @@ class RepoCustomer {
                 userDatabase!!.CustomerDao().addCustomer(customer)
             }
         }
+        fun getCustomerID(context :Context ,id :Int):LiveData<Customer>{
+            userDatabase= intialiseDB(context)
+            return userDatabase!!.CustomerDao().getCustomerByID(id)
+        }
 
         fun delete(context: Context,customer: Customer){
             userDatabase= intialiseDB(context)
@@ -50,11 +55,12 @@ class RepoCustomer {
             }
 
         }
-//        fun getCustomerIdData(context: Context):LiveData<List<CustomerSelect>>{
-//            userDatabase= intialiseDB(context)
-//            return userDatabase!!.hospitalDAO().getIdFromHospital()
-//
-//        }
+        fun getEquipmentDashboard(context: Context, id :Int):LiveData<List<DashboardCustomerEquipmentDataClass>>{
+            userDatabase= intialiseDB(context)
+            return userDatabase!!.CustomerDao().getDashboardEquipmentsByID(id)
+
+        }
+
     }
 
 }

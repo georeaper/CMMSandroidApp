@@ -11,6 +11,13 @@ interface CustomerDao {
     @Query("Select * from Customer")
     fun getAllCustomer(): LiveData<List<Customer>>
 
+    @Query("SELECT * FROM Customer Where Customer.CustomerID = :id")
+    fun getCustomerByID(id :Int):LiveData<Customer>
+    @Query("Select Equipments.EquipmentID, Equipments.SerialNumber, Equipments.Model ,Equipments.InstallationDate " +
+            "From Equipments " +
+            "where Equipments.CustomerID = :id")
+    fun getDashboardEquipmentsByID(id:Int):LiveData<List<DashboardCustomerEquipmentDataClass>>
+
 
     @Insert
     fun addCustomer(customer: Customer)
@@ -30,6 +37,8 @@ interface ContractsDao {
 
     @Query("Select * from Contracts where Contracts.ContractID= :id")
     fun getContractsById(id:Int):LiveData<List<Contracts>>
+
+
 
     @Query ("Select CustomerID,Name as CustomerName from Customer")
     fun getCustomerID(): LiveData<List<CustomerSelect>>

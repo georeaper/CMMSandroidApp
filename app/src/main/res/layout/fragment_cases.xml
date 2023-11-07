@@ -11,6 +11,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <!--suppress AndroidUnresolvableTag -->
         <SearchView
             android:id="@+id/searchView_cases"
             android:layout_width="match_parent"

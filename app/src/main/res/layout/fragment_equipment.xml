@@ -13,7 +13,7 @@
         android:orientation="vertical"
         android:background="@color/white">
 
-
+        <!--suppress AndroidUnresolvableTag -->
         <SearchView
             android:id="@+id/searchView_equipment"
             android:layout_width="match_parent"

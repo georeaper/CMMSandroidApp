@@ -49,3 +49,30 @@ data class TicketCustomerName(
      var EquipmentID :String?
 
 )
+data class DashboardCustomerEquipmentDataClass(
+    var EquipmentID: Int?,
+    var SerialNumber: String?,
+    var Model: String?,
+    var InstallationDate: String?
+)
+data class DashboardCustomerTechnicalCasesDataClass(
+    var ContractID: Int?,
+    var Title: String?,
+    var DateEnd: String?,
+    var Active: String?
+
+)
+data class DashboardCustomerWorkOrdersDataClass(
+    var FieldReportID : Int?,
+    var ReportNumber : String?,
+    var Title: String?,
+    var DateCreated: String?
+)
+data class DashboardCustomerContractsDataClass(
+    var ContractID: Int?,
+    var Title: String?,
+    var Active: String?,
+    var DateStart: String?
+
+)
+

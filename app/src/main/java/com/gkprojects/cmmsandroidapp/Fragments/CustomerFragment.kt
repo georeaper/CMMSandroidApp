@@ -54,6 +54,7 @@ class CustomerFragment : Fragment() {
 
 
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -193,6 +194,7 @@ class CustomerFragment : Fragment() {
         val navView: NavigationView = activity.findViewById(R.id.navView)
         val toolbar: MaterialToolbar = activity.findViewById(R.id.topAppBar)
         toolbar.title="Customer"
+
 
         var toggle = ActionBarDrawerToggle(activity, drawerLayout, toolbar, R.string.open, R.string.close)
         drawerLayout.addDrawerListener(toggle)
