@@ -18,6 +18,14 @@ interface CustomerDao {
             "where Equipments.CustomerID = :id")
     fun getDashboardEquipmentsByID(id:Int):LiveData<List<DashboardCustomerEquipmentDataClass>>
 
+    @Query("Select Contracts.ContractID,Contracts.Title ," +
+            "Contracts.ContractStatus, Contracts.DateEnd ,Contracts.ContractType " +
+            "From Contracts Where Contracts.CustomerID = :id ")
+    fun getDashboardContractsByID(id :Int):LiveData<List<DashboardCustomerContractsDataClass>>
+
+    @Query("Select Tickets.TicketID , Tickets.Title, Tickets.Urgency , Tickets.DateStart , Tickets.DateEnd " +
+            "From Tickets Where Tickets.CustomerID = :id")
+    fun getDashboardTechnicalCaseByID(id :Int):LiveData<List<DashboardCustomerTechnicalCasesDataClass>>
 
     @Insert
     fun addCustomer(customer: Customer)
@@ -37,8 +45,6 @@ interface ContractsDao {
 
     @Query("Select * from Contracts where Contracts.ContractID= :id")
     fun getContractsById(id:Int):LiveData<List<Contracts>>
-
-
 
     @Query ("Select CustomerID,Name as CustomerName from Customer")
     fun getCustomerID(): LiveData<List<CustomerSelect>>
@@ -134,7 +140,6 @@ interface EquipmentsDao{
     suspend fun delete(equipments: Equipments)
 
 }
-
 @Dao
 interface FieldReportEquipmentDao {
 

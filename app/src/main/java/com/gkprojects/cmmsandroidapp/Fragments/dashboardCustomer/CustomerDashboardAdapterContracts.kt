@@ -1,24 +1,39 @@
 package com.gkprojects.cmmsandroidapp.Fragments.dashboardCustomer
 
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.gkprojects.cmmsandroidapp.DataClasses.DashboardCustomerContractsDataClass
+import com.gkprojects.cmmsandroidapp.DataClasses.DashboardCustomerEquipmentDataClass
+import com.gkprojects.cmmsandroidapp.R
 
-class CustomerDashboardAdapterContracts(contactList :ArrayList<DashboardCustomerContractsDataClass>): RecyclerView.Adapter<CustomerDashboardAdapterContracts.DashboardContractsVH>() {
+class CustomerDashboardAdapterContracts(private var contractList :ArrayList<DashboardCustomerContractsDataClass>): RecyclerView.Adapter<CustomerDashboardAdapterContracts.DashboardContractsVH>() {
     class DashboardContractsVH(itemView :View ):RecyclerView.ViewHolder(itemView) {
-
+        var title : TextView =itemView.findViewById(R.id.recyclerviewCustomerDashContractsTitle)
+        var type : TextView =itemView.findViewById(R.id.recyclerviewCustomerDashContractsType)
+        var dateEnd : TextView =itemView.findViewById(R.id.recyclerviewCustomerDashContractsDateEnd)
+        var contractIndicator : View =itemView.findViewById(R.id.recyclerviewCustomerDashIndicatorContracts)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DashboardContractsVH {
-        TODO("Not yet implemented")
+        val itemView= LayoutInflater.from(parent.context).inflate(R.layout.dashboard_customer_list_contracts,parent,false)
+        return DashboardContractsVH(itemView)
     }
 
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        return contractList.size
     }
 
     override fun onBindViewHolder(holder: DashboardContractsVH, position: Int) {
-        TODO("Not yet implemented")
+        var currentItem = contractList[position]
+        holder.title.text=currentItem.Title
+        holder.type.text="Type: "+ currentItem.ContractType
+        holder.dateEnd.text="Date End: " + currentItem.DateEnd
+    }
+    fun setData(contractList : ArrayList<DashboardCustomerContractsDataClass>){
+        this.contractList=contractList
+        notifyDataSetChanged()
     }
 }

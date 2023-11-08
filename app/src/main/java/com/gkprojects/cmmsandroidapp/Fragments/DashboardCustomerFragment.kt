@@ -16,9 +16,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gkprojects.cmmsandroidapp.Adapter.CustomerAdapter
 import com.gkprojects.cmmsandroidapp.DataClasses.Customer
+import com.gkprojects.cmmsandroidapp.DataClasses.DashboardCustomerContractsDataClass
 import com.gkprojects.cmmsandroidapp.DataClasses.DashboardCustomerEquipmentDataClass
+import com.gkprojects.cmmsandroidapp.DataClasses.DashboardCustomerTechnicalCasesDataClass
 import com.gkprojects.cmmsandroidapp.DataClasses.FieldReports
+import com.gkprojects.cmmsandroidapp.Fragments.Contracts.ContractFragment
 import com.gkprojects.cmmsandroidapp.Fragments.dashboardCustomer.CustomerDashboardAdapter
+import com.gkprojects.cmmsandroidapp.Fragments.dashboardCustomer.CustomerDashboardAdapterContracts
+import com.gkprojects.cmmsandroidapp.Fragments.dashboardCustomer.CustomerDashboardAdapterTechnicalCase
 import com.gkprojects.cmmsandroidapp.Models.CustomerVM
 import com.gkprojects.cmmsandroidapp.R
 import com.gkprojects.cmmsandroidapp.databinding.FragmentDashboardCustomerBinding
@@ -38,10 +43,12 @@ class DashboardCustomerFragment : Fragment() {
     private lateinit var equipmentAdapter: CustomerDashboardAdapter
 
     private lateinit var contractRv: RecyclerView
+    private lateinit var contractAdapter: CustomerDashboardAdapterContracts
 
     private lateinit var workOrderRv: RecyclerView
 
     private lateinit var technicalCaseRv: RecyclerView
+    private lateinit var technicalCasesAdapter : CustomerDashboardAdapterTechnicalCase
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,6 +89,8 @@ class DashboardCustomerFragment : Fragment() {
             fragmentTransaction.commit()
         }
         setEquipmentList(customerId)
+        setContracts(customerId)
+        setTechnicalCases(customerId)
 
         customerViewModel.getCustomerDataByID(requireContext(),customerId).observe(viewLifecycleOwner,
             Observer {
@@ -93,17 +102,27 @@ class DashboardCustomerFragment : Fragment() {
         Log.d("Dashboardid",customerId.toString())
 
 
-
-
         val customerInformation : ImageButton= view.findViewById(R.id.ibDashboardGeneralInformationImageButton)
         val assetBtn : ImageButton =view.findViewById(R.id.imageDashboardButonAssets)
-        val workOrderBtn : ImageButton =view.findViewById(R.id.imageDashboardButonWorkOrders)
+        val workOrderBtn : ImageButton =view.findViewById(R.id.imageDashboardButtonWorkOrders)
         val contractBtn : ImageButton =view.findViewById(R.id.imageDashboardButonContracts)
         val technicalCaseBtn : ImageButton =view.findViewById(R.id.imageDashboardButonTechnicalCases)
         val notesBtn : ImageButton =view.findViewById(R.id.imageDashboardButonNotes)
 
         customerInformation.setOnClickListener {
             sentIDtoFragments(customerId,EditCustomerFragment())
+        }
+        assetBtn.setOnClickListener {
+            sentIDtoFragments(customerId,EquipmentFragment())
+        }
+        workOrderBtn.setOnClickListener {
+            sentIDtoFragments(customerId,Work_Orders())
+        }
+        contractBtn.setOnClickListener {
+            sentIDtoFragments(customerId,ContractFragment())
+        }
+        technicalCaseBtn.setOnClickListener {
+            sentIDtoFragments(customerId,CasesFragment())
         }
 
 
@@ -146,6 +165,41 @@ class DashboardCustomerFragment : Fragment() {
                 equipmentAdapter.setData(tempList)
             })
 
+    }
+    private fun setContracts(id :Int){
+        val rvContracts =binding.recyclerviewCustomerdashboardContracts
+        contractAdapter= CustomerDashboardAdapterContracts(ArrayList<DashboardCustomerContractsDataClass>())
+        rvContracts.apply {
+            setHasFixedSize(true)
+            layoutManager=LinearLayoutManager(this.context)
+            adapter=contractAdapter
+        }
+        customerViewModel.getCustomerContractsPerCustomer(requireContext(),id).observe(viewLifecycleOwner,
+            Observer {
+                var contractList = ArrayList<DashboardCustomerContractsDataClass>()
+                for(i in it.indices){
+                    contractList.add(it[i])
+                }
+                contractAdapter.setData(contractList)
+            })
+
+    }
+    private fun setTechnicalCases(id :Int){
+        val rvTechnicalCase=binding.recyclerviewCustomerdashboardTechnicalCases
+        technicalCasesAdapter= CustomerDashboardAdapterTechnicalCase(ArrayList<DashboardCustomerTechnicalCasesDataClass>())
+        rvTechnicalCase.apply {
+            setHasFixedSize(true)
+            layoutManager=LinearLayoutManager(this.context)
+            adapter=technicalCasesAdapter
+        }
+        customerViewModel.getCustomerTechnicalCasesPerCustomer(requireContext(),id).observe(viewLifecycleOwner,
+            Observer {
+                var technicalCaseList= ArrayList<DashboardCustomerTechnicalCasesDataClass>()
+                for (i in it.indices){
+                    technicalCaseList.add(it[i])
+                }
+                technicalCasesAdapter.setData(technicalCaseList)
+            })
     }
 
 

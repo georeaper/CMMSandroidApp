@@ -56,10 +56,11 @@ data class DashboardCustomerEquipmentDataClass(
     var InstallationDate: String?
 )
 data class DashboardCustomerTechnicalCasesDataClass(
-    var ContractID: Int?,
+    var TicketID: Int?,
     var Title: String?,
-    var DateEnd: String?,
-    var Active: String?
+    var Urgency: String?,
+    var DateStart: String?,
+    var DateEnd :String?
 
 )
 data class DashboardCustomerWorkOrdersDataClass(
@@ -71,8 +72,9 @@ data class DashboardCustomerWorkOrdersDataClass(
 data class DashboardCustomerContractsDataClass(
     var ContractID: Int?,
     var Title: String?,
-    var Active: String?,
-    var DateStart: String?
+    var ContractStatus: String?,
+    var DateEnd: String?,
+    var ContractType: String?
 
 )
 
