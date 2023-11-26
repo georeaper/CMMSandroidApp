@@ -8,8 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.gkprojects.cmmsandroidapp.DataClasses.Cases
-import com.gkprojects.cmmsandroidapp.DataClasses.Hospital
+
 import com.gkprojects.cmmsandroidapp.DataClasses.TicketCustomerName
 import com.gkprojects.cmmsandroidapp.DataClasses.Tickets
 import com.gkprojects.cmmsandroidapp.R
@@ -48,7 +47,7 @@ class CasesAdapter(private var context :Context , private var casesList : ArrayL
         val currentitem = casesList[position]
         holder.caseNumber.text = "ID: "+ currentitem.TicketID.toString()
         holder.customer.text = currentitem.CustomerName.toString()
-        holder.serialNumber.text = currentitem.EquipmentID.toString()
+        holder.serialNumber.text = currentitem.SerialNumber.toString()
         holder.startDate.text = "Start Date: "+ currentitem.DateStart.toString()
         holder.title.text=currentitem.Title.toString()
         Log.d("urgencyAdapter",currentitem.Urgency.toString())

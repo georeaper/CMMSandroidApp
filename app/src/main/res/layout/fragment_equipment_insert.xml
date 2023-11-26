@@ -6,156 +6,188 @@
     android:layout_height="match_parent"
     android:accessibilityPaneTitle="Insert Equipment"
     tools:context=".Fragments.EquipmentInsertFragment">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <LinearLayout
+   <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp">
+            android:layout_margin="5dp"
+            android:orientation="vertical"
+            >
 
             <TextView
                 android:id="@+id/tv_select_customer"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@color/teal_200"
-                android:text="Select Customer"
-                android:textAlignment="center"
-                android:textSize="20sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_margin="5dp">
-
-            <EditText
-                android:id="@+id/et_equipment_sn"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_horizontal|center_vertical"
-                android:hint="Enter Serial Number" />
-
-            <EditText
-                android:id="@+id/et_equipment_model"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_horizontal|center_vertical"
-                android:hint="Enter Model" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_margin="5dp">
-
-            <EditText
-                android:id="@+id/et_equipment_category"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_horizontal|center_vertical"
-                android:hint="Enter Category" />
-
-            <EditText
-                android:id="@+id/et_equipment_Manufacturer"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_horizontal|center_vertical"
-                android:hint="Enter Manufacturer" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_margin="5dp">
-
-            <EditText
-                android:id="@+id/et_equipment_status"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_horizontal|center_vertical"
-                android:hint="Enter Status" />
-
-            <EditText
-                android:id="@+id/et_equipment_version"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_horizontal|center_vertical"
-                android:hint="Enter version" />
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_margin="5dp">
-
-            <EditText
-                android:id="@+id/et_equipment_warranty"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_horizontal|center_vertical"
-                android:hint="Enter Warranty" />
-
-            <EditText
-                android:id="@+id/et_equipment_installation"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_horizontal|center_vertical"
-                android:hint="Enter Installation Date" />
-
-        </LinearLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            android:gravity="center">
-
-            <Button
-                android:id="@+id/btn_equipment_clear"
-                android:layout_width="100dp"
                 android:layout_height="50dp"
-
-                android:layout_weight="1"
-                android:text="Clear"
-
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btn_equipment_submit"
-                app:layout_constraintHorizontal_bias="0.49"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <Button
-                android:id="@+id/btn_equipment_submit"
-                android:layout_width="100dp"
-                android:layout_height="50dp"
+                android:gravity="center"
+                android:layout_margin="5dp"
+                android:text="Customer Select"
+                android:background="@drawable/bordered_rectangle"
+                android:textSize="18sp" />
 
 
-                android:layout_marginStart="16dp"
-                android:layout_weight="1"
-                android:text="Submit"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/btn_equipment_clear" />
+       <com.google.android.material.textfield.TextInputLayout
+    android:id="@+id/equipment_insert_textInputLayout_sn"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:hint="@string/SerialNumber">
+    <com.google.android.material.textfield.TextInputEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/equipment_insert_textInputEdittext_sn"/>
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.textfield.TextInputLayout>
+       <com.google.android.material.textfield.TextInputLayout
+           android:id="@+id/equipment_insert_textInputLayout_model"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_margin="5dp"
+           android:hint="Model">
+           <com.google.android.material.textfield.TextInputEditText
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:id="@+id/equipment_insert_textInputEdittext_model"/>
+
+
+       </com.google.android.material.textfield.TextInputLayout>
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content">
+           <com.google.android.material.textfield.TextInputLayout
+               android:id="@+id/equipment_insert_textInputLayout_manufacturer"
+               android:layout_width="0dp"
+               android:layout_height="wrap_content"
+               android:hint="Manufacturer"
+               android:layout_weight="1"
+               android:layout_margin="5dp"
+
+               style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+
+               <AutoCompleteTextView
+                   android:id="@+id/equipment_insert_autoCompleteTextView_manufacturer"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:inputType="none"
+
+                   />
+
+           </com.google.android.material.textfield.TextInputLayout>
+           <com.google.android.material.textfield.TextInputLayout
+               android:id="@+id/equipment_insert_textInputLayout_category"
+               android:layout_width="0dp"
+               android:layout_height="wrap_content"
+               android:layout_weight="1"
+               android:hint="Category"
+               android:layout_margin="5dp"
+               style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+
+               <AutoCompleteTextView
+                   android:id="@+id/equipment_insert_autoCompleteTextView_category"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:inputType="none"
+
+                   />
+
+           </com.google.android.material.textfield.TextInputLayout>
+       </LinearLayout>
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal">
+
+           <com.google.android.material.textfield.TextInputLayout
+               android:id="@+id/equipment_insert_textInputLayout_installationDate"
+               android:layout_width="0dp"
+               android:layout_height="50dp"
+               android:layout_margin="5dp"
+               android:hint="Installation Date"
+               android:layout_weight="1"
+               style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
+
+               <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                   android:id="@+id/equipment_insert_autoCompleteTextView_installation"
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+                   android:inputType="none"
+
+                   android:focusable="false"
+                   android:clickable="true"
+                   />
+
+           </com.google.android.material.textfield.TextInputLayout>
+           <com.google.android.material.textfield.TextInputLayout
+               android:id="@+id/equipment_insert_textInputLayout_warranty"
+               android:layout_width="0dp"
+               android:layout_height="wrap_content"
+               android:layout_margin="5dp"
+               android:layout_weight="1"
+               android:hint="Warranty">
+               <com.google.android.material.textfield.TextInputEditText
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:id="@+id/equipment_insert_textInputEdittext_warranty"/>
+
+
+           </com.google.android.material.textfield.TextInputLayout>
+       </LinearLayout>
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content">
+
+           <com.google.android.material.textfield.TextInputLayout
+               android:id="@+id/equipment_insert_textInputLayout_status"
+               android:layout_width="0dp"
+               android:layout_height="wrap_content"
+               android:hint="Status"
+               android:layout_weight="1"
+               android:layout_margin="5dp"
+
+               style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+
+               <AutoCompleteTextView
+                   android:id="@+id/equipment_insert_autoCompleteTextView_status"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:inputType="none"
+
+                   />
+
+           </com.google.android.material.textfield.TextInputLayout>
+           <com.google.android.material.textfield.TextInputLayout
+               android:id="@+id/equipment_insert_textInputLayout_version"
+               android:layout_width="0dp"
+               android:layout_height="wrap_content"
+               android:layout_margin="5dp"
+               android:layout_weight="1"
+               android:hint="Version">
+               <com.google.android.material.textfield.TextInputEditText
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:id="@+id/equipment_insert_textInputEdittext_version"/>
+
+
+           </com.google.android.material.textfield.TextInputLayout>
 
 
 
+       </LinearLayout>
 
+       <com.google.android.material.textfield.TextInputLayout
+           android:id="@+id/equipment_insert_textInputLayout_description"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_margin="5dp"
+           android:layout_weight="1"
+           android:hint="Description / Notes">
+           <com.google.android.material.textfield.TextInputEditText
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:lines="4"
+               android:id="@+id/equipment_insert_textInputEdittext_description"/>
+
+
+       </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
 

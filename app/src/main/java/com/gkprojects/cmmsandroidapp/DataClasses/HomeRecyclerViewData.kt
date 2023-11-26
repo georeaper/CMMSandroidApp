@@ -8,15 +8,14 @@ data class HomeRecyclerViewData(
 )
 
 data class OverviewMainData(
-    val information :String? ,
-    val customerName :String? ,
-    val date :String?,
-    val id :String? ,
-    val customerID :Int?,
-    val contractID :Int?,
-    val userID :Int?,
-    val assetID :Int?,
-    val workOrderID : Int?,
-    val technicalCaseID :Int ?,
-    val setTable :String ?
+    val Urgency :String? ,
+    val CustomerName :String? ,
+    val DateStart :String?,
+    val DateEnd :String? ,
+    val Title :String?,
+    val Description :String?,
+    val UserID :Int?,
+    val EquipmentID :Int?,
+    val TicketID :Int ?,
+    val CustomerID :String ?
 )

@@ -23,6 +23,7 @@ import com.gkprojects.cmmsandroidapp.Models.CustomerVM
 import com.gkprojects.cmmsandroidapp.R
 import com.gkprojects.cmmsandroidapp.databinding.FragmentEditCustomerBinding
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
@@ -45,7 +46,8 @@ class EditCustomerFragment : Fragment() {
 
     override  fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle? ): View
     {
-
+        val bottomNavigationView: BottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView)
+        bottomNavigationView.selectedItemId=R.id.action_home
         binding=FragmentEditCustomerBinding.inflate(inflater, container, false)
 
         return binding.root
@@ -140,12 +142,8 @@ class EditCustomerFragment : Fragment() {
            }
 
 
-       }else{
-
-           customerList= Customer(hospitalID!!,remoteID,name.text.toString(),phone1.text.toString(),email.text.toString(),
-               address.text.toString(),zipcode.text.toString(),city.text.toString(),notes.text.toString(),
-               description.text.toString(),statusStr,lastModified,dateCreated,version)
        }
+
 
 
         statusStr = if (status.isChecked){
@@ -217,7 +215,7 @@ class EditCustomerFragment : Fragment() {
         val dateCreated =getCurrentDateAsString()
         customerList= Customer(hospitalID!!,
             remoteID,
-            binding.customerEditAddressTextInput.text.toString(),
+            binding.customerEditCustomerNameTextInput.text.toString(),
             binding.customerEditPhoneTextInput.text.toString(),
             binding.customerEditEmailTextInput.text.toString(),
             binding.customerEditAddressTextInput.text.toString(),
@@ -251,7 +249,7 @@ class EditCustomerFragment : Fragment() {
 
         customerList= Customer(hospitalID!!,
             remoteID,
-            binding.customerEditAddressTextInput.text.toString(),
+            binding.customerEditCustomerNameTextInput.text.toString(),
             binding.customerEditPhoneTextInput.text.toString(),
             binding.customerEditEmailTextInput.text.toString(),
             binding.customerEditAddressTextInput.text.toString(),

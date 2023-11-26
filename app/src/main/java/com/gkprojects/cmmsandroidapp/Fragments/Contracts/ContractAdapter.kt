@@ -7,10 +7,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.gkprojects.cmmsandroidapp.Adapter.CustomerAdapter
-import com.gkprojects.cmmsandroidapp.DataClasses.Contract
+
 import com.gkprojects.cmmsandroidapp.DataClasses.Contracts
 import com.gkprojects.cmmsandroidapp.DataClasses.ContractsCustomerName
-import com.gkprojects.cmmsandroidapp.DataClasses.Hospital
+
 import com.gkprojects.cmmsandroidapp.R
 
 class ContractAdapter(private var contractList :ArrayList<ContractsCustomerName> ) :RecyclerView.Adapter<ContractAdapter.MyViewHolder>() {

@@ -19,14 +19,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gkprojects.cmmsandroidapp.Adapter.CasesAdapter
 import com.gkprojects.cmmsandroidapp.Adapter.CustomerAdapter
-import com.gkprojects.cmmsandroidapp.DataClasses.Cases
-import com.gkprojects.cmmsandroidapp.DataClasses.Hospital
+
 import com.gkprojects.cmmsandroidapp.DataClasses.TicketCustomerName
 import com.gkprojects.cmmsandroidapp.DataClasses.Tickets
 import com.gkprojects.cmmsandroidapp.Models.CasesVM
 import com.gkprojects.cmmsandroidapp.Models.CustomerVM
 import com.gkprojects.cmmsandroidapp.R
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import kotlinx.coroutines.Dispatchers
@@ -45,13 +45,15 @@ class CasesFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        val bottomNavigationView: BottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView)
+        bottomNavigationView.selectedItemId=R.id.action_home
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_cases, container, false)
     }
@@ -125,7 +127,6 @@ class CasesFragment : Fragment() {
 
                 passDataCustomer(model)
 
-                //passDataCustomer()
             }
         })
 
@@ -138,30 +139,6 @@ class CasesFragment : Fragment() {
             transaction?.commit()
         }
 
-        val myCallback = object : ItemTouchHelper.SimpleCallback(
-            0,
-            ItemTouchHelper.RIGHT
-        ) {
-
-            // More code here
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ): Boolean {
-                return false
-            }
-
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-
-
-            }
-
-
-        }
-        val myHelper = ItemTouchHelper(myCallback)
-        myHelper.attachToRecyclerView(casesRecyclerView)
     }
 
 
@@ -171,7 +148,7 @@ class CasesFragment : Fragment() {
         if (query!=null){
             val filteredList= ArrayList<TicketCustomerName>()
             for (i in templist){
-                if (i.Title?.lowercase(Locale.ROOT)?.contains(query) == true)
+                if ((i.Title?.lowercase(Locale.ROOT)?.contains(query) == true)or(i.CustomerName?.lowercase(Locale.ROOT)?.contains(query) == true) )
                     filteredList.add(i)
                 Log.d("filteredCases", filteredList.toString())
             }

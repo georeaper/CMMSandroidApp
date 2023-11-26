@@ -8,8 +8,7 @@ import com.gkprojects.cmmsandroidapp.DataClasses.CustomerSelect
 import com.gkprojects.cmmsandroidapp.DataClasses.DashboardCustomerContractsDataClass
 import com.gkprojects.cmmsandroidapp.DataClasses.DashboardCustomerEquipmentDataClass
 import com.gkprojects.cmmsandroidapp.DataClasses.DashboardCustomerTechnicalCasesDataClass
-import com.gkprojects.cmmsandroidapp.DataClasses.Equipment
-import com.gkprojects.cmmsandroidapp.DataClasses.Hospital
+
 import com.gkprojects.cmmsandroidapp.Repository.RepoCustomer
 
 

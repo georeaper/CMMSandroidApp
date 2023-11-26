@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.CaseInsertFragment">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -18,14 +18,19 @@
             android:orientation="vertical">
 
 
+
+
+
+
+
+
+
             <TextView
                 android:id="@+id/tv_customer_case"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:gravity="center"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_margin="5dp"
                 android:text="Customer Select"
                 android:background="@drawable/bordered_rectangle"
                 android:textSize="18sp" />
@@ -34,9 +39,7 @@
                 android:id="@+id/caseInsertTitleTextField"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_margin="5dp"
                 android:hint="@string/title">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -46,14 +49,21 @@
                     />
 
             </com.google.android.material.textfield.TextInputLayout>
+            <TextView
+                android:id="@+id/tv_sn_case"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:layout_margin="5dp"
+                android:text="Equipment Select"
+                android:background="@drawable/bordered_rectangle"
+                android:textSize="18sp" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/caseInsertDesciptionTextField"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_margin="5dp"
                 android:hint="Description">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -64,23 +74,20 @@
             </com.google.android.material.textfield.TextInputLayout>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_height="50dp"
+                android:layout_margin="5dp"
+
 
                 >
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/datePicker_casesInsert_Layout"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="50dp"
                     android:hint="Open Date"
-                    android:layout_marginEnd="5dp"
-
 
                     android:layout_weight="1"
 
-                    style="@style/Widget.Material3.TextInputLayout.FilledBox">
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
 
                     <com.google.android.material.textfield.MaterialAutoCompleteTextView
                         android:id="@+id/datePicker_casesInsert"
@@ -102,13 +109,13 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:hint="Close Date"
-                    android:layout_marginStart="5dp"
-                    style="@style/Widget.Material3.TextInputLayout.FilledBox">
+                    android:layout_margin="5dp"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
 
                     <com.google.android.material.textfield.MaterialAutoCompleteTextView
                         android:id="@+id/closedDate_casesInsert"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="50dp"
                         android:inputType="none"
                         android:textSize="@dimen/textSizeDashboard"
 
@@ -125,16 +132,20 @@
 
 
 
-
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="5dp"
+                >
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/caseInsertSelectUserLayout"
-                android:layout_width="260dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:hint="User Responsible"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_margin="5dp"
 
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
@@ -147,61 +158,44 @@
                     />
 
             </com.google.android.material.textfield.TextInputLayout>
-
-
-
-
-            <LinearLayout
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/yourTextInputLayoutId"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginTop="10dp"
-                >
-                <com.google.android.material.checkbox.MaterialCheckBox
-                    android:layout_width="100dp"
-                    android:id="@+id/caseInsertMaterialCheckbox"
-                    android:layout_height="60dp"
-                    android:text="Active"
-                    android:layout_marginEnd="10dp"
-                    style="@style/Base.Widget.Material3.CompoundButton.CheckBox"/>
+                android:hint="Status"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
-
-
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/yourTextInputLayoutId"
+                <AutoCompleteTextView
+                    android:id="@+id/sp_tickets_autocomplete"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Status"
+                    android:inputType="none"
+                    app:simpleItems="@array/simple_items"
+                    />
 
-
-                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
-
-                    <AutoCompleteTextView
-                        android:id="@+id/sp_tickets_autocomplete"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="none"
-                        app:simpleItems="@array/simple_items"
-                        />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
+            </com.google.android.material.textfield.TextInputLayout>
 
 
             </LinearLayout>
 
 
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:layout_width="100dp"
+                    android:id="@+id/caseInsertMaterialCheckbox"
+                    android:layout_height="50dp"
+                    android:text="Active"
+                    android:gravity="center"
+                    android:layout_margin="5dp"
+                    style="@style/Base.Widget.Material3.CompoundButton.CheckBox"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/caseInsertCommentsTextFieldLayout"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_margin="5dp"
+
                 android:hint="Comments">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -215,7 +209,7 @@
 
 
 
-    </LinearLayout>
+    </ScrollView>
 
 
 </FrameLayout>

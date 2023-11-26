@@ -10,6 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -17,11 +19,14 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-import com.gkprojects.cmmsandroidapp.DataClasses.Contract
+
 import com.gkprojects.cmmsandroidapp.DataClasses.Contracts
 import com.gkprojects.cmmsandroidapp.DataClasses.ContractsCustomerName
+import com.gkprojects.cmmsandroidapp.DataClasses.DetailedContract
 import com.gkprojects.cmmsandroidapp.R
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.navigation.NavigationView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -39,12 +44,28 @@ class ContractFragment : Fragment() {
 
 
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
         val v=inflater.inflate(R.layout.fragment_contract, container, false)
         // Inflate the layout for this fragment
 
         return v
+    }
+
+    override fun onResume() {
+        super.onResume()
+        var activity =requireActivity()
+
+        var drawerLayout = activity.findViewById<DrawerLayout>(R.id.DrawLayout)
+        val navView: NavigationView = activity.findViewById(R.id.navView)
+        val toolbar: MaterialToolbar = activity.findViewById(R.id.topAppBar)
+        toolbar.title="Contract"
+
+
+        var toggle = ActionBarDrawerToggle(activity, drawerLayout, toolbar, R.string.open, R.string.close)
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
     }
 
     @SuppressLint("UseRequireInsteadOfGet", "SuspiciousIndentation")
@@ -62,24 +83,14 @@ class ContractFragment : Fragment() {
         try {
             lifecycleScope.launch {
                 withContext(Dispatchers.Main){
-
-//                    contractViewModel.getCustomerName(it).observe(viewLifecycleOwner, Observer {
-//                        contractAdapter.setData(it as ArrayList<ContractsCustomerName>)
-//                        templist.clear()
-//                        for (i in it.indices){
-//                            templist.add(it[i])
-//                        }
-//                    })
-
                     context?.let {
                         contractViewModel.getCustomerName(it).observe(viewLifecycleOwner, Observer {
                             contractAdapter.setData(it as ArrayList<ContractsCustomerName>)
-                            Log.d("debug123",it.toString())
+
                             templist.clear() // clear the templist,because it keeps populate everytime we open and close Customer Drawer
-                            for(i in it.indices)(
-                                    templist.add(it[i])
-                                    )
-                            Log.d("templist", templist.size.toString())
+                            for(i in it.indices) {
+                                templist.add(it[i])
+                            }
                         })
                     }
 
@@ -106,58 +117,12 @@ class ContractFragment : Fragment() {
         })
         contractAdapter.setOnClickListener(object : ContractAdapter.OnClickListener{
             override fun onClick(position: Int, model: ContractsCustomerName) {
-//                var temp: java.io.Serializable = model as java.io.Serializable
-                Toast.makeText(context,model.toString(),Toast.LENGTH_LONG).show()
+
                 passDataCustomer(model)
 
-                //passDataCustomer()
+
             }
         })
-
-        val myCallback = object: ItemTouchHelper.SimpleCallback(0,
-            ItemTouchHelper.RIGHT) {
-
-            // More code here
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ): Boolean {
-                return false
-            }
-
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-
-
-
-//                try {
-//                    GlobalScope.launch(Dispatchers.IO) {
-//
-//                        context?.let {
-//                            contractViewModel.deleteContract(
-//                                it, templist[viewHolder.absoluteAdapterPosition]
-//                            )
-//                        }
-//
-//                    }
-//                }catch (e:java.lang.Exception){
-//                    Log.d("deleteEquipment",e.toString())
-//                }
-
-                context?.let {
-
-                    contractViewModel.getAllContractData(it).observe(viewLifecycleOwner, Observer {
-                        contractAdapter.setData(it as ArrayList<ContractsCustomerName>)
-
-                    })
-                }
-            }
-
-
-        }
-        val myHelper = ItemTouchHelper(myCallback)
-        myHelper.attachToRecyclerView(contractRecyclerView)
 
 
         val btnFloat=view.findViewById<FloatingActionButton>(R.id.openContractFragment)
@@ -191,12 +156,7 @@ class ContractFragment : Fragment() {
         val bundle = Bundle()
         data.ContractID?.let { bundle.putInt("id", it.toInt()) }
 
-        bundle.putString("hospitalId", data.CustomerID.toString())
-        bundle.putString("contractType", data.ContractType)
-        bundle.putString("contractStatus", data.ContractStatus)
-        bundle.putString("endDate", data.DateEnd)
-        bundle.putString("startDate", data.DateStart)
-        data.Value?.toDouble()?.let { bundle.putDouble("contractValue", it) }
+
         val fragmentManager =parentFragmentManager
         val fragmentTransaction=fragmentManager.beginTransaction()
         val fragment = ContractInsertFragment()

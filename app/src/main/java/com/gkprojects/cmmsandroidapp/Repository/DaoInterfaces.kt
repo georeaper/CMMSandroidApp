@@ -18,13 +18,13 @@ interface CustomerDao {
             "where Equipments.CustomerID = :id")
     fun getDashboardEquipmentsByID(id:Int):LiveData<List<DashboardCustomerEquipmentDataClass>>
 
-    @Query("Select Contracts.ContractID,Contracts.Title ," +
+    @Query("Select Contracts.ContractID,Contracts.Title , " +
             "Contracts.ContractStatus, Contracts.DateEnd ,Contracts.ContractType " +
             "From Contracts Where Contracts.CustomerID = :id ")
     fun getDashboardContractsByID(id :Int):LiveData<List<DashboardCustomerContractsDataClass>>
 
     @Query("Select Tickets.TicketID , Tickets.Title, Tickets.Urgency , Tickets.DateStart , Tickets.DateEnd " +
-            "From Tickets Where Tickets.CustomerID = :id")
+            "From Tickets Where Tickets.CustomerID = :id ")
     fun getDashboardTechnicalCaseByID(id :Int):LiveData<List<DashboardCustomerTechnicalCasesDataClass>>
 
     @Insert
@@ -44,7 +44,7 @@ interface ContractsDao {
     fun getAllContracts(): LiveData<List<Contracts>>
 
     @Query("Select * from Contracts where Contracts.ContractID= :id")
-    fun getContractsById(id:Int):LiveData<List<Contracts>>
+    fun getContractsById(id:Int):LiveData<Contracts>
 
     @Query ("Select CustomerID,Name as CustomerName from Customer")
     fun getCustomerID(): LiveData<List<CustomerSelect>>
@@ -53,21 +53,10 @@ interface ContractsDao {
             "Contracts.Title, Contracts.DateStart, Contracts.DateEnd, Contracts.Value, " +
             "Contracts.Notes, Contracts.Description, Contracts.ContractType, " +
             "Contracts.ContractStatus, Contracts.ContactName " +
-            "FROM Contracts LEFT JOIN Customer ON Contracts.CustomerID = Customer.CustomerID")
+            "FROM Contracts LEFT JOIN Customer ON Contracts.CustomerID = Customer.CustomerID ")
     fun getContractsCustomerNames(): LiveData<List<ContractsCustomerName>>
-    @Query("Select Contracts.Title AS information," +
-            "Customer.Name AS customerName," +
-            "Contracts.DateEnd AS date, "+
-            "Contracts.ContractID AS id,"  +
-            "Contracts.CustomerID  AS customerID, "+
-            "Contracts.ContractID AS contractID,"+
-            "null AS userID,"+
-            "null as assetID,"+
-            "null as workOrderID,"+
-            "null as  technicalCaseID, "+
-            "'Contracts' as setTable " +
-            "FROM Contracts LEFT JOIN Customer ON Contracts.CustomerID = Customer.CustomerID")
-    fun getCustomerNameOnOverview():LiveData<List<OverviewMainData>>
+
+
     @Insert
     fun addContracts(contracts:Contracts)
 
@@ -83,15 +72,36 @@ interface ContractEquipmentsDao {
     @Query("Select * from ContractEquipments")
     fun getAllContractEquipment(): LiveData<List<ContractEquipments>>
 
+    @Query ("Select * from ContractEquipments Where ContractEquipments.ContractID = :id")
+    fun getContractEquipmentByID(id :Int):LiveData<List<ContractEquipments>>
+    @Query ("Select * from ContractEquipments Where ContractEquipments.ContractEquipmentID = :id")
+    fun getContractEquipmentByEquipmentID(id :Int):LiveData<ContractEquipments>
 
+    @Query("SELECT COUNT(*) FROM ContractEquipments WHERE ContractID = :contractID AND EquipmentID = :equipmentID")
+    fun count(contractID: Int, equipmentID: Int): Int
 
     @Insert
-    fun addContractEquipments(contracts:Contracts)
+    fun addContractEquipments(contractEquipments:ContractEquipments)
+
+    @Query("SELECT ContractEquipments.ContractID, " +
+            "Equipments.EquipmentID as equipmentID, Equipments.SerialNumber as serialNumber, Equipments.Model as model, " +
+            "ContractEquipments.ContractEquipmentID, " +
+            "ContractEquipments.Value " +
+            ", ContractEquipments.Visits " +
+            ", ContractEquipments.LastModified ," +
+            " ContractEquipments.DateCreated, " +
+            "ContractEquipments.Version " +
+            "FROM ContractEquipments " +
+            "LEFT JOIN Equipments ON ContractEquipments.EquipmentID = Equipments.EquipmentID " +
+            "WHERE ContractEquipments.ContractID = :id ")
+    fun getDetailedContractByID(id: Int):LiveData<List<DetailedContract>>
+
+
 
     @Update
-    fun updateContractEquipments(contracts:Contracts)
+    fun updateContractEquipments(contractEquipments:ContractEquipments)
     @Delete
-    fun deleteContractEquipments(contracts:Contracts)
+    fun deleteContractEquipments(contractEquipments:ContractEquipments)
 
 }
 @Dao
@@ -126,7 +136,10 @@ interface EquipmentsDao{
     )
      fun getCustomerName():LiveData<List<EquipmentSelectCustomerName>>
 
-
+    @Query(" Select EquipmentID,SerialNumber,Model,CustomerID " +
+            " From Equipments " +
+            " Where CustomerID= :Customerid ")
+    fun selectEquipmentByCustomerID(Customerid : Int) : LiveData<List<EquipmentListInCases>>
 
     @Query("Select * FROM Equipments WHERE EquipmentID= :id")
      fun SelectRecordById(id :Int) : LiveData<Equipments>
@@ -253,22 +266,22 @@ interface TicketsDao {
     @Query ("Select CustomerID,Name as CustomerName from Customer")
     fun getCustomerID():LiveData<List<CustomerSelect>>
 
-    @Query("Select Tickets.TicketID,Tickets.Title,Tickets.Active,Tickets.DateStart,Tickets.Urgency,Customer.Name AS CustomerName,Tickets.UserID," +
+    @Query("Select Tickets.TicketID,Tickets.Title,Tickets.Active,Tickets.DateStart,Tickets.Urgency,Customer.Name AS CustomerName,Tickets.UserID, Equipments.SerialNumber AS SerialNumber , " +
             "Tickets.CustomerID,Tickets.EquipmentID "+
             "From Tickets " +
-            "Left JOIN Customer ON Tickets.CustomerID = Customer.CustomerID"
+            "Left JOIN Customer ON Tickets.CustomerID = Customer.CustomerID " +
+            "Left JOIN Equipments ON Tickets.EquipmentID = Equipments.EquipmentID "
+
     )
     fun getCustomerName():LiveData<List<TicketCustomerName>>
 
+
+
     @Query
-        ("Select Equipments.SerialNumber AS information, Customer.Name as customerName ,Tickets.DateStart as date,"+
-            " Tickets.TicketID as id,Tickets.CustomerID as customerID,null as ContractID,Tickets.UserID as userID,"+
-            "Tickets.EquipmentID as assetID, null as workOrderID," +
-            " Tickets.TicketID as technicalCaseID ,'Tickets' as setTable "+
-            "From Tickets LEFT JOIN Customer ON Tickets.CustomerID= Customer.CustomerID "+
-            "LEFT Join Equipments ON Tickets.EquipmentID = Equipments.EquipmentID " +
-            " where Tickets.Urgency = 'RED' "
-    )
+        ("Select Tickets.Urgency , Customer.Name as CustomerName ,Tickets.DateStart ," +
+            "Tickets.DateEnd,Tickets.Title,Tickets.Description,"+
+            "Tickets.UserID ,Tickets.EquipmentID , Tickets.TicketID ,Tickets.CustomerID "+
+            "From Tickets LEFT JOIN Customer ON Tickets.CustomerID= Customer.CustomerID " )
     fun getDateForOverview():LiveData<List<OverviewMainData>>
     @Insert
     fun addTickets(tickets: Tickets)

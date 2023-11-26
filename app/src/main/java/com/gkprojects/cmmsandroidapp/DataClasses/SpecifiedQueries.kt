@@ -4,7 +4,8 @@ import androidx.room.ColumnInfo
 import androidx.room.PrimaryKey
 
 
-data class CustomerSelect( var CustomerID : Int,var CustomerName: String)
+data class CustomerSelect( var CustomerID : Int,
+                           var CustomerName: String)
 
 
 
@@ -45,6 +46,7 @@ data class TicketCustomerName(
      var Urgency :String?,
      var CustomerName: String?,
      var UserID :String?,
+     var SerialNumber : String?,
      var CustomerID :String?,
      var EquipmentID :String?
 
@@ -75,6 +77,29 @@ data class DashboardCustomerContractsDataClass(
     var ContractStatus: String?,
     var DateEnd: String?,
     var ContractType: String?
+
+)
+data class EquipmentListInCases(
+    var EquipmentID :Int?,
+    var SerialNumber :String?,
+    var Model :String?,
+    var CustomerID : Int?
+) {
+    override fun toString(): String {
+        return SerialNumber ?: ""
+    }
+}
+data class DetailedContract(
+    var ContractID: Int?,
+    var equipmentID: Int?,
+    var serialNumber: String?,
+    var model: String?,
+    var ContractEquipmentID : Int?,
+    var Value : Double?,
+    var Visits : String?,
+    var LastModified : String?,
+    var DateCreated: String?,
+    var Version : String?
 
 )
 

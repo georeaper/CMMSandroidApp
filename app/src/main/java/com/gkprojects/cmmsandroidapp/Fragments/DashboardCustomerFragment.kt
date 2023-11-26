@@ -29,7 +29,7 @@ import com.gkprojects.cmmsandroidapp.R
 import com.gkprojects.cmmsandroidapp.databinding.FragmentDashboardCustomerBinding
 import com.gkprojects.cmmsandroidapp.databinding.FragmentEditCustomerBinding
 import com.google.android.material.appbar.MaterialToolbar
-
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class DashboardCustomerFragment : Fragment() {
@@ -53,7 +53,8 @@ class DashboardCustomerFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        val bottomNavigationView: BottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView)
+        bottomNavigationView.selectedItemId=R.id.action_home
     }
 
     override fun onResume() {

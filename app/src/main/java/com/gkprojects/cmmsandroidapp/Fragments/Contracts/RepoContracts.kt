@@ -55,7 +55,7 @@ class RepoContracts {
 
         }
         fun getCustomerIdData(context: Context): LiveData<List<CustomerSelect>> {
-
+            userDatabase= intialiseDB(context)
 
             return userDatabase!!.ContractsDao().getCustomerID()
 
@@ -64,19 +64,48 @@ class RepoContracts {
         @SuppressLint("SuspiciousIndentation")
         fun getListContracts(context: Context): LiveData<List<ContractsCustomerName>>{
             userDatabase =intialiseDB(context)
-                var tempLog =userDatabase!!.ContractsDao().getContractsCustomerNames()
-
-                    Log.d("tag34",tempLog.toString())
-
-            return  tempLog
+            return userDatabase!!.ContractsDao().getContractsCustomerNames()
 
         }
-
-        fun getContractsOverview(context: Context):LiveData<List<OverviewMainData>>{
-
+        fun getContractsById(context: Context,id :Int): LiveData<Contracts>{
             userDatabase= intialiseDB(context)
-            return userDatabase!!.ContractsDao().getCustomerNameOnOverview()
+            return userDatabase!!.ContractsDao().getContractsById(id)
         }
+        fun getContractEquipmentsById(context: Context,id : Int):LiveData<List<ContractEquipments>>{
+            userDatabase= intialiseDB(context)
+            return userDatabase!!.ContractEquipmentsDao().getContractEquipmentByID(id)
+        }
+        fun getDetailedContractByID(context: Context, id : Int):LiveData<List<DetailedContract>>{
+            userDatabase= intialiseDB(context)
+            return userDatabase!!.ContractEquipmentsDao().getDetailedContractByID(id)
+        }
+         fun deleteContractEquipment(context: Context,contractEquipment : ContractEquipments){
+            userDatabase= intialiseDB(context)
+            userDatabase!!.ContractEquipmentsDao().deleteContractEquipments(contractEquipment)
+
+        }
+
+        fun getContractEquipmentByContractEquipmentID(context: Context, id: Int): LiveData<ContractEquipments> {
+            userDatabase= intialiseDB(context)
+            return userDatabase!!.ContractEquipmentsDao().getContractEquipmentByEquipmentID(id)
+        }
+
+        fun insertContractEquipmentIfNotExists(context: Context, contractEquipment: ContractEquipments) {
+            userDatabase = intialiseDB(context)
+
+            CoroutineScope(Dispatchers.IO).launch {
+                val count = userDatabase!!.ContractEquipmentsDao().count(
+                    contractEquipment.ContractID ?: -1,
+                    contractEquipment.EquipmentID ?: -1
+                )
+
+                if (count == 0) {
+                    userDatabase!!.ContractEquipmentsDao().addContractEquipments(contractEquipment)
+                }
+            }
+        }
+
+
     }
 
 

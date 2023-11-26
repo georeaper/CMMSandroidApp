@@ -31,6 +31,7 @@ import com.gkprojects.cmmsandroidapp.Models.EquipmentVM
 
 import com.gkprojects.cmmsandroidapp.R
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import kotlinx.coroutines.*
@@ -183,7 +184,7 @@ class EquipmentFragment : Fragment() {
     private fun filterList(query:String){
         val filteredList= java.util.ArrayList<EquipmentSelectCustomerName>()
         for (i in templist){
-            if(i.Model?.lowercase(Locale.ROOT)?.contains(query)==true)
+            if((i.Model?.lowercase(Locale.ROOT)?.contains(query)==true) or (i.SerialNumber?.lowercase(Locale.ROOT)?.contains(query) == true)or(i.CustomerName?.lowercase(Locale.ROOT)?.contains(query) == true))
 
                 filteredList.add(i)
             Log.d("dataEquipment", filteredList.toString())
@@ -201,21 +202,7 @@ class EquipmentFragment : Fragment() {
     private fun passDataEquipment(data : EquipmentSelectCustomerName){
         //var temp: java.io.Serializable = data as java.io.Serializable
         val bundle = Bundle()
-        data.CustomerID?.let { bundle.putInt("HospitalId", it) }
-        data.EquipmentID?.let{bundle.putInt("EquipmentId",it)}
-        //bundle.putString("id", data.hospitalID.toString())
-        bundle.putString("model", data.Model)
-        bundle.putString("category", data.EquipmentCategory)
-        bundle.putString("manufacturer", data.Manufacturer)
-        bundle.putString("sn", data.SerialNumber)
-        bundle.putString("status", data.EquipmentStatus)
-        bundle.putString("installationDate", data.InstallationDate)
-        bundle.putString("Warranty", data.Warranty)
-        bundle.putString("Description", data.Description)
-        bundle.putString("EquipmentVersion", data.EquipmentVersion)//version
-
-
-
+        data.EquipmentID?.let { bundle.putInt("EquipmentId", it) }
         val fragmentManager =parentFragmentManager
         val fragmentTransaction=fragmentManager.beginTransaction()
         val fragment =EquipmentInsertFragment()
@@ -252,6 +239,8 @@ class EquipmentFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val bottomNavigationView: BottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView)
+        bottomNavigationView.selectedItemId=R.id.action_home
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_equipment, container, false)
     }

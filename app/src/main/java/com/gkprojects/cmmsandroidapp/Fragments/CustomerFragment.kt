@@ -21,10 +21,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gkprojects.cmmsandroidapp.Adapter.CustomerAdapter
 import com.gkprojects.cmmsandroidapp.DataClasses.Customer
-import com.gkprojects.cmmsandroidapp.DataClasses.Hospital
+
 import com.gkprojects.cmmsandroidapp.Models.CustomerVM
 import com.gkprojects.cmmsandroidapp.R
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import kotlinx.coroutines.Dispatchers
@@ -49,6 +50,8 @@ class CustomerFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val bottomNavigationView: BottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView)
+        bottomNavigationView.selectedItemId=R.id.action_home
 
     }
 
@@ -118,7 +121,7 @@ class CustomerFragment : Fragment() {
                 //Toast.makeText(context,model.toString(),Toast.LENGTH_LONG).show()
                 passDataCustomer(model)
 
-                //passDataCustomer()
+
             }
         })
 
@@ -131,40 +134,6 @@ class CustomerFragment : Fragment() {
             transaction?.commit()
         }
 
-//        val myCallback = object: ItemTouchHelper.SimpleCallback(0,
-//            ItemTouchHelper.RIGHT) {
-//
-//            // More code here
-//            override fun onMove(
-//                recyclerView: RecyclerView,
-//                viewHolder: RecyclerView.ViewHolder,
-//                target: RecyclerView.ViewHolder
-//            ): Boolean {
-//                return false
-//            }
-
-
-//            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-//
-//
-//                lifecycleScope.launch(Dispatchers.IO) {
-//
-//                    context?.let { customerViewModel.deleteCustomer(it, templist[viewHolder.absoluteAdapterPosition]) }
-//
-//                }
-//
-//                context?.let {
-//                    customerViewModel.getAllCustomerData(it).observe(viewLifecycleOwner, Observer {
-//                        customerAdapter.setData(it as ArrayList<Customer>)
-//
-//                    })
-//                }
-//            }
-
-
-//        }
-//        val myHelper = ItemTouchHelper(myCallback)
-//        myHelper.attachToRecyclerView(customerRecyclerView)
 
     }
 

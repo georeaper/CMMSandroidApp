@@ -45,10 +45,8 @@ class CustomerAdapter(private val context: Context, private var customerList:Arr
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentitem = customerList[position]
         holder.customerName.text = currentitem.Name
-//        holder.customerAddress.text = currentitem.Address
-//        holder.customerEmail.text=currentitem.Email
-//        holder.customerPhone.text=currentitem.Phone
-        val pos=holder.absoluteAdapterPosition
+
+       // val pos=holder.absoluteAdapterPosition
         holder.itemView.setOnClickListener {
             if (onClickListener != null) {
                 onClickListener!!.onClick(position, currentitem )

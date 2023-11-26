@@ -6,95 +6,134 @@ import android.app.Dialog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 import com.gkprojects.cmmsandroidapp.Adapter.RvAdapterFindCustomers
 import com.gkprojects.cmmsandroidapp.DataClasses.CustomerSelect
-import com.gkprojects.cmmsandroidapp.DataClasses.Equipment
+
 import com.gkprojects.cmmsandroidapp.DataClasses.Equipments
+import com.gkprojects.cmmsandroidapp.Fragments.Contracts.ContractFragment
 
 
 import com.gkprojects.cmmsandroidapp.Models.EquipmentVM
 import com.gkprojects.cmmsandroidapp.R
+import com.gkprojects.cmmsandroidapp.databinding.FragmentContractInsertBinding
+import com.gkprojects.cmmsandroidapp.databinding.FragmentEquipmentBinding
+import com.gkprojects.cmmsandroidapp.databinding.FragmentEquipmentInsertBinding
+import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.textfield.MaterialAutoCompleteTextView
+import com.google.android.material.textfield.TextInputEditText
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.time.Duration
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 
 class EquipmentInsertFragment : Fragment() {
 
     private lateinit var equipmentViewModel:EquipmentVM
+    private lateinit var toolbar: MaterialToolbar
+    private lateinit var binding : FragmentEquipmentInsertBinding
     var dialog: Dialog? = null
     private var rvAdapter: RvAdapterFindCustomers? = null
-    lateinit var filterText : SearchView
-    var hospId : Int?= null
+    private lateinit var filterText : SearchView
+    private var customerId : Int?= null
+    private var equipmentId : Int?= null
+    private var lastModified : String? = null
+    private var dateCreated : String? = null
+    private var version : String? = null
+    private var customerSearch =ArrayList<CustomerSelect>()
 
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        val bottomNavigationView: BottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView)
+        bottomNavigationView.selectedItemId=R.id.action_home
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_equipment_insert, container, false)
+        binding = FragmentEquipmentInsertBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     @SuppressLint("SuspiciousIndentation")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         equipmentViewModel= ViewModelProvider(this)[EquipmentVM::class.java]
-        var equipmentID :Int? = null
-        val serialNumber=view.findViewById<EditText>(R.id.et_equipment_sn)
-        val model=view.findViewById<EditText>(R.id.et_equipment_model)
-        val manufacturer=view.findViewById<EditText>(R.id.et_equipment_Manufacturer)
-        val warranty=view.findViewById<EditText>(R.id.et_equipment_warranty)
-        val category=view.findViewById<EditText>(R.id.et_equipment_category)
-        val installation=view.findViewById<EditText>(R.id.et_equipment_installation)
-        val status=view.findViewById<EditText>(R.id.et_equipment_status)
-        val version_equipment=view.findViewById<EditText>(R.id.et_equipment_version)
+
+        
+        val args =this.arguments
+        equipmentId= args?.getInt("EquipmentId")
+        toolbar = requireActivity().findViewById(R.id.topAppBar)
+        toolbar.title = " Edit Equipment"
+        val navigationIcon = toolbar.navigationIcon
+        (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
+        toolbar.setNavigationOnClickListener {
+            toolbar.navigationIcon = navigationIcon
+            val fragmentManager =parentFragmentManager
+            val fragmentTransaction=fragmentManager.beginTransaction()
+            val fragment = EquipmentFragment()
+            fragmentTransaction.replace(R.id.frameLayout1,fragment)
+            fragmentTransaction.commit()
+
+        }
+
+
+        val serialNumber=view.findViewById<TextInputEditText>(R.id.equipment_insert_textInputEdittext_sn)
+        val model=view.findViewById<TextInputEditText>(R.id.equipment_insert_textInputEdittext_model)
+        val manufacturer=view.findViewById<MaterialAutoCompleteTextView>(R.id.equipment_insert_autoCompleteTextView_manufacturer)
+        val warranty=view.findViewById<TextInputEditText>(R.id.equipment_insert_textInputEdittext_warranty)
+        val category=view.findViewById<MaterialAutoCompleteTextView>(R.id.equipment_insert_autoCompleteTextView_category)
+        val installation=view.findViewById<MaterialAutoCompleteTextView>(R.id.equipment_insert_autoCompleteTextView_installation)
+        val status=view.findViewById<MaterialAutoCompleteTextView>(R.id.equipment_insert_autoCompleteTextView_status)
+        val version_equipment=view.findViewById<TextInputEditText>(R.id.equipment_insert_textInputEdittext_version)
         val customerNameTV=view.findViewById<TextView>(R.id.tv_select_customer)
 
+        //fetching data based on equipmentID
+
+        if (equipmentId!=null){
+            equipmentViewModel.getRecordById(requireContext(),equipmentId!!).observe(viewLifecycleOwner,
+                Observer {
+                    serialNumber.setText(it.SerialNumber);
+                    model.setText(it.Model)
+                    manufacturer.setText(it.Manufacturer)
+                    warranty.setText(it.Warranty)
+                    category.setText(it.EquipmentCategory)
+                    installation.setText(it.InstallationDate)
+                    status.setText(it.EquipmentStatus)
+                    version_equipment.setText(it.EquipmentVersion)
+                    equipmentId=it.EquipmentID
+                    customerId=it.CustomerID!!.toInt()
+                    dateCreated=it.DateCreated
+                    Log.d("CustomerID2","$customerId")
+                    setCustomer(customerId!!)
+                })
+
+        }
 
 
-        val args =this.arguments
-        val id= args?.getInt("EquipmentId")
-        val fgId=args?.getInt("HospitalId")
-        serialNumber.setText(args?.getString("sn"))
-        model.setText(args?.getString("model"))
-        manufacturer.setText(args?.getString("manufacturer"))
-        warranty.setText(args?.getString("Warranty"))
-        category.setText(args?.getString("category"))
-        installation.setText(args?.getString("installationDate"))
-        status.setText(args?.getString("status"))
-        version_equipment.setText(args?.getString("EquipmentVersion"))
-        val description = args?.getString("Description")
 
-        //________________________________________________
-        equipmentID=id
-
-        // in the below Line i am trying to fetch customer Data id and Name so i can use pass it as a FgnKey in the table
-        var customerSearch =ArrayList<CustomerSelect>()
-
-        context?.let { equipmentViewModel.getCustomerId(it).observe(viewLifecycleOwner,
-            Observer{
-
-                customerSearch= it as ArrayList<CustomerSelect>
-                getValuesFromdb(customerSearch,fgId,customerNameTV)
-
-        }) }
-
-        Log.d("customerSelect",customerSearch.toString())
 
 
             customerNameTV.setOnClickListener {
@@ -140,7 +179,7 @@ class EquipmentInsertFragment : Fragment() {
                 rvAdapter!!.setOnClickListener(object :RvAdapterFindCustomers.OnClickListener{
                     override fun onClick(position: Int, model: CustomerSelect) {
                         var strtemp: String = model.CustomerName
-                        hospId = model.CustomerID
+                        customerId = model.CustomerID
 
                         customerNameTV.text = strtemp
                         dialog!!.dismiss();
@@ -151,79 +190,6 @@ class EquipmentInsertFragment : Fragment() {
 
 
             }
-
-        val btnsubmit : Button = view.findViewById(R.id.btn_equipment_submit)
-        val btnclear : Button =view.findViewById(R.id.btn_equipment_clear)
-        btnsubmit.setOnClickListener {
-            if(hospId!=null) {
-                var equipment = Equipments(
-                    null,
-                    null,
-                    null,
-                    serialNumber.text.toString(),
-                    model.text.toString(),
-                    manufacturer.text.toString(),
-                    null,
-                    description.toString(),
-                    version_equipment.text.toString(),
-                    category.text.toString(),
-                    warranty.text.toString(),
-                    status.text.toString(),
-                    installation.text.toString(),
-                    null,null,null,hospId
-
-                )
-                if (equipmentID == null) {
-                    this.context?.let { it1 -> equipmentViewModel.insert(it1, equipment) }
-
-                    serialNumber.text.clear()
-                    model.text.clear()
-                    manufacturer.text.clear()
-                    warranty.text.clear()
-                    category.text.clear()
-                    installation.text.clear()
-                    status.text.clear()
-                    version_equipment.text.clear()
-                    customerNameTV.text="Select Customer"
-                } else {
-
-                    equipment = Equipments(
-                        equipmentID,
-                        null,
-                        null,serialNumber.text.toString(),model.text.toString(),manufacturer.text.toString(),
-                        null,null,
-                        version_equipment.text.toString(),
-                        category.text.toString(),
-                        warranty.text.toString(),
-                        status.text.toString(),
-                        installation.text.toString(),
-                        "null",null,null,
-                        fgId
-                    )
-                    this.context?.let { it1 -> equipmentViewModel.updateEquipment(it1, equipment) }
-                    Toast.makeText(context, "Updated", Toast.LENGTH_SHORT).show()
-                }
-            }
-            else{
-                Toast.makeText(context,"Select Customer",Toast.LENGTH_SHORT).show()
-            }
-
-
-        }
-        btnclear.setOnClickListener {
-            if(equipmentID==null){
-            serialNumber.text.clear()
-            model.text.clear()
-            manufacturer.text.clear()
-            warranty.text.clear()
-            category.text.clear()
-            installation.text.clear()
-            status.text.clear()
-            version_equipment.text.clear()
-            }else{
-                Toast.makeText(context,"You can't Delete now",Toast.LENGTH_SHORT).show()
-            }
-        }
 
 
     }
@@ -247,7 +213,7 @@ class EquipmentInsertFragment : Fragment() {
 
     }
     fun getValuesFromdb(data : ArrayList<CustomerSelect>, id :Int?,tv :TextView){
-        var customerNameIndexed = mutableMapOf<Int, String>()
+        val customerNameIndexed = mutableMapOf<Int, String>()
 
         if(isInt(id)) {
             for (i in data.indices) {
@@ -258,13 +224,148 @@ class EquipmentInsertFragment : Fragment() {
             tv.text="empty"
 
     }
+    private fun setCustomer(id : Int){
+        val customerTextView=binding.tvSelectCustomer
+
+        lifecycleScope.launch {
+            try {
+                withContext(Dispatchers.Main){
+                    equipmentViewModel.getCustomerId(requireContext()).observe(viewLifecycleOwner,
+                        Observer {
+                            customerSearch = it as ArrayList<CustomerSelect>
+                            Log.d("CustomerID3","$customerId")
+                            getValuesFromdb(customerSearch, id, customerTextView)
+                        })
+                }
+
+            }catch (e: Exception){
+                Log.d("catchEquipment",e.toString())
+            }
+        }
+
+    }
 
     private fun isInt(id: Int?): Boolean {
 
         return id is Int
     }
+    fun getCurrentDateAsString(): String {
+        // Get the current date
+        val currentDate = LocalDate.now()
+
+        // Define a format for the date (optional, you can skip this step if you don't need a specific format)
+        val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+
+        // Format the date to a string
+        val formattedDate = currentDate.format(formatter)
+
+        return formattedDate
+    }
 
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        // Clear the existing menu items
+        menu.clear()
+
+        // Inflate the new menu for the fragment
+        inflater.inflate(R.menu.menu_main, menu)
+        toolbar.setNavigationIcon(R.drawable.baseline_arrow_back_24)
+
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+    @Deprecated("Deprecated in Java")
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        // Notify the system that the fragment has an options menu
+        setHasOptionsMenu(true)
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.submit_menu_btn -> {
+
+
+                if (customerId!=null){
+                    updateData()
+
+                }else{
+                    insertData()
+
+                }
+
+                return true
+            }
+            R.id.cancel_menu_btn -> {
+                Toast.makeText(context,"Delete is UNAVAILABLE due to credentials , ", Toast.LENGTH_SHORT).show()
+                // Handle menu item 2
+                return true
+            }
+
+            else -> return super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun insertData() {
+        lastModified = getCurrentDateAsString()
+        dateCreated = getCurrentDateAsString()
+        val insertEquipment = Equipments(equipmentId,
+            null,
+            null,
+            binding.equipmentInsertTextInputEdittextSn.text.toString(),
+            binding.equipmentInsertTextInputEdittextModel.text.toString(),
+            binding.equipmentInsertAutoCompleteTextViewManufacturer.text.toString(),
+            null,
+            binding.equipmentInsertTextInputEdittextDescription.text.toString(),
+            binding.equipmentInsertTextInputEdittextVersion.text.toString(),
+            binding.equipmentInsertAutoCompleteTextViewCategory.text.toString(),
+            binding.equipmentInsertTextInputEdittextWarranty.text.toString(),
+            binding.equipmentInsertAutoCompleteTextViewStatus.text.toString(),
+            binding.equipmentInsertAutoCompleteTextViewInstallation.text.toString(),
+            lastModified,
+            dateCreated,
+            version,
+            customerId
+
+            )
+
+        GlobalScope.launch(Dispatchers.IO) {equipmentViewModel.insert(requireContext(),insertEquipment)  }
+        val fragmentManager =parentFragmentManager
+        val fragmentTransaction=fragmentManager.beginTransaction()
+        val fragment = EquipmentFragment()
+        fragmentTransaction.replace(R.id.frameLayout1,fragment)
+        fragmentTransaction.commit()
+    }
+
+    private fun updateData() {
+        lastModified = getCurrentDateAsString()
+        //dateCreated = getCurrentDateAsString()
+        val updateEquipment = Equipments(equipmentId,
+            null,
+            null,
+            binding.equipmentInsertTextInputEdittextSn.text.toString(),
+            binding.equipmentInsertTextInputEdittextModel.text.toString(),
+            binding.equipmentInsertAutoCompleteTextViewManufacturer.text.toString(),
+            null,
+            binding.equipmentInsertTextInputEdittextDescription.text.toString(),
+            binding.equipmentInsertTextInputEdittextVersion.text.toString(),
+            binding.equipmentInsertAutoCompleteTextViewCategory.text.toString(),
+            binding.equipmentInsertTextInputEdittextWarranty.text.toString(),
+            binding.equipmentInsertAutoCompleteTextViewStatus.text.toString(),
+            binding.equipmentInsertAutoCompleteTextViewInstallation.text.toString(),
+            lastModified,
+            dateCreated,
+            version,
+            customerId
+        )
+
+        GlobalScope.launch(Dispatchers.IO) {equipmentViewModel.updateEquipment(requireContext(),updateEquipment)  }
+
+        val fragmentManager =parentFragmentManager
+        val fragmentTransaction=fragmentManager.beginTransaction()
+        val fragment = EquipmentFragment()
+        fragmentTransaction.replace(R.id.frameLayout1,fragment)
+        fragmentTransaction.commit()
+    }
 
 
 }

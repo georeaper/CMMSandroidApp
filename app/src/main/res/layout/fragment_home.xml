@@ -14,131 +14,186 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
              android:background="@color/white">
-
             <TextView
-                android:id="@+id/homeTvTitle"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left|bottom"
-                android:layout_weight="1"
-                android:background="@color/BackgroundAppColor"
-                android:gravity="center"
-                android:padding="4dp"
-                android:text="Overview"
-                android:textColor="@color/AppColorText"
-                android:textSize="18sp"
-
+                android:id="@+id/tv_greeting_view_top"
+                android:layout_width="wrap_content"
+                android:layout_height="80dp"
+                android:text="Today is 26/11/2023"
+                android:textSize="25sp"
+                android:gravity="center_vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.divider.MaterialDivider
-                android:id="@+id/home_divider"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout"
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_greeting_view_top">
 
-                app:layout_constraintTop_toBottomOf="@+id/homeTvTitle"
-                tools:layout_editor_absoluteX="0dp" />
+                <TextView
+                    android:id="@+id/tv_greeting_view_technicalCases"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:textSize="20sp"
+                    android:text="Technical Cases this month"
+                    android:gravity="center_vertical"
+                    android:padding="10dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="0.8" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:text="16"
+                    android:textSize="25sp"
+                    android:gravity="center"
+                    android:id="@+id/tv_greeting_view_technicalCases_number"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tv_greeting_view_technicalCases"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="0.2" />
+
+                <TextView
+                    android:id="@+id/tv_greeting_view_downtime"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:gravity="center_vertical"
+                    android:text="Total Downtime(hrs) this month"
+                    android:textSize="20sp"
+                    android:padding="10dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_greeting_view_technicalCases"
+                    app:layout_constraintWidth_percent="0.8" />
+
+                <TextView
+                    android:id="@+id/tv_greeting_view_downtime_number"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:text="52"
+                    android:textSize="25sp"
+
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tv_greeting_view_downtime"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_greeting_view_technicalCases_number"
+                    app:layout_constraintWidth_percent="0.2" />
+
+                <TextView
+                    android:id="@+id/tv_greeting_view_maintenances"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:gravity="center_vertical"
+                    android:text="Maintenances completed this month"
+                    android:textSize="20sp"
+                    android:padding="10dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_greeting_view_downtime"
+                    app:layout_constraintWidth_percent="0.8" />
+
+                <TextView
+                    android:id="@+id/tv_greeting_view_maintenances_number"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:text="3"
+                    android:textSize="25sp"
+
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tv_greeting_view_maintenances"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_greeting_view_downtime_number"
+                    app:layout_constraintWidth_percent="0.2" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/calendar_tv_calendar"
+                android:layout_width="0dp"
+                android:paddingStart="15dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/AppColor"
+                android:gravity="center_vertical"
+                android:padding="5dp"
+                android:text="Calendar"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toStartOf="@+id/img_calendar_view"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+            <ImageButton
+                android:id="@+id/img_calendar_view"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@color/AppColor"
+                app:tint="@color/white"
+                android:layout_marginEnd="5dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+                app:srcCompat="@drawable/remove_expandable_icon" />
+
+            <CalendarView
+                android:id="@+id/calendarView_calendar_view"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:padding="10dp"
+                android:background="@color/teal_700"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/calendar_tv_calendar" />
+
+            <TextView
+                android:id="@+id/technicalCases_tv_content_item_view"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/AppColor"
+                android:gravity="center_vertical"
+                android:paddingStart="15dp"
+                android:text="Technical Cases"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toStartOf="@+id/img_content_item_view"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/calendarView_calendar_view" />
+
+            <ImageButton
+                android:id="@+id/img_content_item_view"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@color/AppColor"
+                app:tint="@color/white"
+                android:layout_marginEnd="5dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/calendarView_calendar_view"
+                app:srcCompat="@drawable/remove_expandable_icon" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewHomeWorkOrder"
                 android:layout_width="match_parent"
                 android:layout_height="500dp"
                 android:layout_margin="5dp"
+                android:visibility="visible"
 
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/home_divider" />
+                app:layout_constraintTop_toBottomOf="@+id/technicalCases_tv_content_item_view" />
 
-            <!--            <TextView-->
-<!--                android:id="@+id/technicalCasesOverview"-->
-<!--                android:layout_width="250dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_gravity="center"-->
-<!--                android:layout_weight="1"-->
-<!--                android:background="@drawable/full_color_background"-->
-<!--                android:gravity="center"-->
-<!--                android:padding="4dp"-->
-<!--                android:text="Technical Cases"-->
-<!--                android:textColor="@color/white"-->
-<!--                android:textSize="25sp"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@id/recyclerViewHomeWorkOrder" />-->
 
-<!--            <androidx.recyclerview.widget.RecyclerView-->
-<!--                android:id="@+id/recyclerViewTechnicalCases"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="250dp"-->
-<!--                android:layout_margin="5dp"-->
-<!--                android:layout_marginTop="8dp"-->
-<!--                android:background="@drawable/bordered_rectangle"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/technicalCasesOverview" />-->
-<!--            <TextView-->
-<!--                android:id="@+id/downTimeOverview"-->
-<!--                android:layout_width="250dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_gravity="center"-->
-<!--                android:layout_weight="1"-->
-<!--                android:background="@drawable/full_color_background"-->
-<!--                android:gravity="center"-->
-<!--                android:padding="4dp"-->
-<!--                android:text="Downtime Assets"-->
-<!--                android:textColor="@color/white"-->
-<!--                android:textSize="25sp"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@id/recyclerViewTechnicalCases" />-->
-
-<!--            <androidx.recyclerview.widget.RecyclerView-->
-<!--                android:id="@+id/recyclerViewDownTime"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="250dp"-->
-<!--                android:layout_margin="5dp"-->
-<!--                android:layout_marginTop="8dp"-->
-<!--                android:background="@drawable/bordered_rectangle"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/downTimeOverview" />-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/scheduling"-->
-<!--                android:layout_width="250dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_gravity="center"-->
-<!--                android:layout_weight="1"-->
-<!--                android:background="@drawable/full_color_background"-->
-<!--                android:gravity="center"-->
-<!--                android:padding="4dp"-->
-<!--                android:text="Upcoming"-->
-<!--                android:textColor="@color/white"-->
-<!--                android:textSize="25sp"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@id/recyclerViewDownTime" />-->
-
-<!--            <androidx.recyclerview.widget.RecyclerView-->
-<!--                android:id="@+id/recyclerscheduling"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="250dp"-->
-<!--                android:layout_margin="5dp"-->
-<!--                android:layout_marginTop="8dp"-->
-<!--                android:background="@drawable/bordered_rectangle"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/scheduling" />-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </ScrollView>
-
-
-
 
     </FrameLayout>
 

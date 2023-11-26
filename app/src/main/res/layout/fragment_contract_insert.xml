@@ -6,162 +6,344 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.Contracts.ContractInsertFragment"
     android:orientation="vertical">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="wrap_content">
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal"
+                android:layout_margin="5dp"
+                android:background="@drawable/round_corners"
+                >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_weight="8.5"
+                    android:textSize="20sp"
+                    android:layout_margin="5dp"
+                    android:padding="10dp"
+                    android:text="Contract Information"
+                    android:gravity="center|left"
 
-        <TextView
+                    android:textColor="@color/AppColor"/>
+                <ImageButton
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:id="@+id/contractInsertLinearLayoutInfoImgButton"
+                    android:layout_gravity="center"
+                    android:layout_margin="5dp"
+                    android:background="@color/BackgroundElementsColor"
+                    android:src="@drawable/add_expandable_icon"
+                    android:layout_weight="1"
+                    app:tint="@color/AppColor" />
+
+            </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/contract_insert_linearLayout_Info"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <TextView
             android:id="@+id/tv_customerName_contract"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginBottom="5dp"
-            android:background="@color/lightGreyBlue"
+            android:layout_height="50dp"
             android:gravity="center"
-            android:text="Select Customer"
-            android:textSize="20sp" />
+            android:layout_margin="5dp"
+            android:hint="Customer Name"
+            android:text="Customer Select"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:background="@drawable/bordered_rectangle"
+            android:textSize="18sp" />
 
-        <EditText
+            <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/etTitleContracts"
-            android:hint="Simvasi Metropolitan 34/2"
-            android:textSize="20sp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            />
+            android:id="@+id/contractInsert_TextInputLayout_Title"
+            android:layout_margin="5dp"
+            android:hint="@string/title"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-        <TextView
-            android:id="@+id/tv_contract_date_start"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/contractInsert_TextInputEditText_Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:textSize="20sp"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+            <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Starting Date"
-            android:textSize="20sp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"/>
+            android:layout_margin="5dp" >
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/contractInsert_TextInputLayout_StartDate"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="Open Date"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
 
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/contractInsert_TextInputEditText_StartDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="none"
+                    android:textSize="@dimen/textSizeDashboard"
+                    app:simpleItems="@array/simple_items"
+                    android:focusable="false"
+                    android:clickable="true"/>
 
-        <EditText
-            android:id="@+id/et_date_contract_start"
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/contractInsert_TextInputLayout_EndDate"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:hint="Close Date"
+                android:layout_margin="5dp"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/contractInsert_TextInputEditText_EndDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="none"
+                    android:textSize="@dimen/textSizeDashboard"
+                    android:focusable="false"
+                    android:clickable="true"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+            <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp" >
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/contractInsert_TextInputLayout_ContractType"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Contract Type"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/contractInsert_TextInputEditText_ContractType"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="none"
+                android:textSize="@dimen/textSizeDashboard"
+                app:simpleItems="@array/simple_items"
+                android:focusable="false"
+                android:clickable="true"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/contractInsert_TextInputLayout_ContractStatus"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:hint="Contract Status"
+            android:layout_margin="5dp"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/contractInsert_TextInputEditText_ContractStatus"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="none"
+                android:textSize="@dimen/textSizeDashboard"
+                android:focusable="false"
+                android:clickable="true"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/contractInsert_TextInputLayout_Description"
+        android:layout_margin="5dp"
+        android:hint="Description"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/contractInsert_TextInputEditText_Description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="date"
-            android:textSize="20sp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            />
-        <TextView
-            android:id="@+id/tv_contract_date_end"
+            android:lines="4"
+
+            android:textSize="20sp"/>
+    </com.google.android.material.textfield.TextInputLayout>
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/contractInsert_TextInputLayout_ContactName"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:hint="Contact Name"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/contractInsert_TextInputEditText_ContactName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:textSize="20sp"/>
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/contractInsert_TextInputLayout_Value"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:hint="Value"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/contractInsert_TextInputEditText_Value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:textSize="20sp"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+         <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/contractInsert_TextInputLayout_Notes"
+        android:layout_margin="5dp"
+        android:hint="Notes"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/contractInsert_TextInputEditText_Notes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="End Date"
-            android:textSize="20sp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"/>
+            android:lines="4"
+
+            android:textSize="20sp"/>
+        </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
 
 
-        <EditText
-            android:id="@+id/et_date_contract_end"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="date"
-            android:textSize="20sp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"/>
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Select type of Contract"
-            android:textSize="20sp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/round_corners">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_weight="8.5"
+                android:textSize="20sp"
+                android:layout_margin="5dp"
+                android:padding="10dp"
+                android:text="Contract Equipment List"
+                android:gravity="center|left"
 
-            />
+                android:textColor="@color/AppColor"/>
+            <ImageButton
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:id="@+id/contractInsertLinearLayoutEquipmentListImgButton"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:background="@color/BackgroundElementsColor"
+                android:src="@drawable/add_expandable_icon"
+                android:layout_weight="1"
+                app:tint="@color/AppColor" />
 
-        <Spinner
-            android:id="@+id/contractTypeSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            />
+        </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="5dp"
+                android:background="@drawable/round_corners"
+                android:id="@+id/contractInserLinearLayoutEquipmentList">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@color/BackgroundElementsColor">
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_weight="5"
+                        android:layout_margin="5dp"
+                        android:hint="Select an item">
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Contract Status"
-            android:textSize="20sp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"/>
+                        <AutoCompleteTextView
+                            android:id="@+id/contractInsertAutocomplateEquipmentList"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            />
+                    </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_weight="3"
+                        android:layout_margin="5dp"
+                        android:hint="Visits">
 
-        <Spinner
-            android:id="@+id/contractStatusSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"/>
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/contractInsertTextInputEditTextVistsEquipmentList"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:inputType="number"
+                            />
+                    </com.google.android.material.textfield.TextInputLayout>
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:src="@drawable/add_expandable_icon"
+            android:layout_gravity="center"
+            android:tint="@color/AppColor"
+            android:backgroundTint="@color/BackgroundElementsColor"
+            android:id="@+id/contractInsertImgButtonListEquipments"/>
+                </LinearLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:id="@+id/contractInsert_recyclerView_EquipmentList"
+                    android:layout_margin="5dp"
+                    tools:listitem="@layout/contract_insert_equipment_list_row"
+                    android:background="@drawable/round_corners"/>
+
+            </LinearLayout>
+
 
 
     </LinearLayout>
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+</ScrollView>
 
-        <Button
-            android:id="@+id/btn_clear_contract_insert"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Clear"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btn_submit_contract_insert"
-            app:layout_constraintHorizontal_bias="0.49"
-            app:layout_constraintStart_toStartOf="parent"
-             />
-
-        <Button
-            android:id="@+id/btn_submit_contract_insert"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Submit"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/btn_clear_contract_insert" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</LinearLayout>
 
 </FrameLayout>
 

@@ -15,10 +15,14 @@ import org.w3c.dom.Text
 
 class MainOverviewAdapter(context: Context, private var list:ArrayList<OverviewMainData>) : RecyclerView.Adapter<MainOverviewAdapter.MyViewHolder>(){
     class MyViewHolder(itemView :View): RecyclerView.ViewHolder(itemView) {
-        val title : TextView=itemView.findViewById(R.id.textViewTitle_main)
-        val customerName : TextView=itemView.findViewById(R.id.textViewCustomerName_main)
-        val id : TextView=itemView.findViewById(R.id.textViewId_main)
-        val date : TextView=itemView.findViewById(R.id.textViewDate_main)
+        val title : TextView=itemView.findViewById(R.id.tv_title_home)
+        val customerName : TextView=itemView.findViewById(R.id.tv_customername_home)
+        //val id : TextView=itemView.findViewById(R.id.)
+        val date : TextView=itemView.findViewById(R.id.dates_home)
+        val urgent : TextView=itemView.findViewById(R.id.tv_urgent_name)
+        val description : TextView=itemView.findViewById(R.id.tv_details_home)
+        val view : View =itemView.findViewById(R.id.view_testing)
+
 
     }
     fun setData(tempList: ArrayList<OverviewMainData>) {
@@ -28,7 +32,7 @@ class MainOverviewAdapter(context: Context, private var list:ArrayList<OverviewM
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val itemView=
-            LayoutInflater.from(parent.context).inflate(R.layout.list_main_rv_overview,parent,false)
+            LayoutInflater.from(parent.context).inflate(R.layout.recyclerview_test_row,parent,false)
         return MainOverviewAdapter.MyViewHolder(itemView)
     }
 
@@ -39,27 +43,31 @@ class MainOverviewAdapter(context: Context, private var list:ArrayList<OverviewM
     @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentitem = list[position]
-        holder.title.text=currentitem.information
-        holder.customerName.text=currentitem.customerName
-        holder.id.text=currentitem.id
-        holder.date.text=currentitem.date
+        holder.title.text=currentitem.Title
+        holder.customerName.text=currentitem.CustomerName
 
-        if (currentitem.setTable == "Contracts"){
-            val orangeColor = ContextCompat.getColor(holder.itemView.context, R.color.orange)
-            holder.title.setTextColor(orangeColor)
-            holder.customerName.setTextColor(orangeColor)
-            holder.id.setTextColor(orangeColor)
-            holder.date.setTextColor(orangeColor)
+        holder.date.text=currentitem.DateStart
+        holder.urgent.text=currentitem.Urgency
+        holder.description.text=currentitem.Description
 
-        }else{
-            val redColor = ContextCompat.getColor(holder.itemView.context, R.color.red)
-            holder.title.setTextColor(redColor)
-            holder.customerName.setTextColor(redColor)
-            holder.id.setTextColor(redColor)
-            holder.date.setTextColor(redColor)
-
-
+        when (currentitem.Urgency) {
+            "Fixed" -> {holder.view.setBackgroundColor(ContextCompat.getColor(holder.view.context, R.color.ColorFixed))
+                        holder.urgent.setTextColor(ContextCompat.getColor(holder.view.context, R.color.ColorFixed))}
+            "Down" -> {holder.view.setBackgroundColor(ContextCompat.getColor(holder.view.context, R.color.ColorDown))
+                        holder.urgent.setTextColor(ContextCompat.getColor(holder.view.context, R.color.ColorDown))}
+            "Planning" -> {holder.view.setBackgroundColor(ContextCompat.getColor(holder.view.context, R.color.ColorPlanning))
+                holder.urgent.setTextColor(ContextCompat.getColor(holder.view.context, R.color.ColorPlanning))}
+            "Maintenance" -> {holder.view.setBackgroundColor(ContextCompat.getColor(holder.view.context, R.color.ColorMaintenance))
+                holder.urgent.setTextColor(ContextCompat.getColor(holder.view.context, R.color.ColorMaintenance))}
+            "Service" -> {holder.view.setBackgroundColor(ContextCompat.getColor(holder.view.context, R.color.ColorService))
+                holder.urgent.setTextColor(ContextCompat.getColor(holder.view.context, R.color.ColorService))}
+            "Demonstration" -> {holder.view.setBackgroundColor(ContextCompat.getColor(holder.view.context, R.color.ColorDemonstration))
+                holder.urgent.setTextColor(ContextCompat.getColor(holder.view.context, R.color.ColorDemonstration))}
+            "Other" -> {holder.view.setBackgroundColor(ContextCompat.getColor(holder.view.context, R.color.ColorOther))
+                holder.urgent.setTextColor(ContextCompat.getColor(holder.view.context, R.color.ColorOther))}
+            else -> holder.view.setBackgroundColor(ContextCompat.getColor(holder.view.context, R.color.white)) // Default color
         }
+
 
     }
 }

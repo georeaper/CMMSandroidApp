@@ -29,11 +29,7 @@ class RvAdapterFindCustomers(private val context: Context, private var customerL
     override fun getItemCount(): Int {
         return customerList.size
     }
-//    fun setData(customerlist:ArrayList<CustomerSelect>)
-//    {
-//        this.customerList=customerlist
-//        notifyDataSetChanged()
-//    }
+
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem=customerList[position]
