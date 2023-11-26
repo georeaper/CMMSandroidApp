@@ -24,6 +24,13 @@
     <color name="colorAccent">#009688</color>
     <color name="red">#FF0000</color>
     <color name="orange">#FFA500</color>
+    <color name="ColorDown">#FF0000</color>
+    <color name="ColorFixed">#3498db</color>
+    <color name="ColorService">#009688</color>
+    <color name="ColorMaintenance">#008000</color>
+    <color name="ColorDemonstration">#FFA500</color>
+    <color name="ColorPlanning">#FFFF00</color>
+    <color name="ColorOther">#424242</color>
 
 
 </resources>

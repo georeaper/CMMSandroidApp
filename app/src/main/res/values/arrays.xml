@@ -11,4 +11,28 @@
         <item>User 3</item>
 
     </string-array>
+    <string-array name="cases_types">
+        <item>Planning</item>
+        <item>Down</item>
+        <item>Fixed</item>
+        <item>Service</item>
+        <item>Maintenance</item>
+        <item>Demonstration</item>
+        <item>Other</item>
+    </string-array>
+    <string-array name="contract_types">
+        <item>Service</item>
+        <item>Sales</item>
+        <item>Warranty</item>
+
+    </string-array>
+    <string-array name="workOrder_types">
+        <item>Service</item>
+        <item>Maintenance</item>
+        <item>Installation</item>
+        <item>CheckOut</item>
+    </string-array>
+    <string-array name="equipmentStatus_types">
+        <item>R</item>
+    </string-array>
 </resources>

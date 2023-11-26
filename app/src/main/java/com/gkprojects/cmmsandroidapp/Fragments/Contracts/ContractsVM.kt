@@ -1,6 +1,7 @@
 package com.gkprojects.cmmsandroidapp.Fragments.Contracts
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 
@@ -11,6 +12,10 @@ import com.gkprojects.cmmsandroidapp.DataClasses.OverviewMainData
 
 
 class ContractsVM : ViewModel(){
+    init {
+        Log.d("ContractsVM", "ViewModel is being initialized")
+        // Other initialization code
+    }
 
     suspend fun insert(context: Context, contract: Contracts)
     {
@@ -31,7 +36,7 @@ class ContractsVM : ViewModel(){
 
         RepoContracts.updateContractData(context,contract)
     }
-    fun getCustomerId(context: Context): LiveData<List<CustomerSelect>> {
+    suspend fun getCustomerId(context: Context): LiveData<List<CustomerSelect>> {
        // return RepoCases.getCustomerIdData(context)
         return  RepoContracts.getCustomerIdData(context)
     }
@@ -39,7 +44,5 @@ class ContractsVM : ViewModel(){
     fun getCustomerName(context: Context): LiveData<List<ContractsCustomerName>>{
         return  RepoContracts.getListContracts(context)
     }
-    fun getContractsOverview(context: Context):LiveData<List<OverviewMainData>>{
-        return RepoContracts.getContractsOverview(context)
-    }
+
 }

@@ -125,7 +125,6 @@ class CasesFragment : Fragment() {
 
                 passDataCustomer(model)
 
-                //passDataCustomer()
             }
         })
 
@@ -138,30 +137,6 @@ class CasesFragment : Fragment() {
             transaction?.commit()
         }
 
-        val myCallback = object : ItemTouchHelper.SimpleCallback(
-            0,
-            ItemTouchHelper.RIGHT
-        ) {
-
-            // More code here
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ): Boolean {
-                return false
-            }
-
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-
-
-            }
-
-
-        }
-        val myHelper = ItemTouchHelper(myCallback)
-        myHelper.attachToRecyclerView(casesRecyclerView)
     }
 
 
@@ -171,7 +146,7 @@ class CasesFragment : Fragment() {
         if (query!=null){
             val filteredList= ArrayList<TicketCustomerName>()
             for (i in templist){
-                if (i.Title?.lowercase(Locale.ROOT)?.contains(query) == true)
+                if ((i.Title?.lowercase(Locale.ROOT)?.contains(query) == true)or(i.CustomerName?.lowercase(Locale.ROOT)?.contains(query) == true) )
                     filteredList.add(i)
                 Log.d("filteredCases", filteredList.toString())
             }

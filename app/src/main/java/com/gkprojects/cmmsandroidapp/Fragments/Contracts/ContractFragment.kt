@@ -62,24 +62,14 @@ class ContractFragment : Fragment() {
         try {
             lifecycleScope.launch {
                 withContext(Dispatchers.Main){
-
-//                    contractViewModel.getCustomerName(it).observe(viewLifecycleOwner, Observer {
-//                        contractAdapter.setData(it as ArrayList<ContractsCustomerName>)
-//                        templist.clear()
-//                        for (i in it.indices){
-//                            templist.add(it[i])
-//                        }
-//                    })
-
                     context?.let {
                         contractViewModel.getCustomerName(it).observe(viewLifecycleOwner, Observer {
                             contractAdapter.setData(it as ArrayList<ContractsCustomerName>)
-                            Log.d("debug123",it.toString())
+
                             templist.clear() // clear the templist,because it keeps populate everytime we open and close Customer Drawer
-                            for(i in it.indices)(
-                                    templist.add(it[i])
-                                    )
-                            Log.d("templist", templist.size.toString())
+                            for(i in it.indices) {
+                                templist.add(it[i])
+                            }
                         })
                     }
 
@@ -106,58 +96,12 @@ class ContractFragment : Fragment() {
         })
         contractAdapter.setOnClickListener(object : ContractAdapter.OnClickListener{
             override fun onClick(position: Int, model: ContractsCustomerName) {
-//                var temp: java.io.Serializable = model as java.io.Serializable
-                Toast.makeText(context,model.toString(),Toast.LENGTH_LONG).show()
+
                 passDataCustomer(model)
 
-                //passDataCustomer()
+
             }
         })
-
-        val myCallback = object: ItemTouchHelper.SimpleCallback(0,
-            ItemTouchHelper.RIGHT) {
-
-            // More code here
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ): Boolean {
-                return false
-            }
-
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-
-
-
-//                try {
-//                    GlobalScope.launch(Dispatchers.IO) {
-//
-//                        context?.let {
-//                            contractViewModel.deleteContract(
-//                                it, templist[viewHolder.absoluteAdapterPosition]
-//                            )
-//                        }
-//
-//                    }
-//                }catch (e:java.lang.Exception){
-//                    Log.d("deleteEquipment",e.toString())
-//                }
-
-                context?.let {
-
-                    contractViewModel.getAllContractData(it).observe(viewLifecycleOwner, Observer {
-                        contractAdapter.setData(it as ArrayList<ContractsCustomerName>)
-
-                    })
-                }
-            }
-
-
-        }
-        val myHelper = ItemTouchHelper(myCallback)
-        myHelper.attachToRecyclerView(contractRecyclerView)
 
 
         val btnFloat=view.findViewById<FloatingActionButton>(R.id.openContractFragment)

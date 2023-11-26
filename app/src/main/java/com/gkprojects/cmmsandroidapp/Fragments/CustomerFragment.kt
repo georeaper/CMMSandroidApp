@@ -118,7 +118,7 @@ class CustomerFragment : Fragment() {
                 //Toast.makeText(context,model.toString(),Toast.LENGTH_LONG).show()
                 passDataCustomer(model)
 
-                //passDataCustomer()
+
             }
         })
 
@@ -131,40 +131,6 @@ class CustomerFragment : Fragment() {
             transaction?.commit()
         }
 
-//        val myCallback = object: ItemTouchHelper.SimpleCallback(0,
-//            ItemTouchHelper.RIGHT) {
-//
-//            // More code here
-//            override fun onMove(
-//                recyclerView: RecyclerView,
-//                viewHolder: RecyclerView.ViewHolder,
-//                target: RecyclerView.ViewHolder
-//            ): Boolean {
-//                return false
-//            }
-
-
-//            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-//
-//
-//                lifecycleScope.launch(Dispatchers.IO) {
-//
-//                    context?.let { customerViewModel.deleteCustomer(it, templist[viewHolder.absoluteAdapterPosition]) }
-//
-//                }
-//
-//                context?.let {
-//                    customerViewModel.getAllCustomerData(it).observe(viewLifecycleOwner, Observer {
-//                        customerAdapter.setData(it as ArrayList<Customer>)
-//
-//                    })
-//                }
-//            }
-
-
-//        }
-//        val myHelper = ItemTouchHelper(myCallback)
-//        myHelper.attachToRecyclerView(customerRecyclerView)
 
     }
 

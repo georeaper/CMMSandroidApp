@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.gkprojects.cmmsandroidapp.DataClasses.CustomerSelect
+import com.gkprojects.cmmsandroidapp.DataClasses.EquipmentListInCases
 import com.gkprojects.cmmsandroidapp.DataClasses.EquipmentSelectCustomerName
 
 import com.gkprojects.cmmsandroidapp.DataClasses.Equipments
@@ -42,5 +43,8 @@ class EquipmentVM :ViewModel() {
     }
     fun getRecordById(context: Context, id : Int):LiveData<Equipments>{
         return RepoEquipment.getRecordbyId(context,id)
+    }
+    fun getEquipmentByCustomerId(context: Context,id: Int):LiveData<List<EquipmentListInCases>>{
+        return  RepoEquipment.getEquipmentByCustomer(context,id)
     }
 }

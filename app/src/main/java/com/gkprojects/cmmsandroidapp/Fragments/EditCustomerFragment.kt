@@ -140,12 +140,13 @@ class EditCustomerFragment : Fragment() {
            }
 
 
-       }else{
-
-           customerList= Customer(hospitalID!!,remoteID,name.text.toString(),phone1.text.toString(),email.text.toString(),
-               address.text.toString(),zipcode.text.toString(),city.text.toString(),notes.text.toString(),
-               description.text.toString(),statusStr,lastModified,dateCreated,version)
        }
+       //else{
+//
+//           customerList= Customer(hospitalID!!,remoteID,name.text.toString(),phone1.text.toString(),email.text.toString(),
+//               address.text.toString(),zipcode.text.toString(),city.text.toString(),notes.text.toString(),
+//               description.text.toString(),statusStr,lastModified,dateCreated,version)
+//       }
 
 
         statusStr = if (status.isChecked){
@@ -217,7 +218,7 @@ class EditCustomerFragment : Fragment() {
         val dateCreated =getCurrentDateAsString()
         customerList= Customer(hospitalID!!,
             remoteID,
-            binding.customerEditAddressTextInput.text.toString(),
+            binding.customerEditCustomerNameTextInput.text.toString(),
             binding.customerEditPhoneTextInput.text.toString(),
             binding.customerEditEmailTextInput.text.toString(),
             binding.customerEditAddressTextInput.text.toString(),
@@ -251,7 +252,7 @@ class EditCustomerFragment : Fragment() {
 
         customerList= Customer(hospitalID!!,
             remoteID,
-            binding.customerEditAddressTextInput.text.toString(),
+            binding.customerEditCustomerNameTextInput.text.toString(),
             binding.customerEditPhoneTextInput.text.toString(),
             binding.customerEditEmailTextInput.text.toString(),
             binding.customerEditAddressTextInput.text.toString(),

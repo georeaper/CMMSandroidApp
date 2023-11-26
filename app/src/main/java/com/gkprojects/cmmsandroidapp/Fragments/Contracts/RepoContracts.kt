@@ -55,7 +55,7 @@ class RepoContracts {
 
         }
         fun getCustomerIdData(context: Context): LiveData<List<CustomerSelect>> {
-
+            userDatabase= intialiseDB(context)
 
             return userDatabase!!.ContractsDao().getCustomerID()
 
@@ -72,11 +72,7 @@ class RepoContracts {
 
         }
 
-        fun getContractsOverview(context: Context):LiveData<List<OverviewMainData>>{
 
-            userDatabase= intialiseDB(context)
-            return userDatabase!!.ContractsDao().getCustomerNameOnOverview()
-        }
     }
 
 

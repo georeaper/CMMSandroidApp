@@ -9,8 +9,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
-        android:id="@+id/tv_searchable_spinner"
-        android:text="Select Customer"
+        android:id="@+id/tv_searchable_equipment"
+        android:text="Select Equipment"
         android:layout_gravity="center"
         android:textStyle="bold"/>
 
@@ -18,7 +18,7 @@
     <SearchView
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:id="@+id/searchView_rv_customers"
+        android:id="@+id/dialog_equipment_searchView_equipment"
 
         android:singleLine="true"
         android:layout_marginBottom="8dp"
@@ -28,9 +28,9 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="300dp"
         android:background="@color/white"
-        android:id="@+id/rv_searchable_TextView"/>
+        android:id="@+id/dialog_equipment_recyclerView"/>
 
 
 </LinearLayout>

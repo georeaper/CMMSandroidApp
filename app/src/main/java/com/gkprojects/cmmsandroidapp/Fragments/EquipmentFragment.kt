@@ -183,7 +183,7 @@ class EquipmentFragment : Fragment() {
     private fun filterList(query:String){
         val filteredList= java.util.ArrayList<EquipmentSelectCustomerName>()
         for (i in templist){
-            if(i.Model?.lowercase(Locale.ROOT)?.contains(query)==true)
+            if((i.Model?.lowercase(Locale.ROOT)?.contains(query)==true) or (i.SerialNumber?.lowercase(Locale.ROOT)?.contains(query) == true)or(i.CustomerName?.lowercase(Locale.ROOT)?.contains(query) == true))
 
                 filteredList.add(i)
             Log.d("dataEquipment", filteredList.toString())

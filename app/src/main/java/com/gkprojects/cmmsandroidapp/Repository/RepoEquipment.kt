@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import com.gkprojects.cmmsandroidapp.CMMSDatabase
 import com.gkprojects.cmmsandroidapp.DataClasses.CustomerSelect
+import com.gkprojects.cmmsandroidapp.DataClasses.EquipmentListInCases
 import com.gkprojects.cmmsandroidapp.DataClasses.EquipmentSelectCustomerName
 
 import com.gkprojects.cmmsandroidapp.DataClasses.Equipments
@@ -66,6 +67,10 @@ class RepoEquipment {
         fun getRecordbyId(context: Context, id :Int):LiveData<Equipments>{
             userDatabase= intialiseDB(context)
             return userDatabase!!.EquipmentsDAO().SelectRecordById(id)
+        }
+        fun getEquipmentByCustomer ( context: Context, id : Int):LiveData<List<EquipmentListInCases>>{
+            userDatabase= intialiseDB(context)
+            return userDatabase!!.EquipmentsDAO().selectEquipmentByCustomerID(id)
         }
 
 

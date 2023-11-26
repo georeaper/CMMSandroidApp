@@ -9,7 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -23,6 +25,8 @@ import com.gkprojects.cmmsandroidapp.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -44,6 +48,7 @@ class ContractInsertFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.d("FragmentCheck", "Fragment view is being created.")
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_contract_insert, container, false)
 
@@ -51,7 +56,7 @@ class ContractInsertFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val customerName=view.findViewById<TextView>(R.id.tv_customerName_contract)
+        //val customerName=view.findViewById<TextView>(R.id.tv_customerName_contract)
         val startDate =view.findViewById<EditText>(R.id.et_date_contract_start)
         val endDate =view.findViewById<EditText>(R.id.et_date_contract_end)
         val contractCustomer =view.findViewById<TextView>(R.id.tv_customerName_contract)
@@ -75,20 +80,37 @@ class ContractInsertFragment : Fragment() {
         var value :Double? =args?.getDouble("value")
 
         contractId= id
+        Log.d("debugContracts",contractId.toString())
 
 
 
         contractViewModel= ViewModelProvider(this)[ContractsVM::class.java]
         var customerSearch =ArrayList<CustomerSelect>()
+        Log.d("here","Here")
 
+        lifecycleScope.launch {
+            try {
+                withContext(Dispatchers.Main) {
+                    contractViewModel.getCustomerId(requireContext()).observe(viewLifecycleOwner, Observer {
+                        customerSearch = it as ArrayList<CustomerSelect>
+                        Log.d("customerContract", contractId.toString())
+                        Log.d("customerCSearch", customerSearch.toString())
+                        Log.d("customerCContract", contractCustomer.toString())
+                        getValuesFromdb(customerSearch, customerId?.toInt(), contractCustomer)
+                    })
+                }
+            } catch (e: Exception) {
+                Log.d("contractInsertErrors", e.toString())
+            }
+        }
 
-        context?.let { contractViewModel.getCustomerId(it).observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-            customerSearch = it as ArrayList<CustomerSelect>
-            Log.d("customerContract",contractId.toString())
-            getValuesFromdb(customerSearch, customerId?.toInt(),customerName)
-
-
-        }) }
+//        context?.let { contractViewModel.getCustomerId(it).observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+//            customerSearch = it as ArrayList<CustomerSelect>
+//            Log.d("customerContract",contractId.toString())
+//            Log.d("customerCSearch",customerSearch.toString())
+//            Log.d("customerCContract",contractCustomer.toString())
+//            getValuesFromdb(customerSearch, customerId?.toInt(),contractCustomer)
+// }) }
 
 
 
@@ -219,5 +241,6 @@ class ContractInsertFragment : Fragment() {
     }
 
 }
+
 
 

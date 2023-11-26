@@ -4,7 +4,8 @@ import androidx.room.ColumnInfo
 import androidx.room.PrimaryKey
 
 
-data class CustomerSelect( var CustomerID : Int,var CustomerName: String)
+data class CustomerSelect( var CustomerID : Int,
+                           var CustomerName: String)
 
 
 
@@ -76,5 +77,11 @@ data class DashboardCustomerContractsDataClass(
     var DateEnd: String?,
     var ContractType: String?
 
+)
+data class EquipmentListInCases(
+    var EquipmentID :Int?,
+    var SerialNumber :String?,
+    var Model :String?,
+    var CustomerID : Int?
 )
 

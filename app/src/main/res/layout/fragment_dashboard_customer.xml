@@ -560,6 +560,7 @@
                 android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:textSize="16sp"
+
                 android:text="Notes"
                 android:visibility="invisible"
                 android:textColor="@color/AppColor"
