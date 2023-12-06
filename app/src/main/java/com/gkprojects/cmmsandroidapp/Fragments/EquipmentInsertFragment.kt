@@ -3,6 +3,7 @@ package com.gkprojects.cmmsandroidapp.Fragments
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -110,6 +111,53 @@ class EquipmentInsertFragment : Fragment() {
         val version_equipment=view.findViewById<TextInputEditText>(R.id.equipment_insert_textInputEdittext_version)
         val customerNameTV=view.findViewById<TextView>(R.id.tv_select_customer)
 
+        val imgButtonEquipmentInfo =binding.equipmentInsertLinearLayoutEquipmentInformationImgButton
+        val infoLayoutEquipmentInfo =binding.equipmentInsertLinearLayoutEquipmentInfo
+        val imgButtonEquipmentList =binding.equipmentInsertLinearLayoutEquipmentListImgButton
+        val infoLayoutEquipmentList =binding.equipmentInsertLinearLayoutRecyclerView
+        val isVisibleEquipmentList = getSavedVisibilityState("equipmentList",true)
+
+        val isVisibleEquipmentInfo = getSavedVisibilityState("equipmentInfo",true)
+        if (isVisibleEquipmentInfo){
+            infoLayoutEquipmentInfo.visibility=View.VISIBLE
+            imgButtonEquipmentInfo.setImageResource(R.drawable.remove_expandable_icon)
+
+        }else{
+            infoLayoutEquipmentInfo.visibility=View.GONE
+            imgButtonEquipmentInfo.setImageResource(R.drawable.add_expandable_icon)
+
+        }
+        if (isVisibleEquipmentList){
+            infoLayoutEquipmentList.visibility=View.VISIBLE
+            imgButtonEquipmentList.setImageResource(R.drawable.remove_expandable_icon)
+
+        }else{
+            infoLayoutEquipmentList.visibility=View.GONE
+            imgButtonEquipmentList.setImageResource(R.drawable.add_expandable_icon)
+
+        }
+        imgButtonEquipmentInfo.setOnClickListener {
+            if (infoLayoutEquipmentInfo.visibility == View.VISIBLE) {
+                infoLayoutEquipmentInfo.visibility = View.GONE
+                saveVisibilityState("equipmentInfo",false)
+                imgButtonEquipmentInfo.setImageResource(R.drawable.add_expandable_icon)
+            } else {
+                infoLayoutEquipmentInfo.visibility = View.VISIBLE
+                saveVisibilityState("equipmentInfo",true)
+                imgButtonEquipmentInfo.setImageResource(R.drawable.remove_expandable_icon)
+            }
+        }
+        imgButtonEquipmentList.setOnClickListener {
+            if (infoLayoutEquipmentList.visibility == View.VISIBLE) {
+                infoLayoutEquipmentList.visibility = View.GONE
+                saveVisibilityState("equipmentInfo",false)
+                imgButtonEquipmentList.setImageResource(R.drawable.add_expandable_icon)
+            } else {
+                infoLayoutEquipmentList.visibility = View.VISIBLE
+                saveVisibilityState("equipmentInfo",true)
+                imgButtonEquipmentList.setImageResource(R.drawable.remove_expandable_icon)
+            }
+        }
         //fetching data based on equipmentID
 
         if (equipmentId!=null){
@@ -193,7 +241,15 @@ class EquipmentInsertFragment : Fragment() {
 
 
     }
+    private fun saveVisibilityState(key: String, isVisible: Boolean) {
+        val sharedPreferences = requireContext().getSharedPreferences("AppPrefs", Context.MODE_PRIVATE)
+        sharedPreferences.edit().putBoolean(key, isVisible).apply()
+    }
 
+    private fun getSavedVisibilityState(key: String, defaultVisibility: Boolean): Boolean {
+        val sharedPreferences = requireContext().getSharedPreferences("AppPrefs", Context.MODE_PRIVATE)
+        return sharedPreferences.getBoolean(key, defaultVisibility)
+    }
 
 
     private fun filterList(query: String,searchCustomer : ArrayList<CustomerSelect>) {

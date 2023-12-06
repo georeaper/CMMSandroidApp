@@ -6,12 +6,48 @@
     android:layout_height="match_parent"
     android:accessibilityPaneTitle="Insert Equipment"
     tools:context=".Fragments.EquipmentInsertFragment">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:orientation="vertical"
             >
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="60dp"
+           android:layout_margin="5dp"
+           android:background="@drawable/round_corners">
+           <TextView
+               android:layout_width="match_parent"
+               android:layout_height="50dp"
+               android:layout_weight="8.5"
+               android:textSize="20sp"
+               android:layout_margin="5dp"
+               android:padding="10dp"
+               android:text="Equipment Information"
+               android:gravity="center|left"
+
+               android:textColor="@color/AppColor"/>
+           <ImageButton
+               android:layout_width="35dp"
+               android:layout_height="35dp"
+               android:id="@+id/equipmentInsertLinearLayoutEquipmentInformationImgButton"
+               android:layout_gravity="center"
+               android:layout_margin="5dp"
+               android:background="@color/BackgroundElementsColor"
+               android:src="@drawable/add_expandable_icon"
+               android:layout_weight="1"
+               app:tint="@color/AppColor" />
+
+       </LinearLayout>
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="vertical"
+           android:id="@+id/equipment_insert_linearLayoutEquipmentInfo">
 
             <TextView
                 android:id="@+id/tv_select_customer"
@@ -188,7 +224,45 @@
 
 
        </com.google.android.material.textfield.TextInputLayout>
+       </LinearLayout>
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="60dp"
+           android:layout_margin="5dp"
+           android:background="@drawable/round_corners">
+           <TextView
+               android:layout_width="match_parent"
+               android:layout_height="50dp"
+               android:layout_weight="8.5"
+               android:textSize="20sp"
+               android:layout_margin="5dp"
+               android:padding="10dp"
+               android:text="Equipment History"
+               android:gravity="center|left"
+
+               android:textColor="@color/AppColor"/>
+           <ImageButton
+               android:layout_width="35dp"
+               android:layout_height="35dp"
+               android:id="@+id/equipmentInsertLinearLayoutEquipmentListImgButton"
+               android:layout_gravity="center"
+               android:layout_margin="5dp"
+               android:background="@color/BackgroundElementsColor"
+               android:src="@drawable/add_expandable_icon"
+               android:layout_weight="1"
+               app:tint="@color/AppColor" />
+
+       </LinearLayout>
+       <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/equipment_insert_linearLayoutRecyclerView">
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:id="@+id/equipment_insert_recyclerView"/>
+</LinearLayout>
 
     </LinearLayout>
-
+    </ScrollView>
 </FrameLayout>
