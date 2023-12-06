@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@color/BackgroundElementsColor"
+    android:padding="8dp">
+
+    <!-- Model with Label -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="0dp"
+        android:layout_height="35dp"
+        android:layout_weight="2"
+
+        android:hint="Model"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+
+        <TextView
+            android:id="@+id/contract_insert_equipmentList_tvModel"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:text="B40"
+            android:layout_height="match_parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Serial Number with Label -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="0dp"
+        android:layout_height="35dp"
+        android:layout_weight="5"
+        android:hint="Serial Number"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+
+        <TextView
+            android:id="@+id/contract_insert_equipmentList_tvSerialNumber"
+            android:text="SNE659863259WA"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="match_parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Visits with Label -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="0dp"
+        android:layout_height="35dp"
+        android:layout_weight="3"
+        android:hint="Visits"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+
+        <TextView
+            android:id="@+id/contract_insert_equipmentList_tvVisits"
+            android:text="2"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="match_parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Deletion Button -->
+    <ImageButton
+        android:id="@+id/contract_insert_equipmentList_btnDelete"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_weight="1"
+        android:backgroundTint="@color/BackgroundElementsColor"
+        android:src="@drawable/remove_row_red_35x35"
+        android:layout_gravity="center_vertical"/>
+</LinearLayout>
