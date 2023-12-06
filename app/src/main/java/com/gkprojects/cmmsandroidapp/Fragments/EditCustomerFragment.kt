@@ -143,6 +143,12 @@ class EditCustomerFragment : Fragment() {
 
 
        }
+       //else{
+//
+//           customerList= Customer(hospitalID!!,remoteID,name.text.toString(),phone1.text.toString(),email.text.toString(),
+//               address.text.toString(),zipcode.text.toString(),city.text.toString(),notes.text.toString(),
+//               description.text.toString(),statusStr,lastModified,dateCreated,version)
+//       }
 
 
 
