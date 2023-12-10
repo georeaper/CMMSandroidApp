@@ -254,14 +254,17 @@
 
        </LinearLayout>
        <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/equipment_insert_linearLayoutRecyclerView">
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:id="@+id/equipment_insert_recyclerView"/>
-</LinearLayout>
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:background="@drawable/round_corners"
+           android:layout_margin="5dp"
+           android:id="@+id/equipment_insert_linearLayoutRecyclerView"
+           android:padding="5dp">
+           <androidx.recyclerview.widget.RecyclerView
+               android:layout_width="match_parent"
+               android:layout_height="400dp"
+               android:id="@+id/equipment_insert_recyclerView"/>
+        </LinearLayout>
 
     </LinearLayout>
     </ScrollView>

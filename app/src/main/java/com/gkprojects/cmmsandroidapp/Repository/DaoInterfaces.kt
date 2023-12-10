@@ -144,6 +144,9 @@ interface EquipmentsDao{
     @Query("Select * FROM Equipments WHERE EquipmentID= :id")
      fun SelectRecordById(id :Int) : LiveData<Equipments>
 
+     @Query("Select * from Tickets Where EquipmentID= :id")
+     fun getTicketsByEquipmentId(id : Int) : LiveData<List<Tickets>>
+
  @Insert
     fun addEquipments(equipments: Equipments)
 

@@ -20,11 +20,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.gkprojects.cmmsandroidapp.Adapter.CasesListEquipmentInsertAdapter
 
 import com.gkprojects.cmmsandroidapp.Adapter.RvAdapterFindCustomers
 import com.gkprojects.cmmsandroidapp.DataClasses.CustomerSelect
 
 import com.gkprojects.cmmsandroidapp.DataClasses.Equipments
+import com.gkprojects.cmmsandroidapp.DataClasses.Tickets
 import com.gkprojects.cmmsandroidapp.Fragments.Contracts.ContractFragment
 
 
@@ -45,6 +47,7 @@ import java.time.Duration
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class EquipmentInsertFragment : Fragment() {
@@ -54,6 +57,7 @@ class EquipmentInsertFragment : Fragment() {
     private lateinit var binding : FragmentEquipmentInsertBinding
     var dialog: Dialog? = null
     private var rvAdapter: RvAdapterFindCustomers? = null
+    private var rvAdapterTickets : CasesListEquipmentInsertAdapter? =null
     private lateinit var filterText : SearchView
     private var customerId : Int?= null
     private var equipmentId : Int?= null
@@ -61,6 +65,7 @@ class EquipmentInsertFragment : Fragment() {
     private var dateCreated : String? = null
     private var version : String? = null
     private var customerSearch =ArrayList<CustomerSelect>()
+    private var tickets =ArrayList<Tickets>()
 
 
 
@@ -177,6 +182,11 @@ class EquipmentInsertFragment : Fragment() {
                     Log.d("CustomerID2","$customerId")
                     setCustomer(customerId!!)
                 })
+            equipmentViewModel.getTicketByEquipmentId(requireContext(),equipmentId!!).observe(viewLifecycleOwner,
+                Observer {
+                    tickets=it as ArrayList<Tickets>
+                    setCaseLists(tickets)
+                })
 
         }
 
@@ -241,6 +251,19 @@ class EquipmentInsertFragment : Fragment() {
 
 
     }
+
+    private fun setCaseLists(tickets: ArrayList<Tickets>) {
+        val recyclerTickets = binding.equipmentInsertRecyclerView
+        val rvAdapterTickets = CasesListEquipmentInsertAdapter(tickets)
+        recyclerTickets.apply {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(this.context)
+            adapter = rvAdapterTickets
+        }
+        rvAdapterTickets.setData(tickets)
+
+    }
+
     private fun saveVisibilityState(key: String, isVisible: Boolean) {
         val sharedPreferences = requireContext().getSharedPreferences("AppPrefs", Context.MODE_PRIVATE)
         sharedPreferences.edit().putBoolean(key, isVisible).apply()

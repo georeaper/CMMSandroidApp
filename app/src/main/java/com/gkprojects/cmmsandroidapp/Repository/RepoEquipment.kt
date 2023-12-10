@@ -8,6 +8,7 @@ import com.gkprojects.cmmsandroidapp.DataClasses.EquipmentListInCases
 import com.gkprojects.cmmsandroidapp.DataClasses.EquipmentSelectCustomerName
 
 import com.gkprojects.cmmsandroidapp.DataClasses.Equipments
+import com.gkprojects.cmmsandroidapp.DataClasses.Tickets
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -71,6 +72,10 @@ class RepoEquipment {
         fun getEquipmentByCustomer ( context: Context, id : Int):LiveData<List<EquipmentListInCases>>{
             userDatabase= intialiseDB(context)
             return userDatabase!!.EquipmentsDAO().selectEquipmentByCustomerID(id)
+        }
+        fun getTicketsByEquipmentId(context: Context,id: Int):LiveData<List<Tickets>>{
+            userDatabase= intialiseDB(context)
+            return userDatabase!!.EquipmentsDAO().getTicketsByEquipmentId(id)
         }
 
 

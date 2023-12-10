@@ -8,6 +8,7 @@ import com.gkprojects.cmmsandroidapp.DataClasses.EquipmentListInCases
 import com.gkprojects.cmmsandroidapp.DataClasses.EquipmentSelectCustomerName
 
 import com.gkprojects.cmmsandroidapp.DataClasses.Equipments
+import com.gkprojects.cmmsandroidapp.DataClasses.Tickets
 
 
 import com.gkprojects.cmmsandroidapp.Repository.RepoEquipment
@@ -26,9 +27,10 @@ class EquipmentVM :ViewModel() {
     {
         return RepoEquipment.getAllEquipmentData(context)
     }
-//     fun deleteEquipment(context: Context, equipment: Equipments){
-//        RepoEquipment.delete(context,equipment)
-//    }
+
+    fun getTicketByEquipmentId(context: Context,id: Int):LiveData<List<Tickets>>{
+        return  RepoEquipment.getTicketsByEquipmentId(context,id)
+    }
      fun updateEquipment(context: Context,equipment: Equipments){
         RepoEquipment.updateEquipmentData(context,equipment)
     }
