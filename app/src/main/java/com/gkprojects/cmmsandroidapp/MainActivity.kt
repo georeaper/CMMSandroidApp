@@ -20,8 +20,24 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity() {
+    companion object {
+        const val TAG_HOME = "Home"
+        const val TAG_CUSTOMER = "Customer"
+        const val TAG_EQUIPMENTS = "Equipments"
+        const val TAG_CASES = "Technical Cases"
+        const val TAG_CONTRACTS = "Contracts"
+        const val TAG_SETTINGS = "Settings"
+        const val TAG_WORK_ORDERS = "Work Orders"
+        const val TAG_CONTRACT_INSERT = "Edit Contract"
+        const val TAG_EQUIPMENT_INSERT = "Edit Equipment"
+        const val TAG_CUSTOMER_INSERT = "Edit Customer"
+        const val TAG_CUSTOMER_DASHBOARD = "Dashboard Customer"
+
+
+    }
     lateinit var toggle: ActionBarDrawerToggle
     lateinit var drawerLayout: DrawerLayout
+    private var currentFragmentTag = "Home"
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -52,13 +68,13 @@ class MainActivity : AppCompatActivity() {
         navView.setNavigationItemSelectedListener {
             it.isChecked=true
             when(it.itemId){
-                R.id.home_item -> replaceFragment(HomeFragment(),it.title.toString())
-                R.id.customer_item -> replaceFragment(CustomerFragment(),it.title.toString())
-                R.id.equipment_item -> replaceFragment(EquipmentFragment(),it.title.toString())
-                R.id.workOrder_item ->replaceFragment(Work_Orders(),it.title.toString())
-                R.id.cases_item -> replaceFragment(CasesFragment(),it.title.toString())
-                R.id.contract_item -> replaceFragment(ContractFragment(),it.title.toString())
-                R.id.settings_item -> replaceFragment(SettingsFragment(),it.title.toString())
+                R.id.home_item -> replaceFragment(HomeFragment(), TAG_HOME)
+                R.id.customer_item -> replaceFragment(CustomerFragment(), TAG_CUSTOMER)
+                R.id.equipment_item -> replaceFragment(EquipmentFragment(), TAG_EQUIPMENTS)
+                R.id.workOrder_item ->replaceFragment(Work_Orders(), TAG_WORK_ORDERS)
+                R.id.cases_item -> replaceFragment(CasesFragment(), TAG_CASES)
+                R.id.contract_item -> replaceFragment(ContractFragment(), TAG_CONTRACTS)
+                R.id.settings_item -> replaceFragment(SettingsFragment(), TAG_SETTINGS)
  }
             true
         }
@@ -66,8 +82,10 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationView.setOnNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.action_home -> {
-                    // Handle Home click
-                    // You can add your logic here
+                    if (currentFragmentTag != TAG_HOME) {
+
+                        replaceFragment(HomeFragment(), TAG_HOME)
+                    }
                     true
                 }
                 R.id.action_search -> {
@@ -82,7 +100,9 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.action_settings -> {
-                    // Open the custom dialog when Settings is clicked
+                    if (currentFragmentTag != TAG_SETTINGS) {
+                        replaceFragment(SettingsFragment(), TAG_SETTINGS)
+                    }
 
                     true
                 }
@@ -91,24 +111,23 @@ class MainActivity : AppCompatActivity() {
                     // You can add your logic here
                     true
                 }
-                else -> false
+                else -> return@setOnNavigationItemSelectedListener false
             }
+
         }
 
 
 
-}
-private fun replaceFragment(fragment : Fragment , title :String){
-
-    val fragmentManager =supportFragmentManager
-    val fragmentTransaction=fragmentManager.beginTransaction()
-    fragmentTransaction.replace(R.id.frameLayout1,fragment)
-    fragmentTransaction.commit()
-    drawerLayout.closeDrawers()
-    val toolbar: MaterialToolbar = findViewById(R.id.topAppBar)
-    toolbar.title = title
-
-}
+    }
+    private fun replaceFragment(fragment: Fragment, tag: String) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.frameLayout1, fragment, tag)
+            .commit()
+        currentFragmentTag = tag // Keep track of the current fragment
+        drawerLayout.closeDrawers()
+        val toolbar : MaterialToolbar = findViewById(R.id.topAppBar)
+        toolbar.title = tag // Optional: Set the toolbar title to the tag
+    }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         if(toggle.onOptionsItemSelected(item)){
@@ -170,7 +189,7 @@ private fun replaceFragment(fragment : Fragment , title :String){
             // Handle Cancel click
             val fragmentManager =supportFragmentManager
             val transaction=fragmentManager.beginTransaction()
-            transaction.replace(R.id.frameLayout1, CaseInsertFragment())
+            transaction.replace(R.id.frameLayout1, Work_Orders())
             transaction.commit()
             dialog?.dismiss()
         }
@@ -178,6 +197,8 @@ private fun replaceFragment(fragment : Fragment , title :String){
         dialog = builder.create()
         dialog.show()
     }
+
+
 
 
     }

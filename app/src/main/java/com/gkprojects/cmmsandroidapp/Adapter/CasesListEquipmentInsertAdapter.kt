@@ -10,6 +10,17 @@ import com.gkprojects.cmmsandroidapp.R
 import com.google.android.material.textview.MaterialTextView
 
 class CasesListEquipmentInsertAdapter(private var list : ArrayList<Tickets>): RecyclerView.Adapter<CasesListEquipmentInsertAdapter.MyViewHolder>() {
+
+    private var onClickListener: CasesListEquipmentInsertAdapter.OnClickListener? = null
+
+    interface OnClickListener {
+        fun onClick(position: Int, model: Tickets)
+    }
+
+    fun setOnClickListener(onClickListener: CasesListEquipmentInsertAdapter.OnClickListener) {
+        this.onClickListener = onClickListener
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val itemView=
             LayoutInflater.from(parent.context).inflate(R.layout.equipment_insert_cases_list,parent,false)

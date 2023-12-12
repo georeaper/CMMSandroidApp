@@ -50,8 +50,8 @@ class CustomerFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val bottomNavigationView: BottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView)
-        bottomNavigationView.selectedItemId=R.id.action_home
+//        val bottomNavigationView: BottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView)
+//        bottomNavigationView.selectedItemId=R.id.action_home
 
     }
 

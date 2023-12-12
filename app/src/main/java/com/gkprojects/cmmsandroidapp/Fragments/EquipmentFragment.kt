@@ -239,8 +239,8 @@ class EquipmentFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val bottomNavigationView: BottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView)
-        bottomNavigationView.selectedItemId=R.id.action_home
+//        val bottomNavigationView: BottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView)
+//        bottomNavigationView.selectedItemId=R.id.action_home
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_equipment, container, false)
     }

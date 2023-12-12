@@ -91,8 +91,8 @@ class ContractInsertFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        val bottomNavigationView: BottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView)
-        bottomNavigationView.selectedItemId=R.id.action_home
+//        val bottomNavigationView: BottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView)
+//        bottomNavigationView.selectedItemId=R.id.action_home
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

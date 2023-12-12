@@ -46,8 +46,8 @@ class EditCustomerFragment : Fragment() {
 
     override  fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle? ): View
     {
-        val bottomNavigationView: BottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView)
-        bottomNavigationView.selectedItemId=R.id.action_home
+//        val bottomNavigationView: BottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView)
+//        bottomNavigationView.selectedItemId=R.id.action_home
         binding=FragmentEditCustomerBinding.inflate(inflater, container, false)
 
         return binding.root
