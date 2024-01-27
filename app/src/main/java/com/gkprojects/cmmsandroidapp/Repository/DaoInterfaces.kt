@@ -277,6 +277,14 @@ interface TicketsDao {
 
     )
     fun getCustomerName():LiveData<List<TicketCustomerName>>
+    @Query("Select Tickets.TicketID,Tickets.Title,Tickets.Active,Tickets.DateStart,Tickets.Urgency,Customer.Name AS CustomerName,Tickets.UserID, Equipments.SerialNumber AS SerialNumber , " +
+            "Tickets.CustomerID,Tickets.EquipmentID ,Equipments.Model AS Model, Equipments.Manufacturer AS Manufacturer "+
+            "From Tickets " +
+            "Left JOIN Customer ON Tickets.CustomerID = Customer.CustomerID " +
+            "Left JOIN Equipments ON Tickets.EquipmentID = Equipments.EquipmentID "
+
+    )
+    fun getTicketInformationCalendar():LiveData<List<TicketCalendar>>
 
 
 

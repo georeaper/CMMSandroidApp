@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
+import android.icu.text.SimpleDateFormat
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -37,6 +38,7 @@ import com.gkprojects.cmmsandroidapp.databinding.FragmentEquipmentBinding
 import com.gkprojects.cmmsandroidapp.databinding.FragmentEquipmentInsertBinding
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.Dispatchers
@@ -87,6 +89,11 @@ class EquipmentInsertFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         equipmentViewModel= ViewModelProvider(this)[EquipmentVM::class.java]
+        val appDataLoader = AppDataLoader(requireContext())
+        val manufacturerArray = appDataLoader.getDataFromJson("equipmentManufacturer.json")
+        val modelArray = appDataLoader.getDataFromJson("equipmentModel.json")
+        val categoryArray = appDataLoader.getDataFromJson("equipmentCategory.json")
+        val statusEquipmentArray = appDataLoader.getDataFromJson("equipmentStatus.json")
 
         
         val args =this.arguments
@@ -107,14 +114,40 @@ class EquipmentInsertFragment : Fragment() {
 
 
         val serialNumber=view.findViewById<TextInputEditText>(R.id.equipment_insert_textInputEdittext_sn)
-        val model=view.findViewById<TextInputEditText>(R.id.equipment_insert_textInputEdittext_model)
+
+        val model=view.findViewById<MaterialAutoCompleteTextView>(R.id.equipment_insert_textInputEdittext_model)
+        val adapterDropModel = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, modelArray)
+        model.setAdapter(adapterDropModel)
+
         val manufacturer=view.findViewById<MaterialAutoCompleteTextView>(R.id.equipment_insert_autoCompleteTextView_manufacturer)
-        val warranty=view.findViewById<TextInputEditText>(R.id.equipment_insert_textInputEdittext_warranty)
+        val adapterDropManufacturer = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, manufacturerArray)
+        manufacturer.setAdapter(adapterDropManufacturer)
+
         val category=view.findViewById<MaterialAutoCompleteTextView>(R.id.equipment_insert_autoCompleteTextView_category)
-        val installation=view.findViewById<MaterialAutoCompleteTextView>(R.id.equipment_insert_autoCompleteTextView_installation)
+        val adapterDropCategory = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, categoryArray)
+        category.setAdapter(adapterDropCategory)
+
         val status=view.findViewById<MaterialAutoCompleteTextView>(R.id.equipment_insert_autoCompleteTextView_status)
+        val adapterDropStatus = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, statusEquipmentArray)
+        status.setAdapter(adapterDropStatus)
+
+        val installation=view.findViewById<MaterialAutoCompleteTextView>(R.id.equipment_insert_autoCompleteTextView_installation)
+        val warranty=view.findViewById<TextInputEditText>(R.id.equipment_insert_textInputEdittext_warranty)
         val version_equipment=view.findViewById<TextInputEditText>(R.id.equipment_insert_textInputEdittext_version)
         val customerNameTV=view.findViewById<TextView>(R.id.tv_select_customer)
+
+        val builder = MaterialDatePicker.Builder.datePicker()
+        val picker = builder.build()
+        installation.setOnClickListener {
+            fragmentManager?.let { it1 -> picker.show(it1, picker.toString()) }
+        }
+        picker.addOnPositiveButtonClickListener {
+            val calendar = Calendar.getInstance()
+            calendar.timeInMillis = it
+            val format = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            val selectedDate = format.format(calendar.time)
+            installation.setText(selectedDate)
+        }
 
         val imgButtonEquipmentInfo =binding.equipmentInsertLinearLayoutEquipmentInformationImgButton
         val infoLayoutEquipmentInfo =binding.equipmentInsertLinearLayoutEquipmentInfo
@@ -188,6 +221,22 @@ class EquipmentInsertFragment : Fragment() {
                     setCaseLists(tickets)
                 })
 
+        }else{
+            lifecycleScope.launch {
+                try {
+                    withContext(Dispatchers.Main){
+                        equipmentViewModel.getCustomerId(requireContext()).observe(viewLifecycleOwner,
+                            Observer {
+                                customerSearch = it as ArrayList<CustomerSelect>
+
+
+                            })
+                    }
+
+                }catch (e: Exception){
+                    Log.d("catchEquipment",e.toString())
+                }
+            }
         }
 
 
@@ -364,10 +413,12 @@ class EquipmentInsertFragment : Fragment() {
             R.id.submit_menu_btn -> {
 
 
-                if (customerId!=null){
+                if (equipmentId!=null){
+                    Log.d("here!=null","equipmentHere")
                     updateData()
 
                 }else{
+                    Log.d("here","equipmentHere")
                     insertData()
 
                 }
@@ -387,7 +438,7 @@ class EquipmentInsertFragment : Fragment() {
     private fun insertData() {
         lastModified = getCurrentDateAsString()
         dateCreated = getCurrentDateAsString()
-        val insertEquipment = Equipments(equipmentId,
+        val insertEquipment = Equipments(null,
             null,
             null,
             binding.equipmentInsertTextInputEdittextSn.text.toString(),
@@ -406,6 +457,7 @@ class EquipmentInsertFragment : Fragment() {
             customerId
 
             )
+        Log.d("equipmentInsert","$insertEquipment")
 
         GlobalScope.launch(Dispatchers.IO) {equipmentViewModel.insert(requireContext(),insertEquipment)  }
         val fragmentManager =parentFragmentManager

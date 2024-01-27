@@ -103,7 +103,7 @@ class EditCustomerFragment : Fragment() {
         val status =view.findViewById<CheckBox>(R.id.customerEdit_status_checkbox)
         val city =view.findViewById<TextInputEditText>(R.id.customerEdit_City_TextInput)
         var statusStr =""
-        var remoteID : String?=""
+        var remoteID : Int?= null
         var lastModified : String?=""
         var version : String? =""
         var dateCreated :String?=""
@@ -121,14 +121,10 @@ class EditCustomerFragment : Fragment() {
                        email.setText(it.Email)
                        notes.setText(it.Notes)
                        city.setText(it.City)
-                       if (it.CustomerStatus=="Active"){
-                           status.isChecked=true
-                           statusStr= it.CustomerStatus!!
-
-                       }else{
-                           statusStr= it.CustomerStatus!!
-
+                       if(it.CustomerStatus!=null){
+                           status.isChecked=it.CustomerStatus!!
                        }
+
                        remoteID=it.RemoteID
                        lastModified=it.LastModified
                        version=it.Version
@@ -136,30 +132,15 @@ class EditCustomerFragment : Fragment() {
 
                        customerList= Customer(hospitalID!!,remoteID,name.text.toString(),phone1.text.toString(),email.text.toString(),
                            address.text.toString(),zipcode.text.toString(),city.text.toString(),notes.text.toString(),
-                           description.text.toString(),statusStr,lastModified,dateCreated,version)
+                           description.text.toString(),status.isChecked,lastModified,dateCreated,version)
 
-                   })
+                        })
+                }
+
+
            }
 
-
        }
-       //else{
-//
-//           customerList= Customer(hospitalID!!,remoteID,name.text.toString(),phone1.text.toString(),email.text.toString(),
-//               address.text.toString(),zipcode.text.toString(),city.text.toString(),notes.text.toString(),
-//               description.text.toString(),statusStr,lastModified,dateCreated,version)
-//       }
-
-
-
-        statusStr = if (status.isChecked){
-            "Active"
-        }else{
-            "NotActive"
-        }
-
-
-        }
 
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -207,19 +188,17 @@ class EditCustomerFragment : Fragment() {
 
     @OptIn(DelicateCoroutinesApi::class)
     private fun insertCustomer(){
+    Log.d("herehere","here")
 
-        var statusStr =""
-        val remoteID : String=""
+        val remoteID : Int? =null
         val lastModified : String=""
         val version : String =""
-//        var dateCreated :String?=""
-        statusStr = if (binding.customerEditStatusCheckbox.isChecked){
-            "Active"
-        }else{
-            "NoActive"
-        }
+
+        val status =binding.customerEditStatusCheckbox.isChecked
+        Log.d("herehere2","here")
         val dateCreated =getCurrentDateAsString()
-        customerList= Customer(hospitalID!!,
+        Log.d("herehere3","${binding.customerEditCustomerNameTextInput.text.toString()}")
+        customerList= Customer(null,
             remoteID,
             binding.customerEditCustomerNameTextInput.text.toString(),
             binding.customerEditPhoneTextInput.text.toString(),
@@ -229,7 +208,7 @@ class EditCustomerFragment : Fragment() {
             binding.customerEditCityTextInput.text.toString(),
             binding.customerEditNotesTextInput.text.toString(),
             binding.customerEditDescriptionTextInput.text.toString(),
-            statusStr,lastModified,dateCreated,version)
+            status,lastModified,dateCreated,version)
         Log.d("InsertCustomer",customerList.toString())
         GlobalScope.launch(Dispatchers.Main) {
             customerViewModel.insert(requireContext(), customerList!!)
@@ -239,15 +218,7 @@ class EditCustomerFragment : Fragment() {
     @OptIn(DelicateCoroutinesApi::class)
     private fun updateCustomer(){
 
-
-        var statusStr=customerList?.CustomerStatus
-
-        statusStr = if (binding.customerEditStatusCheckbox.isChecked){
-            "Active"
-        }else{
-            "NotActive"
-        }
-
+        val status = binding.customerEditStatusCheckbox.isChecked
         val remoteID =customerList?.RemoteID
         val lastModified = getCurrentDateAsString()
         val dateCreated =customerList?.DateCreated
@@ -263,7 +234,7 @@ class EditCustomerFragment : Fragment() {
             binding.customerEditCityTextInput.text.toString(),
             binding.customerEditNotesTextInput.text.toString(),
             binding.customerEditDescriptionTextInput.text.toString(),
-            statusStr,
+            status,
             lastModified,
             dateCreated,
             version)

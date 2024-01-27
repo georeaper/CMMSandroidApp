@@ -12,7 +12,8 @@ data class Users(
     @ColumnInfo(name ="Description") var Description :String?,
     @ColumnInfo(name ="Email") var Email :String?,
     @ColumnInfo(name ="Phone") var Phone :String?,
-    @ColumnInfo(name ="ReportPrefix") var ReportPrefix :String?,
+    @ColumnInfo(name ="Signature") var Signature :ByteArray?,
+    @ColumnInfo(name ="Prefix") var ReportPrefix :String?,
     @ColumnInfo(name ="LastModified") var LastModified :String?,
     @ColumnInfo(name ="DateCreated") var DateCreated :String?,
     @ColumnInfo(name ="Version") var Version :String?

@@ -78,8 +78,9 @@
            android:layout_width="match_parent"
            android:layout_height="60dp"
            android:layout_margin="5dp"
-           android:hint="Model">
-           <com.google.android.material.textfield.TextInputEditText
+           android:hint="Model"
+           style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+           <AutoCompleteTextView
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:id="@+id/equipment_insert_textInputEdittext_model"/>

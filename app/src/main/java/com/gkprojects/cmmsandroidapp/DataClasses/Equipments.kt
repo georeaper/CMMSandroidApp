@@ -12,7 +12,7 @@ import androidx.room.PrimaryKey
         onDelete = ForeignKey.CASCADE)])
 data class Equipments(
     @PrimaryKey(autoGenerate = true) var EquipmentID :Int?,
-    @ColumnInfo(name ="RemoteID") var RemoteID :String? ,
+    @ColumnInfo(name ="RemoteID") var RemoteID :Int? ,
     @ColumnInfo(name ="Name") var Name :String?,
     @ColumnInfo(name ="SerialNumber") var SerialNumber :String?,
     @ColumnInfo(name ="Model") var Model :String?,

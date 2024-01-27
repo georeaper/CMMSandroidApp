@@ -14,7 +14,7 @@ import androidx.room.PrimaryKey
 )
 data class MaintenanceFieldForm(
     @PrimaryKey(autoGenerate = true) var MaintenanceFieldFormID :Int?,
-    @ColumnInfo(name ="RemoteID") var RemoteID :String? ,
+    @ColumnInfo(name ="RemoteID") var RemoteID :Int? ,
     @ColumnInfo(name ="Title") var Title :String?,
     @ColumnInfo(name ="Description") var Description :String?,
     @ColumnInfo(name ="ValueExpected") var ValueExpected :String?,

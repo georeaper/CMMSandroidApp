@@ -17,9 +17,9 @@
             <TextView
                 android:id="@+id/tv_greeting_view_top"
                 android:layout_width="wrap_content"
-                android:layout_height="80dp"
+                android:layout_height="50dp"
                 android:text="Today is 26/11/2023"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 android:gravity="center_vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -35,20 +35,20 @@
                 <TextView
                     android:id="@+id/tv_greeting_view_technicalCases"
                     android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:textSize="20sp"
+                    android:layout_height="30dp"
+                    android:textSize="17sp"
                     android:text="Technical Cases this month"
-                    android:gravity="center_vertical"
-                    android:padding="10dp"
+                    android:gravity="center"
+
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintWidth_percent="0.8" />
 
                 <TextView
                     android:layout_width="0dp"
-                    android:layout_height="50dp"
+                    android:layout_height="30dp"
                     android:text="16"
-                    android:textSize="25sp"
+                    android:textSize="17sp"
                     android:gravity="center"
                     android:id="@+id/tv_greeting_view_technicalCases_number"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -59,11 +59,11 @@
                 <TextView
                     android:id="@+id/tv_greeting_view_downtime"
                     android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:gravity="center_vertical"
+                    android:layout_height="30dp"
+                    android:gravity="center"
                     android:text="Total Downtime(hrs) this month"
-                    android:textSize="20sp"
-                    android:padding="10dp"
+                    android:textSize="17sp"
+
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_greeting_view_technicalCases"
                     app:layout_constraintWidth_percent="0.8" />
@@ -71,10 +71,10 @@
                 <TextView
                     android:id="@+id/tv_greeting_view_downtime_number"
                     android:layout_width="0dp"
-                    android:layout_height="50dp"
+                    android:layout_height="30dp"
                     android:gravity="center"
                     android:text="52"
-                    android:textSize="25sp"
+                    android:textSize="17sp"
 
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/tv_greeting_view_downtime"
@@ -84,11 +84,11 @@
                 <TextView
                     android:id="@+id/tv_greeting_view_maintenances"
                     android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:gravity="center_vertical"
+                    android:layout_height="30dp"
+                    android:gravity="center"
                     android:text="Maintenances completed this month"
-                    android:textSize="20sp"
-                    android:padding="10dp"
+                    android:textSize="17sp"
+
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_greeting_view_downtime"
                     app:layout_constraintWidth_percent="0.8" />
@@ -96,10 +96,10 @@
                 <TextView
                     android:id="@+id/tv_greeting_view_maintenances_number"
                     android:layout_width="0dp"
-                    android:layout_height="50dp"
+                    android:layout_height="30dp"
                     android:gravity="center"
                     android:text="3"
-                    android:textSize="25sp"
+                    android:textSize="17sp"
 
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/tv_greeting_view_maintenances"
@@ -112,22 +112,23 @@
                 android:id="@+id/calendar_tv_calendar"
                 android:layout_width="0dp"
                 android:paddingStart="15dp"
-                android:layout_height="40dp"
+                android:layout_height="30dp"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="5dp"
+
                 android:background="@color/AppColor"
                 android:gravity="center_vertical"
-                android:padding="5dp"
+
                 android:text="Calendar"
                 android:textColor="@color/white"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 app:layout_constraintEnd_toStartOf="@+id/img_calendar_view"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
             <ImageButton
                 android:id="@+id/img_calendar_view"
                 android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_height="30dp"
                 android:background="@color/AppColor"
                 app:tint="@color/white"
                 android:layout_marginEnd="5dp"
@@ -135,24 +136,78 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
                 app:srcCompat="@drawable/remove_expandable_icon" />
-
-            <CalendarView
-                android:id="@+id/calendarView_calendar_view"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="30dp"
+                android:layout_margin="5dp"
+                android:id="@+id/linearLayoutHome_kiziNavigation"
+                android:orientation="horizontal"
+                android:background="@color/darkGray"
+                app:layout_constraintTop_toBottomOf="@id/calendar_tv_calendar"
+                app:layout_constraintStart_toStartOf="parent">
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/btnHomeNavigationPrevious"
+                    android:layout_weight="0.25"
+                    android:background="@color/darkGray"
+                    android:src="@drawable/arrow_left"
+                    android:layout_margin="5dp"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:id="@+id/tvHomeKiziCalendar"
+                    android:textSize="17sp"
+                    android:textColor="#999C9C"
+                    android:background="@color/darkGray"
+                    android:gravity="center"
+                    android:text="JanuaryOktomber"
+                    />
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/btnHomeNavigationNext"
+                    android:layout_weight="0.25"
+                    android:background="@color/darkGray"
+                    android:src="@drawable/baseline_keyboard_arrow_right_24"
+                    android:layout_margin="5dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayoutDayHeaders"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginStart="5dp"
-                android:padding="10dp"
-                android:background="@color/teal_700"
+
+                android:orientation="vertical"
+                android:gravity="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/calendar_tv_calendar" />
+                app:layout_constraintTop_toBottomOf="@id/linearLayoutHome_kiziNavigation">
+
+                <include
+                    android:id="@+id/titlesContainer"
+                    layout="@layout/calendar_day_titles_container" />
+                <!-- Day headers will be added here programmatically -->
+
+
+            <com.kizitonwose.calendar.view.CalendarView
+                android:id="@+id/kiziCalendar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+
+
+                app:cv_dayViewResource="@layout/calendar_day_layout"
+                 />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/technicalCases_tv_content_item_view"
                 android:layout_width="0dp"
-                android:layout_height="40dp"
+                android:layout_height="30dp"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="5dp"
                 android:background="@color/AppColor"
@@ -160,21 +215,21 @@
                 android:paddingStart="15dp"
                 android:text="Technical Cases"
                 android:textColor="@color/white"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 app:layout_constraintEnd_toStartOf="@+id/img_content_item_view"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/calendarView_calendar_view" />
+                app:layout_constraintTop_toBottomOf="@+id/linearLayoutDayHeaders" />
 
             <ImageButton
                 android:id="@+id/img_content_item_view"
                 android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_height="30dp"
                 android:background="@color/AppColor"
                 app:tint="@color/white"
                 android:layout_marginEnd="5dp"
                 android:layout_marginTop="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/calendarView_calendar_view"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayoutDayHeaders"
                 app:srcCompat="@drawable/remove_expandable_icon" />
 
             <androidx.recyclerview.widget.RecyclerView

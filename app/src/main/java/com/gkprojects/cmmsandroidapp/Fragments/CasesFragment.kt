@@ -1,5 +1,7 @@
 package com.gkprojects.cmmsandroidapp.Fragments
 
+
+
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
@@ -14,27 +16,21 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gkprojects.cmmsandroidapp.Adapter.CasesAdapter
-import com.gkprojects.cmmsandroidapp.Adapter.CustomerAdapter
-
 import com.gkprojects.cmmsandroidapp.DataClasses.TicketCustomerName
-import com.gkprojects.cmmsandroidapp.DataClasses.Tickets
 import com.gkprojects.cmmsandroidapp.Models.CasesVM
-import com.gkprojects.cmmsandroidapp.Models.CustomerVM
 import com.gkprojects.cmmsandroidapp.R
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.*
-import kotlin.collections.ArrayList
+
 
 class CasesFragment : Fragment() {
     private lateinit var casesRecyclerView: RecyclerView
@@ -45,9 +41,13 @@ class CasesFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        val bottomNavigationView: BottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView)
-//        bottomNavigationView.selectedItemId=R.id.action_home
-    }
+        val bottomNavigationView: BottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView)
+//        bottomNavigationView.itemIconTintList = ContextCompat.getColorStateList(requireContext(), R.drawable.bottom_nav_item_selector)
+//        bottomNavigationView.itemTextColor = ContextCompat.getColorStateList(requireContext(), R.drawable.bottom_nav_item_selector)
+//
+
+        
+}
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -167,12 +167,12 @@ class CasesFragment : Fragment() {
 
         val bundle = Bundle()
         data.TicketID?.let { bundle.putInt("id", it.toInt()) }
-        bundle.putString("title", data.Title)
-        bundle.putString("startDate", data.DateStart)
-        bundle.putString("endDate", data.CustomerID)
-        bundle.putString("comments", data.Active)
-        bundle.putString("active", data.EquipmentID)
-        bundle.putString("userId",data.UserID)
+//        bundle.putString("title", data.Title)
+//        bundle.putString("startDate", data.DateStart)
+//        bundle.putString("endDate", data)
+//        bundle.putString("active", data.Active)
+//        bundle.putString("equipmentID", data.EquipmentID)
+//        bundle.putString("userId",data.UserID)
         bundle.putString("customerId",data.CustomerID)
 
 

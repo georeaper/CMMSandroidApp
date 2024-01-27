@@ -7,18 +7,11 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "Tickets",
     foreignKeys = [
-        ForeignKey(entity = Users::class,
-            childColumns = ["UserID"],
-            parentColumns = ["UserID"],
-            onDelete = ForeignKey.CASCADE),
-        ForeignKey(entity = Customer::class,
+                ForeignKey(entity = Customer::class,
             childColumns = ["CustomerID"],
             parentColumns = ["CustomerID"],
-            onDelete = ForeignKey.CASCADE),
-        ForeignKey(entity = Equipments::class,
-            childColumns = ["EquipmentID"],
-            parentColumns = ["EquipmentID"],
-            onDelete = ForeignKey.CASCADE)]
+            onDelete = ForeignKey.CASCADE)
+        ]
 )
 data class Tickets(
     @PrimaryKey(autoGenerate = true) var TicketID :Int?,
@@ -27,7 +20,7 @@ data class Tickets(
     @ColumnInfo(name ="Description") var Description :String?,
     @ColumnInfo(name ="Notes") var Notes :String?,
     @ColumnInfo(name ="Urgency") var Urgency :String?,
-    @ColumnInfo(name ="Active") var Active :String?,
+    @ColumnInfo(name ="Active") var Active :Boolean?,
     @ColumnInfo(name ="DateStart") var DateStart: String?,
     @ColumnInfo(name ="DateEnd") var DateEnd :String?,
     @ColumnInfo(name ="LastModified") var LastModified :String?,

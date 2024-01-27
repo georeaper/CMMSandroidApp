@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
+import android.icu.text.SimpleDateFormat
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -29,6 +30,8 @@ import com.gkprojects.cmmsandroidapp.DataClasses.Contracts
 import com.gkprojects.cmmsandroidapp.DataClasses.CustomerSelect
 import com.gkprojects.cmmsandroidapp.DataClasses.DetailedContract
 import com.gkprojects.cmmsandroidapp.DataClasses.EquipmentListInCases
+import com.gkprojects.cmmsandroidapp.Fragments.AppDataLoader
+import com.gkprojects.cmmsandroidapp.Fragments.CaseInsertFragment
 import com.gkprojects.cmmsandroidapp.Fragments.CasesFragment
 import com.gkprojects.cmmsandroidapp.Fragments.CustomerFragment
 import com.gkprojects.cmmsandroidapp.Models.EquipmentVM
@@ -39,6 +42,7 @@ import com.gkprojects.cmmsandroidapp.databinding.FragmentContractInsertBinding
 import com.gkprojects.cmmsandroidapp.databinding.FragmentDashboardCustomerBinding
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.Dispatchers
@@ -91,19 +95,21 @@ class ContractInsertFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-//        val bottomNavigationView: BottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView)
-//        bottomNavigationView.selectedItemId=R.id.action_home
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val appDataLoader = AppDataLoader(requireContext())
+        val contractTypeArray = appDataLoader.getDataFromJson("contractType.json")
+        val contractStatusArray = appDataLoader.getDataFromJson("contractStatus.json")
+
         contractViewModel= ViewModelProvider(this)[ContractsVM::class.java]
         equipmentViewModel= ViewModelProvider(this)[EquipmentVM::class.java]
         recyclerViewEquipment=binding.contractInsertRecyclerViewEquipmentList
 
         toolbar = requireActivity().findViewById(R.id.topAppBar)
-        val bottomNavigationView: BottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView)
-        bottomNavigationView.selectedItemId=R.id.action_home
+
         toolbar.title = " Edit Contract"
         val navigationIcon = toolbar.navigationIcon
         (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
@@ -138,9 +144,43 @@ class ContractInsertFragment : Fragment() {
         val description = view.findViewById<TextInputEditText>(R.id.contractInsert_TextInputEditText_Description)
         val notes = view.findViewById<TextInputEditText>(R.id.contractInsert_TextInputEditText_Notes)
         val contactName = view.findViewById<TextInputEditText>(R.id.contractInsert_TextInputEditText_ContactName)
+
         val contractType = view.findViewById<MaterialAutoCompleteTextView>(R.id.contractInsert_TextInputEditText_ContractType)
+        val adapterDropType = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, contractTypeArray)
+        contractType.setAdapter(adapterDropType)
+
         val contractStatus = view.findViewById<MaterialAutoCompleteTextView>(R.id.contractInsert_TextInputEditText_ContractStatus)
+        val adapterDropStatus = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, contractStatusArray)
+        contractStatus.setAdapter(adapterDropStatus)
+
         val contractValue = view.findViewById<TextInputEditText>(R.id.contractInsert_TextInputEditText_Value)
+
+        val builder = MaterialDatePicker.Builder.datePicker()
+        val pickerOpen = builder.build()
+        val pickerClose =builder.build()
+
+        endDate.setOnClickListener{
+            fragmentManager?.let { it1 -> pickerClose.show(it1, pickerClose.toString()) }
+        }
+        pickerClose.addOnPositiveButtonClickListener {
+            val calendar2 = Calendar.getInstance()
+            calendar2.timeInMillis = it
+            val format = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            val selectedDate = format.format(calendar2.time)
+            endDate.setText(selectedDate)
+        }
+
+        startDate.setOnClickListener{
+            fragmentManager?.let { it1 -> pickerOpen.show(it1, pickerOpen.toString()) }
+        }
+        pickerOpen.addOnPositiveButtonClickListener {
+            val calendar2 = Calendar.getInstance()
+            calendar2.timeInMillis = it
+            val format = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            val selectedDate = format.format(calendar2.time)
+            startDate.setText(selectedDate)
+        }
+
 
         imgButtonContractInfo.setOnClickListener {
             if (infoLayoutContractInfo.visibility == View.VISIBLE) {
@@ -404,7 +444,7 @@ class ContractInsertFragment : Fragment() {
         val value : String =binding.contractInsertTextInputEditTextValue.text.toString()
         val dValue = value.toDoubleOrNull()
         val dateCurrent = getCurrentDateAsString()
-        val updateContracts = Contracts(contractId!!,null ,
+        val updateContracts = Contracts(null,null ,
             binding.contractInsertTextInputEditTextTitle.text.toString(),
             binding.contractInsertTextInputEditTextStartDate.text.toString(),
             binding.contractInsertTextInputEditTextEndDate.text.toString(),
@@ -423,9 +463,17 @@ class ContractInsertFragment : Fragment() {
         GlobalScope.launch(Dispatchers.IO) {
             contractViewModel.insert(requireContext(),updateContracts)
         }
+        val bundle = Bundle()
+        bundle.putString("customerId", customerId.toString())
+        Log.d("TestTest4","${customerId.toString()}")
+        //bundle.putString("customerName",binding.tvCustomerNameContract.text.toString())
+        bundle.putString("contractTitle",binding.contractInsertTextInputEditTextTitle.text.toString())
+        bundle.putString("contractDateEnd",binding.contractInsertTextInputEditTextEndDate.text.toString())
+        bundle.putString("contractDescription",binding.contractInsertTextInputEditTextDescription.text.toString())
         val fragmentManager =parentFragmentManager
         val fragmentTransaction=fragmentManager.beginTransaction()
-        val fragment = ContractFragment()
+        val fragment = CaseInsertFragment()
+        fragment.arguments = bundle
         fragmentTransaction.replace(R.id.frameLayout1,fragment)
         fragmentTransaction.commit()
 

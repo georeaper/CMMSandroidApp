@@ -19,9 +19,9 @@ import androidx.room.PrimaryKey
 )
 data class Inventory(
     @PrimaryKey(autoGenerate = true) var InventoryID :Int?,
-    @ColumnInfo(name ="RemoteID") var RemoteID :String? ,
-    @ColumnInfo(name ="Title") var Title :Int?,
-    @ColumnInfo(name ="Description") var Description :Int?,
+    @ColumnInfo(name ="RemoteID") var RemoteID :Int? ,
+    @ColumnInfo(name ="Title") var Title :String?,
+    @ColumnInfo(name ="Description") var Description :String?,
     @ColumnInfo(name ="Quantity") var Quantity :Long?,
     @ColumnInfo(name ="Value") var Value :Double?,
     @ColumnInfo(name ="Type") var Type :String?,

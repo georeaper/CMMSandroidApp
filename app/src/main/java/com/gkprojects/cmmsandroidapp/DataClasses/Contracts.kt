@@ -12,7 +12,7 @@ import androidx.room.PrimaryKey
         onDelete = ForeignKey.CASCADE)])
 data class Contracts(
     @PrimaryKey(autoGenerate = true) var ContractID :Int?,
-    @ColumnInfo(name ="RemoteID") var RemoteID :String? ,
+    @ColumnInfo(name ="RemoteID") var RemoteID :Int? ,
     @ColumnInfo(name ="Title") var Title :String?,
     @ColumnInfo(name ="DateStart") var DateStart :String?,
     @ColumnInfo(name ="DateEnd") var DateEnd :String?,

@@ -19,7 +19,7 @@ import androidx.room.PrimaryKey
 )
 data class FieldReportInventory (
     @PrimaryKey(autoGenerate = true) var FieldReportInventoryID :Int?,
-    @ColumnInfo(name ="RemoteID") var RemoteID :String? ,
+    @ColumnInfo(name ="RemoteID") var RemoteID :Int? ,
     @ColumnInfo(name ="LastModified") var LastModified :String?,
     @ColumnInfo(name ="DateCreated") var DateCreated :String?,
     @ColumnInfo(name ="Version") var Version :String?,

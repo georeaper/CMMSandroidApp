@@ -51,6 +51,20 @@ data class TicketCustomerName(
      var EquipmentID :String?
 
 )
+data class TicketCalendar(
+    var TicketID :Int?,
+    var Title :String?,
+    var Active :String?,
+    var DateStart: String?,
+    var Urgency :String?,
+    var CustomerName: String?,
+    var UserID :String?,
+    var SerialNumber : String?,
+    var CustomerID :String?,
+    var EquipmentID :String?,
+    var Model: String?,
+    var Manufacturer: String?
+)
 data class DashboardCustomerEquipmentDataClass(
     var EquipmentID: Int?,
     var SerialNumber: String?,

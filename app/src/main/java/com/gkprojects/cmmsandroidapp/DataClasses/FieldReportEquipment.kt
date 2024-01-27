@@ -19,10 +19,11 @@ import androidx.room.PrimaryKey
     )
 data class FieldReportEquipment(
     @PrimaryKey(autoGenerate = true) var FieldReportEquipmentID :Int?,
-    @ColumnInfo(name ="RemoteID") var RemoteID :String? ,
+    @ColumnInfo(name ="RemoteID") var RemoteID :Int? ,
     @ColumnInfo(name ="LastModified") var LastModified :String?,
     @ColumnInfo(name ="DateCreated") var DateCreated :String?,
     @ColumnInfo(name ="Version") var Version :String?,
-    @ColumnInfo(name ="FieldReportID") var UserID :String?,
-    @ColumnInfo(name ="EquipmentID") var CustomerID :String?
+    @ColumnInfo(name ="FieldReportID") var UserID :Int?,
+    @ColumnInfo(name ="EquipmentID") var CustomerID :Int?,
+    @ColumnInfo(name ="MaintenanceID") var MaintenanceID :Int?
 )

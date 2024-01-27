@@ -59,7 +59,8 @@ dependencies {
 //     The compose calendar library
 //    implementation 'com.kizitonwose.calendar:compose:<latest-version>'
 
-
+//color picker library
+    implementation 'com.github.yukuku:ambilwarna:2.0.1'
 
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1'

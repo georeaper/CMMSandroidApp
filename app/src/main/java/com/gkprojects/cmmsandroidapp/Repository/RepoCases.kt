@@ -74,6 +74,10 @@ class RepoCases {
             userDatabase= intialiseDB(context)
             return userDatabase!!.TicketsDao().getDateForOverview()
         }
+        fun getInformationCasesCalendar(context: Context):LiveData<List<TicketCalendar>>{
+            userDatabase= intialiseDB(context)
+            return userDatabase!!.TicketsDao().getTicketInformationCalendar()
+        }
 
     }
 }

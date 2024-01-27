@@ -141,7 +141,7 @@
             android:layout_margin="5dp"
             android:gravity="center"
             android:layout_weight="1"
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
             <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/contractInsert_TextInputEditText_ContractType"
@@ -163,7 +163,7 @@
             android:layout_weight="1"
             android:hint="Contract Status"
             android:layout_margin="5dp"
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
             <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/contractInsert_TextInputEditText_ContractStatus"

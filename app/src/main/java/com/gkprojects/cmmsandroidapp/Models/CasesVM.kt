@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.gkprojects.cmmsandroidapp.DataClasses.CustomerSelect
 
 import com.gkprojects.cmmsandroidapp.DataClasses.OverviewMainData
+import com.gkprojects.cmmsandroidapp.DataClasses.TicketCalendar
 import com.gkprojects.cmmsandroidapp.DataClasses.TicketCustomerName
 import com.gkprojects.cmmsandroidapp.DataClasses.Tickets
 import com.gkprojects.cmmsandroidapp.Repository.RepoCases
@@ -40,5 +41,8 @@ class CasesVM : ViewModel() {
    }
     fun getOverviewData(context: Context):LiveData<List<OverviewMainData>>{
         return RepoCases.getDataForHome(context)
+    }
+    fun getInformationForCalendar(context: Context):LiveData<List<TicketCalendar>>{
+        return RepoCases.getInformationCasesCalendar(context)
     }
 }

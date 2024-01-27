@@ -1,10 +1,7 @@
 package com.gkprojects.cmmsandroidapp.Fragments
 
-import android.accounts.Account
 import android.app.AlertDialog
 import android.app.Dialog
-import android.content.Context
-import android.content.Intent
 import android.icu.text.SimpleDateFormat
 import android.os.Bundle
 import android.util.Log
@@ -30,7 +27,6 @@ import com.gkprojects.cmmsandroidapp.Models.CasesVM
 import com.gkprojects.cmmsandroidapp.Models.EquipmentVM
 import com.gkprojects.cmmsandroidapp.R
 import com.google.android.material.appbar.MaterialToolbar
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.checkbox.MaterialCheckBox
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
@@ -40,6 +36,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.json.JSONArray
+import java.io.File
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -99,7 +97,9 @@ class CaseInsertFragment : Fragment() {
             fragmentTransaction.replace(R.id.frameLayout1,fragment)
             fragmentTransaction.commit()
         }
-        val simpleItems = resources.getStringArray(R.array.cases_types)
+        //val simpleItems = resources.getStringArray(R.array.cases_types)
+        val simpleItems =getCasesTypesFromJson("caseUrgency.json")
+        Log.d("simpleItems","$simpleItems")
         val startDatePicker = view.findViewById<MaterialAutoCompleteTextView>(R.id.datePicker_casesInsert)
         val closeDatePicker = view.findViewById<MaterialAutoCompleteTextView>(R.id.closedDate_casesInsert)
         val dropdownMenu: MaterialAutoCompleteTextView = view.findViewById(R.id.sp_tickets_autocomplete)
@@ -108,12 +108,15 @@ class CaseInsertFragment : Fragment() {
 
 
         val args = this.arguments
-        val id = args?.getInt("id") //CaseId
+        //casesID = args?.getInt("id") //CaseId
+        casesID = if (args != null && args.containsKey("id")) args.getInt("id") else null
         val customerStr = args?.getString("customerId") //CustomerID
         val customID: Int? = customerStr?.toInt() //making customerID to INT
-        casesID  = id
 
-//        var customerName : String = ""
+        Log.d("CasesTest","$casesID , $customID ")
+
+
+
         val customer=view.findViewById<TextView>(R.id.tv_customer_case)
         val equipment=view.findViewById<TextView>(R.id.tv_sn_case)
 
@@ -125,15 +128,17 @@ class CaseInsertFragment : Fragment() {
 
                 if(customID!=null) {
                     for (i in it.indices) {
+                        Log.d("test3","${it[i].CustomerID} $customID")
 
                         if (it[i].CustomerID == customID) {
                             customer.text = it[i].CustomerName
                             customerId=it[i].CustomerID
+                            Log.d("casesTestCustomer","${customer.text} $customerId")
 
                         }
                     }
                 }else{
-                    Toast.makeText(requireContext(),customID.toString(),Toast.LENGTH_SHORT).show()
+                    Log.d("TestCustom","nully")
                 }
 
             })}
@@ -171,14 +176,15 @@ class CaseInsertFragment : Fragment() {
             startDatePicker.setText(selectedDate)
         }
 
-        Log.d("CustomerSerch",customerSearch.toString())
+        Log.d("CustomerSearch",customerSearch.toString())
 
-        if(id!=null){
+        if(casesID!=null){
+            Log.d("UrgencyIndex", "${casesID}")
             lifecycleScope.launch { withContext(Dispatchers.Main){
                 context?.let {
-                    casesViewModel.getTicketDataById(it,id).observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-                        Log.d("tickets",it.toString())
-                        setUpField(it as Tickets,customerSearch)
+                    casesViewModel.getTicketDataById(it, casesID!!).observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+//                        Log.d("tickets",it.toString())
+                        setUpField(it as Tickets)
                         val urgencyIndex: Int = adapterDrop.getPosition(it.Urgency)
                         Log.d("UrgencyIndex", urgencyIndex.toString())
              })
@@ -255,7 +261,7 @@ class CaseInsertFragment : Fragment() {
 
 
         }
-        casesID=id
+        //casesID=id
         equipment.setOnClickListener {
             Log.d("customID_cases",customerId.toString())
             if (customerId!=null){
@@ -263,11 +269,12 @@ class CaseInsertFragment : Fragment() {
                 getEquipmentData()
 
             }else{
-                Toast.makeText(requireContext(),"Select Customer is required, chech the field above",Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(),"Select Customer is required, check the field above",Toast.LENGTH_SHORT).show()
             }
         }
 
     }
+
     private fun getEquipmentData(){
         val builder = AlertDialog.Builder(context)
         builder.setView(R.layout.dialog_equipment_searchview)
@@ -320,7 +327,7 @@ class CaseInsertFragment : Fragment() {
         })
 
     }
-    fun setUpField(tickets: Tickets ,customerData :ArrayList<CustomerSelect>){
+    fun setUpField(tickets: Tickets ){
         Log.d("ticketsSetUpFields","$tickets + ${tickets.EquipmentID}")
 
         customerId=tickets.CustomerID!!.toInt()
@@ -343,7 +350,9 @@ class CaseInsertFragment : Fragment() {
         val closeDatePicker = requireView().findViewById<MaterialAutoCompleteTextView>(R.id.closedDate_casesInsert)
         val equipmentTv =requireView().findViewById<TextView>(R.id.tv_sn_case)
         //var simpleItems = arrayOf("RED","YELLOW","BLUE")
-        val simpleItems = resources.getStringArray(R.array.cases_types)
+        //val simpleItems = resources.getStringArray(R.array.cases_types)
+        val simpleItems =getCasesTypesFromJson("caseUrgency.json")
+        Log.d("simpleItems","$simpleItems")
         val dropdownMenu: MaterialAutoCompleteTextView = requireView().findViewById(R.id.sp_tickets_autocomplete)
         val adapterDrop = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, simpleItems)
         dropdownMenu.setAdapter(adapterDrop)
@@ -412,12 +421,36 @@ class CaseInsertFragment : Fragment() {
         user.setText(tickets.UserID)
         startDatePicker.setText(tickets.DateStart)
         closeDatePicker.setText(tickets.DateEnd)
-        if (tickets.Active=="CHECKED"){
-            active.isChecked
 
+        if (tickets.Active!=null){
+            active.isChecked=true
         }
 
+
+
     }
+
+        private fun getCasesTypesFromJson(filename: String): Array<String> {
+            try {
+                val file = File(requireActivity().filesDir, filename)
+                if (!file.exists()) return emptyArray()
+
+                val jsonString = file.readText()
+                val jsonArray = JSONArray(jsonString)
+                val names = mutableListOf<String>()
+
+                for (i in 0 until jsonArray.length()) {
+                    val jsonObject = jsonArray.getJSONObject(i)
+                    val name = jsonObject.optString("name")
+                    names.add(name)
+                }
+
+                return names.toTypedArray()
+            } catch (e: Exception) {
+                e.printStackTrace()
+                return emptyArray() // Return an empty array in case of any exception
+            }
+        }
 
     private fun filterList(query: String,searchCustomer : ArrayList<CustomerSelect>) {
         val filteredList= ArrayList<CustomerSelect>()
@@ -459,6 +492,7 @@ class CaseInsertFragment : Fragment() {
     }
 
     private fun insertData (ticket :Tickets){
+        Log.d("ticketing","$ticket")
         GlobalScope.launch(Dispatchers.IO) {
             context?.let { it1 -> casesViewModel.insert(it1, ticket) }
             val fragmentManager =parentFragmentManager
@@ -471,6 +505,7 @@ class CaseInsertFragment : Fragment() {
 
     }
     private fun updateData(ticket :Tickets){
+        Log.d("ticketing2","$ticket")
         GlobalScope.launch(Dispatchers.IO) {
             context?.let { it1 -> casesViewModel.updateCustomer(it1, ticket) }
 
@@ -484,7 +519,7 @@ class CaseInsertFragment : Fragment() {
     }
     fun buttonPressed(casesID :Int?,selectedItem :String?){
         val customer=requireView().findViewById<TextView>(R.id.tv_customer_case)
-        //val dropdownMenu: MaterialAutoCompleteTextView = view.findViewById(R.id.sp_tickets_autocomplete) // Replace with your actual AutoCompleteTextView ID
+
         val titleCase:TextInputEditText=requireView().findViewById(R.id.caseInsertTitleTextInput)
         val description :TextInputEditText =requireView().findViewById(R.id.caseInsertDescriptionTextInput)
         val comments :TextInputEditText =requireView().findViewById(R.id.caseInsertCommentsTextInput)
@@ -496,12 +531,7 @@ class CaseInsertFragment : Fragment() {
         val dropdownMenu: MaterialAutoCompleteTextView = requireView().findViewById(R.id.sp_tickets_autocomplete)
 
         if(customerId!=null) {
-            var checked :String=""
-            if (active.isChecked){
-                checked = "CHECKED"
-            }else{
-                checked = "UNCHECKED"
-            }
+
             var dateStr =getCurrentDateAsString()
             var dateSet =""
 
@@ -516,12 +546,12 @@ class CaseInsertFragment : Fragment() {
 
 
             if (casesID == null) {
-                val case = Tickets(casesID,null,
+                val case = Tickets(null,null,
                     titleCase.text.toString(),
                     description.text.toString(),
                     comments.text.toString(),
                     dropdownMenu.text.toString(),
-                    checked,
+                    active.isChecked,
                     startDatePicker.text.toString(),
                     closeDatePicker.text.toString(),
                     dateSet,
@@ -540,7 +570,7 @@ class CaseInsertFragment : Fragment() {
                     description.text.toString(),
                     comments.text.toString(),
                     dropdownMenu.text.toString(),
-                    checked,
+                    active.isChecked,
                     startDatePicker.text.toString(),
                     closeDatePicker.text.toString(),
                     dateSet,
@@ -560,7 +590,7 @@ class CaseInsertFragment : Fragment() {
 
 
     }
-    fun getCurrentDateAsString(): String {
+    private fun getCurrentDateAsString(): String {
         // Get the current date
         val currentDate = LocalDate.now()
 
@@ -568,9 +598,8 @@ class CaseInsertFragment : Fragment() {
         val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
 
         // Format the date to a string
-        val formattedDate = currentDate.format(formatter)
 
-        return formattedDate
+        return currentDate.format(formatter)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

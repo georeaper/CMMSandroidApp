@@ -50,7 +50,8 @@ abstract class CMMSDatabase : RoomDatabase() {
        companion object  {
        @Volatile
        private var instance: CMMSDatabase? = null
-       private const val DATABASE_NAME="CmmsDb"
+       //private const val DATABASE_NAME="CmmsDb"
+       private const val DATABASE_NAME="CmmsDb5"
        fun getInstance(context: Context):CMMSDatabase?
        {
            if(instance == null)

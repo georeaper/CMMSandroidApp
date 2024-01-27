@@ -23,8 +23,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.gkprojects.cmmsandroidapp.DataClasses.Contracts
 import com.gkprojects.cmmsandroidapp.DataClasses.ContractsCustomerName
 import com.gkprojects.cmmsandroidapp.DataClasses.DetailedContract
+import com.gkprojects.cmmsandroidapp.MainActivity.Companion.TAG_CONTRACTS
 import com.gkprojects.cmmsandroidapp.R
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import kotlinx.coroutines.Dispatchers
@@ -41,6 +43,7 @@ class ContractFragment : Fragment() {
     private var templist = ArrayList<ContractsCustomerName>()
     private lateinit var contractAdapter: ContractAdapter
     private lateinit var contractViewModel: ContractsVM
+    private lateinit var toolbar: MaterialToolbar
 
 
 
@@ -71,6 +74,12 @@ class ContractFragment : Fragment() {
     @SuppressLint("UseRequireInsteadOfGet", "SuspiciousIndentation")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        toolbar = requireActivity().findViewById(R.id.topAppBar)
+        val bottomNavigationView: BottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView)
+        //bottomNavigationView.selectedItemId=R.id.action_home
+        toolbar.title =TAG_CONTRACTS
+
         contractRecyclerView=view.findViewById(R.id.contract_recyclerview)
         contractAdapter = this.context?.let { ContractAdapter( ArrayList<ContractsCustomerName>()) }!!
         contractRecyclerView.apply {

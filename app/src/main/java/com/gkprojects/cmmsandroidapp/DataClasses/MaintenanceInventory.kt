@@ -10,11 +10,8 @@ import androidx.room.PrimaryKey
         ForeignKey(entity = Maintenances::class,
             childColumns = ["MaintenanceID"],
             parentColumns = ["MaintenanceID"],
-            onDelete = ForeignKey.CASCADE),
-        ForeignKey(entity = Inventory::class,
-            childColumns = ["InventoryID"],
-            parentColumns = ["InventoryID"],
             onDelete = ForeignKey.CASCADE)]
+
 )
 data class MaintenanceInventory (
     @PrimaryKey(autoGenerate = true) var FieldReportInventoryID :Int?,

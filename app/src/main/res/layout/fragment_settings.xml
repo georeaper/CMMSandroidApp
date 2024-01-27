@@ -103,6 +103,7 @@
             android:background="@drawable/round_corners"
             android:layout_margin="5dp">
             <TextView
+                android:id="@+id/settings_textview_customizedFields"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_margin="10dp"
