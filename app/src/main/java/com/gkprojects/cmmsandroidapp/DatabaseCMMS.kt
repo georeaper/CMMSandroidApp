@@ -22,16 +22,19 @@ import com.gkprojects.cmmsandroidapp.Repository.*
         MaintenanceFieldForm::class,
         MaintenanceInventory::class,
         Tickets::class,
-        Users::class
+        Users::class,
+        CheckForms::class,
+        FieldReportCheckForm::class,
+        FieldReportTools::class
                ],
-    version =1,
-    exportSchema = true,
-    //autoMigrations = [AutoMigration (from = 1, to = 2) ]
+    version =4,
+    exportSchema = true
+    ,autoMigrations = [AutoMigration (from = 1, to = 2) ,AutoMigration (from = 2, to = 3),AutoMigration (from = 3, to = 4)]
 )
 abstract class CMMSDatabase : RoomDatabase() {
 
     abstract fun CustomerDao(): CustomerDao
-   abstract fun EquipmentsDAO(): EquipmentsDao
+    abstract fun EquipmentsDAO(): EquipmentsDao
     abstract fun DepartmentsDao(): DepartmentsDao
     abstract fun ContractEquipmentsDao(): ContractEquipmentsDao
     abstract fun ContractsDao(): ContractsDao
@@ -45,13 +48,20 @@ abstract class CMMSDatabase : RoomDatabase() {
     abstract fun UsersDao():UsersDao
     abstract fun FieldReportInventoryDao():FieldReportInventoryDao
 
+    abstract fun FieldReportToolsDao():FieldReportToolsDao
+    abstract fun ToolsDao():ToolsDao
+    abstract fun CheckFormsDao():CheckFormsDao
+    abstract fun FieldReportCheckFormsDao():FieldReportCheckFormsDao
 
-   //companion object CMMSDatabaseProvider {
+
+
        companion object  {
        @Volatile
        private var instance: CMMSDatabase? = null
        //private const val DATABASE_NAME="CmmsDb"
-       private const val DATABASE_NAME="CmmsDb5"
+       //private const val DATABASE_NAME="CmmsDb5"
+       //private const val DATABASE_NAME="cmmsAppDB29012024"
+       private const val DATABASE_NAME="cmmsAppDB11022024b"
        fun getInstance(context: Context):CMMSDatabase?
        {
            if(instance == null)

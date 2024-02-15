@@ -122,7 +122,7 @@ class CaseInsertFragment : Fragment() {
 
 
 
-        context?.let { casesViewModel.getCustomerId(it).observe(viewLifecycleOwner,
+        casesViewModel.getCustomerId(requireContext()).observe(viewLifecycleOwner,
             androidx.lifecycle.Observer{
                 customerSearch= it as ArrayList<CustomerSelect>
 
@@ -141,7 +141,7 @@ class CaseInsertFragment : Fragment() {
                     Log.d("TestCustom","nully")
                 }
 
-            })}
+            })
 
 
 
@@ -192,10 +192,6 @@ class CaseInsertFragment : Fragment() {
             } }
 
         }
-
-
-
-
         customer.setOnClickListener {
 
             var builder = AlertDialog.Builder(context)
@@ -418,7 +414,7 @@ class CaseInsertFragment : Fragment() {
         titleCase.setText(tickets.Title)
         description.setText(tickets.Description)
         comments.setText(tickets.Notes)
-        user.setText(tickets.UserID)
+        user.setText(tickets.UserID!!)
         startDatePicker.setText(tickets.DateStart)
         closeDatePicker.setText(tickets.DateEnd)
 
@@ -558,8 +554,8 @@ class CaseInsertFragment : Fragment() {
                     openDate,
                     null,
                     null,
-                    customerId.toString(),
-                    equipmentID.toString()
+                    customerId!!,
+                    equipmentID!!
                 )
 
                 insertData(case)
@@ -577,8 +573,8 @@ class CaseInsertFragment : Fragment() {
                     openDate,
                     null,
                     null,
-                    customerId.toString(),
-                    equipmentID.toString()
+                    customerId!!,
+                    equipmentID!!
                 )
                 updateData(case)
             }

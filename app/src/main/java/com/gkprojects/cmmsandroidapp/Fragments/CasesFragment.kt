@@ -167,13 +167,8 @@ class CasesFragment : Fragment() {
 
         val bundle = Bundle()
         data.TicketID?.let { bundle.putInt("id", it.toInt()) }
-//        bundle.putString("title", data.Title)
-//        bundle.putString("startDate", data.DateStart)
-//        bundle.putString("endDate", data)
-//        bundle.putString("active", data.Active)
-//        bundle.putString("equipmentID", data.EquipmentID)
-//        bundle.putString("userId",data.UserID)
-        bundle.putString("customerId",data.CustomerID)
+
+       // bundle.putInt("customerId",data.CustomerID)
 
 
 

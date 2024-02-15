@@ -10,7 +10,7 @@ import androidx.room.PrimaryKey
 
 data class Maintenances(
     @PrimaryKey(autoGenerate = true) var MaintenanceID :Int?,
-    @ColumnInfo(name ="RemoteID") var RemoteID :String? ,
+    @ColumnInfo(name ="RemoteID") var RemoteID :Int? ,
     @ColumnInfo(name ="Name") var Name :String?,
     @ColumnInfo(name ="Description") var Description :String?,
     @ColumnInfo(name ="LastModified") var LastModified :String?,

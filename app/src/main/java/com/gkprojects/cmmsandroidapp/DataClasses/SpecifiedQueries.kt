@@ -117,3 +117,11 @@ data class DetailedContract(
 
 )
 
+data class WorkOrdersList(
+    var workOrderID : Int?,
+    var customerName : String?,
+    var reportNumber : String?,
+    var title : String?,
+    var dateOpened : String?
+)
+

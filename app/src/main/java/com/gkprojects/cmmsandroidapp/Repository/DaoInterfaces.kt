@@ -189,6 +189,18 @@ interface FieldReportsDao {
 
     @Query("Select * from FieldReports")
     fun getAllFieldReports(): LiveData<List<FieldReports>>
+
+    @Query("Select * from FieldReports Where FieldReportID= :id")
+    fun getReportsByID(id :Int) : LiveData<FieldReports>
+
+    @Query("SELECT FieldReports.FieldReportID AS workOrderID " +
+            ", FieldReports.ReportNumber AS reportNumber " +
+            ",FieldReports.StartDate AS dateOpened " +
+            ",FieldReports.Title AS title " +
+            ",Customer.Name AS customerName " +
+            " FROM FieldReports LEFT JOIN Customer ON FieldReports.CustomerID = Customer.CustomerID")
+    fun getCustomerName():LiveData<List<WorkOrdersList>>
+
     @Query ("Select CustomerID,Name as CustomerName from Customer")
     fun getCustomerID():LiveData<List<CustomerSelect>>
     @Insert
@@ -308,6 +320,13 @@ interface UsersDao {
 
     @Query("Select * from Users")
     fun getAllUsers(): LiveData<List<Users>>
+
+    @Query("UPDATE Users SET LastReportNumber = :number WHERE UserID = :id")
+    fun increaseLastReportNumber(number : Int ,id : Int)
+
+    @Query("SELECT * FROM Users WHERE UserID = :id ")
+    fun getUserByID(id:Int):LiveData<Users>
+
     @Insert
     fun addUsers(users: Users)
 
@@ -315,5 +334,32 @@ interface UsersDao {
     fun updateUsers(users: Users)
     @Delete
     fun deleteUsers(users: Users)
+
+}
+@Dao
+interface ToolsDao{
+
+}
+@Dao
+interface FieldReportToolsDao{
+
+}
+@Dao
+interface FieldReportCheckFormsDao{
+
+}
+@Dao
+interface CheckFormsDao{
+    @Insert
+    fun addCheckFormsFields(checkForms: CheckForms)
+
+    @Update
+    fun updateCheckFormsFields(checkForms: CheckForms)
+
+    @Delete
+    fun deleteCheckFormsFields(checkForms : CheckForms)
+
+    @Query ("Select * from CheckForms where MaintenancesID = :id")
+    fun getCheckFormsFieldsByMaintenanceID(id :Int) :LiveData<List<CheckForms>>
 
 }

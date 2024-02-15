@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.widget.Button
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.drawerlayout.widget.DrawerLayout
@@ -32,6 +31,8 @@ class MainActivity : AppCompatActivity() {
         const val TAG_EQUIPMENT_INSERT = "Edit Equipment"
         const val TAG_CUSTOMER_INSERT = "Edit Customer"
         const val TAG_CUSTOMER_DASHBOARD = "Dashboard Customer"
+        const val TAG_CONFIGURATION = "Configuration"
+        const val TAG_STATISTICS = "Statistics"
 
 
     }
@@ -75,6 +76,8 @@ class MainActivity : AppCompatActivity() {
                 R.id.cases_item -> replaceFragment(CasesFragment(), TAG_CASES)
                 R.id.contract_item -> replaceFragment(ContractFragment(), TAG_CONTRACTS)
                 R.id.settings_item -> replaceFragment(SettingsFragment(), TAG_SETTINGS)
+                R.id.configuration_item -> replaceFragment(ConfigurationFragment(), TAG_CONFIGURATION)
+                R.id.statistics_item -> replaceFragment(StatisticsFragment(), TAG_STATISTICS)
  }
             true
         }

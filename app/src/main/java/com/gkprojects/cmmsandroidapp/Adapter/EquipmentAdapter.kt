@@ -45,10 +45,7 @@ class EquipmentAdapter(private val context: Context, private var equipmentlist:L
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
        val currentitem = equipmentlist[position]
-//        holder.titlesn.text = currentitem.SerialNumber
-//        holder.model.text = currentitem.Model
-//        holder.category.text = currentitem.EquipmentCategory
-//        holder.customer.text =(currentitem.CustomerName)
+
         holder.itemView.setOnClickListener {
             if (onClickListener != null) {
                 onClickListener!!.onClick(position, currentitem )

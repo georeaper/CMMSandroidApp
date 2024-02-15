@@ -17,5 +17,5 @@ data class OverviewMainData(
     val UserID :Int?,
     val EquipmentID :Int?,
     val TicketID :Int ?,
-    val CustomerID :String ?
+    val CustomerID :Int ?
 )

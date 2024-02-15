@@ -24,6 +24,6 @@ data class FieldReportEquipment(
     @ColumnInfo(name ="DateCreated") var DateCreated :String?,
     @ColumnInfo(name ="Version") var Version :String?,
     @ColumnInfo(name ="FieldReportID") var UserID :Int?,
-    @ColumnInfo(name ="EquipmentID") var CustomerID :Int?,
+    @ColumnInfo(name ="EquipmentID") var EquipmentID :Int?,
     @ColumnInfo(name ="MaintenanceID") var MaintenanceID :Int?
 )

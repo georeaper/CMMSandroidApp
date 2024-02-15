@@ -18,7 +18,7 @@ import androidx.room.PrimaryKey
 )
 data class ContractEquipments(
     @PrimaryKey(autoGenerate = true) var ContractEquipmentID :Int?,
-    @ColumnInfo(name ="RemoteID") var RemoteID :String? ,
+    @ColumnInfo(name ="RemoteID") var RemoteID :Int? ,
     @ColumnInfo( name="Value")var Value : Double?,
     @ColumnInfo( name="Visits")var Visits : Double?,
     @ColumnInfo( name="ContractID")var ContractID : Int?,

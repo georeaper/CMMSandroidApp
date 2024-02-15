@@ -15,7 +15,7 @@ import androidx.room.PrimaryKey
 )
 data class Tickets(
     @PrimaryKey(autoGenerate = true) var TicketID :Int?,
-    @ColumnInfo(name ="RemoteID") var RemoteID :String? ,
+    @ColumnInfo(name ="RemoteID") var RemoteID :Int? ,
     @ColumnInfo(name ="Title") var Title :String?,
     @ColumnInfo(name ="Description") var Description :String?,
     @ColumnInfo(name ="Notes") var Notes :String?,
@@ -26,7 +26,7 @@ data class Tickets(
     @ColumnInfo(name ="LastModified") var LastModified :String?,
     @ColumnInfo(name ="DateCreated") var DateCreated :String?,
     @ColumnInfo(name ="Version") var Version :String?,
-    @ColumnInfo(name ="UserID") var UserID :String?,
-    @ColumnInfo(name ="CustomerID") var CustomerID :String?,
-    @ColumnInfo(name ="EquipmentID") var EquipmentID :String?
+    @ColumnInfo(name ="UserID") var UserID :Int?, //changed 2-3
+    @ColumnInfo(name ="CustomerID") var CustomerID :Int?,  //changed 3-4
+    @ColumnInfo(name ="EquipmentID") var EquipmentID :Int? // changed 4-5
 )

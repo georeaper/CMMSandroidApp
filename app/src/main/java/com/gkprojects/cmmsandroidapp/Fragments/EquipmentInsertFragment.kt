@@ -57,7 +57,7 @@ class EquipmentInsertFragment : Fragment() {
     private lateinit var equipmentViewModel:EquipmentVM
     private lateinit var toolbar: MaterialToolbar
     private lateinit var binding : FragmentEquipmentInsertBinding
-    var dialog: Dialog? = null
+    private var dialog: Dialog? = null
     private var rvAdapter: RvAdapterFindCustomers? = null
     private var rvAdapterTickets : CasesListEquipmentInsertAdapter? =null
     private lateinit var filterText : SearchView

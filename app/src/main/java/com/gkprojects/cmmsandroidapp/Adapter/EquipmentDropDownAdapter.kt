@@ -21,7 +21,7 @@ class EquipmentDropDownAdapter(context: Context, private val equipments: List<Eq
             .inflate(R.layout.dropdown_item, parent, false)
         val equipment = equipments[position]
 
-        view.findViewById<TextView>(R.id.textViewEquipmentID).text = equipment.EquipmentID.toString()
+        view.findViewById<TextView>(R.id.textViewEquipmentID).text = equipment.Model.toString()
         view.findViewById<TextView>(R.id.textViewSerialNumber).text = equipment.SerialNumber
         return view
     }
@@ -32,14 +32,11 @@ class EquipmentDropDownAdapter(context: Context, private val equipments: List<Eq
 //        view.findViewById<TextView>(R.id.textViewEquipmentID).text =equipment!!.EquipmentID.toString()
 //        view.findViewById<TextView>(R.id.textViewSerialNumber).text = equipment!!.SerialNumber
 
-        view.findViewById<TextView>(R.id.customDropDownTextView)
+        //view.findViewById<TextView>(R.id.customDropDownTextView)
         val serialNumberTextView = view.findViewById<TextView>(R.id.customDropDownTextView)
         serialNumberTextView.text = equipment?.SerialNumber
         Log.d("AdapterContractEquipment","$serialNumberTextView")
-        // Populate your custom dropdown view
-        //val equipmentIDTextView = view.findViewById<TextView>(R.id.textViewEquipmentID)
 
-        //equipmentIDTextView.text = equipment?.EquipmentID.toString()
 
 
         return view
