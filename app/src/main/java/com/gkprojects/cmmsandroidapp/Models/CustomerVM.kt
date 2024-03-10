@@ -25,22 +25,22 @@ class CustomerVM : ViewModel() {
     {
         return RepoCustomer.getAllCustomerData(context)
     }
-   suspend fun deleteCustomer(context: Context, customer: Customer){
+    fun deleteCustomer(context: Context, customer: Customer){
         RepoCustomer.delete(context,customer)
     }
-    fun getCustomerDataByID(context: Context, id :Int):LiveData<Customer>{
+    fun getCustomerDataByID(context: Context, id :String):LiveData<Customer>{
         return RepoCustomer.getCustomerID(context,id)
     }
-    suspend fun updateCustomer(context: Context,customer:Customer){
+     fun updateCustomer(context: Context,customer:Customer){
         RepoCustomer.updateCustomerData(context,customer)
     }
-    fun getCustomerEquipmentsPerCustomer(context: Context, id :Int):LiveData<List<DashboardCustomerEquipmentDataClass>>{
+    fun getCustomerEquipmentsPerCustomer(context: Context, id :String):LiveData<List<DashboardCustomerEquipmentDataClass>>{
         return RepoCustomer.getEquipmentDashboard(context,id)
     }
-    fun getCustomerContractsPerCustomer(context: Context, id:Int):LiveData<List<DashboardCustomerContractsDataClass>>{
+    fun getCustomerContractsPerCustomer(context: Context, id:String):LiveData<List<DashboardCustomerContractsDataClass>>{
         return RepoCustomer.getContractsDashboard(context,id)
     }
-    fun getCustomerTechnicalCasesPerCustomer(context: Context, id:Int):LiveData<List<DashboardCustomerTechnicalCasesDataClass>>{
+    fun getCustomerTechnicalCasesPerCustomer(context: Context, id:String):LiveData<List<DashboardCustomerTechnicalCasesDataClass>>{
         return RepoCustomer.getTechnicalCasesDashboard(context, id)
     }
 

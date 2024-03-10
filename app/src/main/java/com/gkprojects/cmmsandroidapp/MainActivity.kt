@@ -3,6 +3,7 @@ package com.gkprojects.cmmsandroidapp
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.widget.Button
@@ -10,15 +11,32 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import com.gkprojects.cmmsandroidapp.DataClasses.Customer
 import com.gkprojects.cmmsandroidapp.Fragments.*
+import com.gkprojects.cmmsandroidapp.Fragments.Configuration.ConfigurationFragment
 import com.gkprojects.cmmsandroidapp.Fragments.Contracts.ContractFragment
 import com.gkprojects.cmmsandroidapp.Fragments.Contracts.ContractInsertFragment
+import com.gkprojects.cmmsandroidapp.Fragments.Customers.CustomerFragment
+import com.gkprojects.cmmsandroidapp.Fragments.Customers.EditCustomerFragment
+import com.gkprojects.cmmsandroidapp.Fragments.Equipments.EquipmentFragment
+import com.gkprojects.cmmsandroidapp.Fragments.Equipments.EquipmentInsertFragment
+import com.gkprojects.cmmsandroidapp.Fragments.Inventory.Inventory
+import com.gkprojects.cmmsandroidapp.Fragments.Settings.SettingsFragment
+import com.gkprojects.cmmsandroidapp.Fragments.SpecialTools.SpecialTools
+import com.gkprojects.cmmsandroidapp.Fragments.TechnicalCases.CaseInsertFragment
+import com.gkprojects.cmmsandroidapp.Fragments.TechnicalCases.CasesFragment
+import com.gkprojects.cmmsandroidapp.Fragments.WorkOrders.Work_Orders
+import com.gkprojects.cmmsandroidapp.Models.CustomerVM
+import com.gkprojects.cmmsandroidapp.api.ApiViewModel
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity() {
+
     companion object {
         const val TAG_HOME = "Home"
         const val TAG_CUSTOMER = "Customer"
@@ -33,12 +51,17 @@ class MainActivity : AppCompatActivity() {
         const val TAG_CUSTOMER_DASHBOARD = "Dashboard Customer"
         const val TAG_CONFIGURATION = "Configuration"
         const val TAG_STATISTICS = "Statistics"
+        const val TAG_TOOLS = "Tools"
+        const val TAG_INVENTORY = "Inventory"
 
 
     }
+    private lateinit var viewModel: CustomerVM
+    private lateinit var viewModelApi : ApiViewModel
     lateinit var toggle: ActionBarDrawerToggle
     lateinit var drawerLayout: DrawerLayout
     private var currentFragmentTag = "Home"
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -64,7 +87,9 @@ class MainActivity : AppCompatActivity() {
         drawerLayout.closeDrawers()
         toolbar.title= "Home"
 
+        viewModelApi = ViewModelProvider(this).get(ApiViewModel::class.java)
 
+        testApi()
 
         navView.setNavigationItemSelectedListener {
             it.isChecked=true
@@ -75,7 +100,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.workOrder_item ->replaceFragment(Work_Orders(), TAG_WORK_ORDERS)
                 R.id.cases_item -> replaceFragment(CasesFragment(), TAG_CASES)
                 R.id.contract_item -> replaceFragment(ContractFragment(), TAG_CONTRACTS)
-                R.id.settings_item -> replaceFragment(SettingsFragment(), TAG_SETTINGS)
+//                R.id.settings_item -> replaceFragment(SettingsFragment(), TAG_SETTINGS)
+                R.id.tools_item ->replaceFragment(SpecialTools(), TAG_TOOLS)
+                R.id.inventory_item ->replaceFragment(Inventory(), TAG_INVENTORY)
                 R.id.configuration_item -> replaceFragment(ConfigurationFragment(), TAG_CONFIGURATION)
                 R.id.statistics_item -> replaceFragment(StatisticsFragment(), TAG_STATISTICS)
  }
@@ -94,6 +121,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.action_search -> {
                     // Handle Search click
                     // You can add your logic here
+
                     true
                 }
                 R.id.action_popUpMenu -> {
@@ -122,6 +150,24 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+
+
+
+    private fun updateTest(customer: Customer) {
+        Log.d("testInActivity2","$customer")
+        viewModel.updateCustomer(this,customer)
+
+    }
+    private fun testApi(){
+
+
+        viewModelApi.authResponse.observe(this, Observer { response ->
+            // Update UI with the response
+        })
+
+        viewModelApi.authenticate()
+    }
+
     private fun replaceFragment(fragment: Fragment, tag: String) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.frameLayout1, fragment, tag)

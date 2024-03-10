@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:accessibilityPaneTitle="Insert Equipment"
-    tools:context=".Fragments.EquipmentInsertFragment">
+    tools:context=".Fragments.Equipments.EquipmentInsertFragment">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

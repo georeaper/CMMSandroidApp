@@ -216,7 +216,7 @@ class HomeFragment : Fragment() {
         // Update your calendar view and text view here
         tvCurrentMonth.text = currentMonth.format(DateTimeFormatter.ofPattern("MMMM yyyy"))
         // Setup or update CalendarView with the new month
-        calendarView.setup(currentMonth.minusMonths(360), currentMonth.plusMonths(360), DayOfWeek.MONDAY)
+        calendarView.setup(currentMonth.minusMonths(360), currentMonth.plusMonths(360), DayOfWeek.SUNDAY)
         calendarView.scrollToMonth(currentMonth)
     }
     private fun setdatatoRv( recyclerview : RecyclerView , adapterRv : MainOverviewAdapter,  input :ArrayList<OverviewMainData>){
@@ -303,22 +303,7 @@ class HomeFragment : Fragment() {
                         }
                     }
                 }
-//                dayEvents.forEach { event ->
-//                    // Your event handling logic...
-//                }
-                // Find events for this day
 
-//                dayEvents.forEach { event ->
-//                    when (event.type) {
-//                        EventType.CONTRACT -> {
-//
-//                            // Do something specific for CONTRACT if needed
-//                        }
-//                        EventType.WARRANTY_EXPIRATION -> container.textViewTV.backgroundTintList = ContextCompat.getColorStateList(requireContext(), R.color.darkBlue)
-//                        EventType.TECHNICAL_CASE -> container.textViewTV.backgroundTintList = ContextCompat.getColorStateList(requireContext(), R.color.red)
-//                        EventType.WORK_ORDER -> container.textViewTV. backgroundTintList = ContextCompat.getColorStateList(requireContext(), R.color.orange)
-//                    }
-//                }
             }
         }
     }

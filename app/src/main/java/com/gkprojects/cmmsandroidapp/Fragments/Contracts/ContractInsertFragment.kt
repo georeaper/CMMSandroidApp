@@ -31,17 +31,13 @@ import com.gkprojects.cmmsandroidapp.DataClasses.CustomerSelect
 import com.gkprojects.cmmsandroidapp.DataClasses.DetailedContract
 import com.gkprojects.cmmsandroidapp.DataClasses.EquipmentListInCases
 import com.gkprojects.cmmsandroidapp.Fragments.AppDataLoader
-import com.gkprojects.cmmsandroidapp.Fragments.CaseInsertFragment
-import com.gkprojects.cmmsandroidapp.Fragments.CasesFragment
-import com.gkprojects.cmmsandroidapp.Fragments.CustomerFragment
+import com.gkprojects.cmmsandroidapp.Fragments.TechnicalCases.CaseInsertFragment
 import com.gkprojects.cmmsandroidapp.Models.EquipmentVM
 
 
 import com.gkprojects.cmmsandroidapp.R
 import com.gkprojects.cmmsandroidapp.databinding.FragmentContractInsertBinding
-import com.gkprojects.cmmsandroidapp.databinding.FragmentDashboardCustomerBinding
 import com.google.android.material.appbar.MaterialToolbar
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.google.android.material.textfield.TextInputEditText
@@ -67,9 +63,9 @@ class ContractInsertFragment : Fragment() {
     private var rvAdapterEquipmentList : ContractInsertEquipmentListAdapter? =null
     private var recyclerViewEquipment :RecyclerView?= null
     private lateinit var filterText : SearchView
-    private var customerId : Int?= null
-    private var contractId :Int? =null
-    private var dateCreated : String? = ""
+    private var customerId : String?= null
+    private var contractId :String? =null
+    private var dateCreated : String? = null
     private var customerSearch =ArrayList<CustomerSelect>()
     private var contractEquipment= ArrayList<DetailedContract>()
     private var equipmentsByCustomer =ArrayList<EquipmentListInCases>()
@@ -201,7 +197,7 @@ class ContractInsertFragment : Fragment() {
         }
 
         val args =this.arguments
-         contractId= args?.getInt("id")
+         contractId= args?.getString("id")
 
         if(contractId!=null){
 
@@ -216,20 +212,21 @@ class ContractInsertFragment : Fragment() {
                     contractStatus.setText(it.ContractStatus)
                     contractType.setText(it.ContractType)
                     contractValue.setText(it.Value.toString())
-                    customerId=it.CustomerID!!.toInt()
+                    customerId=it.CustomerID!!
                     dateCreated=it.DateCreated
                     setCustomer(customerId!!)
-                    getEquipmentByCustomerId(it.CustomerID!!.toInt())
+                    getEquipmentByCustomerId(it.CustomerID!!)
 
                 })
             val btnAddEquipments : ImageButton=binding.contractInsertImgButtonListEquipments
             val visits : TextInputEditText=binding.contractInsertTextInputEditTextVistsEquipmentList
             val dropdown : AutoCompleteTextView=binding.contractInsertAutocomplateEquipmentList
+
             btnAddEquipments.setOnClickListener {
 
                 selectedEquipment?.let {
                     val dateCreated =getCurrentDateAsString()
-                    val data = ContractEquipments(null,null,null,visits.text.toString().toDoubleOrNull(),contractId,
+                    val data = ContractEquipments("",null,null,visits.text.toString().toDoubleOrNull(),contractId,
                         selectedEquipment!!.EquipmentID,null,dateCreated,null)
                     Toast.makeText(requireContext(),"$data",Toast.LENGTH_SHORT).show()
                     lifecycleScope.launch {
@@ -245,7 +242,7 @@ class ContractInsertFragment : Fragment() {
 
             try{
 
-            contractViewModel.getDetailedContractByID(requireContext(),contractId!!.toInt()).observe(viewLifecycleOwner,
+            contractViewModel.getDetailedContractByID(requireContext(),contractId!!).observe(viewLifecycleOwner,
                 Observer {
                     contractEquipment.clear()
                     for (i in it.indices){
@@ -334,7 +331,7 @@ class ContractInsertFragment : Fragment() {
 
             rvAdapter!!.setOnClickListener(object :RvAlertAdapter.OnClickListener{
                 override fun onClick(position: Int, model: CustomerSelect) {
-                    var strtemp: String = model.CustomerName
+                    var strtemp: String = model.CustomerName!!
                     customerId = model.CustomerID
 
                     contractCustomer.text = strtemp
@@ -358,7 +355,7 @@ class ContractInsertFragment : Fragment() {
         return sharedPreferences.getBoolean(key, defaultVisibility)
     }
 
-    private fun setCustomer(id : Int){
+    private fun setCustomer(id : String){
         val customerTextView=binding.tvCustomerNameContract
 
         lifecycleScope.launch {
@@ -380,14 +377,14 @@ class ContractInsertFragment : Fragment() {
     }
 
     @SuppressLint("SuspiciousIndentation")
-    private fun getEquipmentByCustomerId(id : Int){
+    private fun getEquipmentByCustomerId(id : String){
         equipmentViewModel.getEquipmentByCustomerId(requireContext(),id).observe(viewLifecycleOwner,
             Observer {
                 Log.d("contractContract","$it")
                 if (it!=null){
                 equipmentsByCustomer= it as ArrayList<EquipmentListInCases>
                     Log.d("ContractEquipments","$equipmentsByCustomer")
-                    val equipmentMap = HashMap<Int, String>()
+                    val equipmentMap = HashMap<String, String>()
                     equipmentsByCustomer.forEach { equipment ->
                         equipment.EquipmentID?.let { id ->
                             equipment.SerialNumber?.let { serialNumber ->
@@ -444,7 +441,7 @@ class ContractInsertFragment : Fragment() {
         val value : String =binding.contractInsertTextInputEditTextValue.text.toString()
         val dValue = value.toDoubleOrNull()
         val dateCurrent = getCurrentDateAsString()
-        val updateContracts = Contracts(null,null ,
+        val updateContracts = Contracts(UUID.randomUUID().toString(),null ,
             binding.contractInsertTextInputEditTextTitle.text.toString(),
             binding.contractInsertTextInputEditTextStartDate.text.toString(),
             binding.contractInsertTextInputEditTextEndDate.text.toString(),
@@ -481,7 +478,7 @@ class ContractInsertFragment : Fragment() {
     private fun filterList(query: String,searchCustomer : ArrayList<CustomerSelect>) {
         val filteredList= java.util.ArrayList<CustomerSelect>()
         for (i in searchCustomer){
-            if (i.CustomerName.lowercase(Locale.ROOT).contains(query))
+            if (i.CustomerName?.lowercase(Locale.ROOT)?.contains(query) == true)
                 filteredList.add(i)
             Log.d("datafilterDialogContract", filteredList.toString())
         }
@@ -495,17 +492,15 @@ class ContractInsertFragment : Fragment() {
 
     }
 
-    fun getValuesFromdb(data : ArrayList<CustomerSelect>, id :Int?,tv :TextView){
-        var customerNameIndexed = mutableMapOf<Int, String>()
+    fun getValuesFromdb(data : ArrayList<CustomerSelect>, id :String?, tv :TextView) {
+        val customerNameIndexed = mutableMapOf<String?, String?>()
 
-        if(isInt(id)) {
-            for (i in data.indices) {
-                customerNameIndexed[data[i].CustomerID] = data[i].CustomerName
-            }
-            tv.text = customerNameIndexed[id]
-        }else
-            tv.text="empty"
+        for (i in data.indices) {
 
+//            data[i].CustomerID.toString()
+            customerNameIndexed[data[i].CustomerID] = data[i].CustomerName
+        }
+        tv.text = customerNameIndexed[id]
     }
 
     private fun isInt(id: Int?): Boolean {

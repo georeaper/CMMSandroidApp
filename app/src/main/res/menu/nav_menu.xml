@@ -28,32 +28,28 @@
             android:title="Contract"
             android:icon="@drawable/baseline_download_for_offline_24"/>
         <item
+            android:id="@+id/inventory_item"
+            android:title="Inventory"
+            android:icon="@drawable/baseline_download_for_offline_24"/>
+
+
+        <item android:id="@+id/tools_item"
+                android:title="Tools"/>
+
+        <item
+        android:id="@+id/statistics_item"
+        android:title="Statistics"
+        android:icon="@drawable/baseline_download_for_offline_24"/>
+
+
+<!--        <item-->
+<!--            android:id="@+id/settings_item"-->
+<!--            android:title="Settings"-->
+<!--            android:icon="@drawable/baseline_download_for_offline_24"/>-->
+        <item
             android:id="@+id/configuration_item"
             android:title="Configuration"
-            android:icon="@drawable/baseline_download_for_offline_24">
-
-<!--            <menu>-->
-<!--                <item android:id="@+id/checkforms_item"-->
-<!--                    android:title="Checkforms"/>-->
-<!--                <item android:id="@+id/tools_item"-->
-<!--                    android:title="Tools"/>-->
-<!--                <item android:id="@+id/form_template_item"-->
-<!--                    android:title="Templates"/>-->
-<!--                <item android:id="@+id/customizedFields_item"-->
-<!--                    android:title="Customized Fields"/>-->
-
-<!--            </menu>-->
-
-        </item>
-        <item
-            android:id="@+id/statistics_item"
-            android:title="Statistics"
             android:icon="@drawable/baseline_download_for_offline_24"/>
-        <item
-            android:id="@+id/settings_item"
-            android:title="Settings"
-            android:icon="@drawable/baseline_download_for_offline_24"/>
-
 
 
 

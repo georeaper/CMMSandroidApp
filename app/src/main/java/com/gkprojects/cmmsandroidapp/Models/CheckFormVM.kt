@@ -18,7 +18,7 @@ class CheckFormVM: ViewModel() {
     fun delete(context: Context,checkForms: CheckForms){
         RepoCheckForms.deleteCheckFormField(context,checkForms)
     }
-    fun getCheckFormFields(context: Context,id :Int):LiveData<List<CheckForms>>{
+    fun getCheckFormFields(context: Context,id :String):LiveData<List<CheckForms>>{
         return RepoCheckForms.getCheckFormFields(context,id)
     }
 

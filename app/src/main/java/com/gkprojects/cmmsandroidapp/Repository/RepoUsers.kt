@@ -56,16 +56,20 @@ class RepoUsers {
                 userDatabase!!.UsersDao().updateUsers(users)
             }
         }
-        fun getSingleUser(context:Context ,id :Int):LiveData<Users>{
+        fun getSingleUser(context:Context ,id :String):LiveData<Users>{
             userDatabase= initialiseDB(context)
             return userDatabase!!.UsersDao().getUserByID(id)
         }
-        fun increaseLastReport(context: Context,number:Int ,id :Int){
+        fun increaseLastReport(context: Context,number:Int ,id :String){
             userDatabase= initialiseDB(context)
             CoroutineScope(Dispatchers.IO).launch {
                 userDatabase!!.UsersDao().increaseLastReportNumber(number,id)
             }
 
+        }
+        fun getFirstUser(context: Context):LiveData<Users>{
+            userDatabase= initialiseDB(context)
+            return userDatabase!!.UsersDao().getFirstUser()
         }
 
 

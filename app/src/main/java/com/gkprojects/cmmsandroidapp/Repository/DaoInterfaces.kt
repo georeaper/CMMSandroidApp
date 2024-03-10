@@ -2,6 +2,8 @@ package com.gkprojects.cmmsandroidapp.Repository
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.gkprojects.cmmsandroidapp.DataClasseUNused.MaintenanceFieldForm
+import com.gkprojects.cmmsandroidapp.DataClasseUNused.MaintenanceInventory
 import com.gkprojects.cmmsandroidapp.DataClasses.*
 
 
@@ -12,20 +14,20 @@ interface CustomerDao {
     fun getAllCustomer(): LiveData<List<Customer>>
 
     @Query("SELECT * FROM Customer Where Customer.CustomerID = :id")
-    fun getCustomerByID(id :Int):LiveData<Customer>
+    fun getCustomerByID(id :String):LiveData<Customer>
     @Query("Select Equipments.EquipmentID, Equipments.SerialNumber, Equipments.Model ,Equipments.InstallationDate " +
             "From Equipments " +
             "where Equipments.CustomerID = :id")
-    fun getDashboardEquipmentsByID(id:Int):LiveData<List<DashboardCustomerEquipmentDataClass>>
+    fun getDashboardEquipmentsByID(id:String):LiveData<List<DashboardCustomerEquipmentDataClass>>
 
     @Query("Select Contracts.ContractID,Contracts.Title , " +
             "Contracts.ContractStatus, Contracts.DateEnd ,Contracts.ContractType " +
             "From Contracts Where Contracts.CustomerID = :id ")
-    fun getDashboardContractsByID(id :Int):LiveData<List<DashboardCustomerContractsDataClass>>
+    fun getDashboardContractsByID(id :String):LiveData<List<DashboardCustomerContractsDataClass>>
 
     @Query("Select Tickets.TicketID , Tickets.Title, Tickets.Urgency , Tickets.DateStart , Tickets.DateEnd " +
             "From Tickets Where Tickets.CustomerID = :id ")
-    fun getDashboardTechnicalCaseByID(id :Int):LiveData<List<DashboardCustomerTechnicalCasesDataClass>>
+    fun getDashboardTechnicalCaseByID(id :String):LiveData<List<DashboardCustomerTechnicalCasesDataClass>>
 
     @Insert
     fun addCustomer(customer: Customer)
@@ -44,7 +46,7 @@ interface ContractsDao {
     fun getAllContracts(): LiveData<List<Contracts>>
 
     @Query("Select * from Contracts where Contracts.ContractID= :id")
-    fun getContractsById(id:Int):LiveData<Contracts>
+    fun getContractsById(id:String):LiveData<Contracts>
 
     @Query ("Select CustomerID,Name as CustomerName from Customer")
     fun getCustomerID(): LiveData<List<CustomerSelect>>
@@ -73,12 +75,12 @@ interface ContractEquipmentsDao {
     fun getAllContractEquipment(): LiveData<List<ContractEquipments>>
 
     @Query ("Select * from ContractEquipments Where ContractEquipments.ContractID = :id")
-    fun getContractEquipmentByID(id :Int):LiveData<List<ContractEquipments>>
+    fun getContractEquipmentByID(id :String):LiveData<List<ContractEquipments>>
     @Query ("Select * from ContractEquipments Where ContractEquipments.ContractEquipmentID = :id")
-    fun getContractEquipmentByEquipmentID(id :Int):LiveData<ContractEquipments>
+    fun getContractEquipmentByEquipmentID(id :String):LiveData<ContractEquipments>
 
     @Query("SELECT COUNT(*) FROM ContractEquipments WHERE ContractID = :contractID AND EquipmentID = :equipmentID")
-    fun count(contractID: Int, equipmentID: Int): Int
+    fun count(contractID: String, equipmentID: String): Int
 
     @Insert
     fun addContractEquipments(contractEquipments:ContractEquipments)
@@ -94,7 +96,7 @@ interface ContractEquipmentsDao {
             "FROM ContractEquipments " +
             "LEFT JOIN Equipments ON ContractEquipments.EquipmentID = Equipments.EquipmentID " +
             "WHERE ContractEquipments.ContractID = :id ")
-    fun getDetailedContractByID(id: Int):LiveData<List<DetailedContract>>
+    fun getDetailedContractByID(id: String):LiveData<List<DetailedContract>>
 
 
 
@@ -125,6 +127,9 @@ interface DepartmentsDao {
 interface EquipmentsDao{
     @Query("Select * from Equipments")
     fun getAllEquipments(): LiveData<List<Equipments>>
+    @Query("Select * from Equipments where CustomerID = :customerId")
+    fun getAllDataEquipmentsByCustomerID(customerId : String): LiveData<List<Equipments>>
+
 
     @Query
     ("Select CustomerID,Name as CustomerName from Customer")
@@ -139,13 +144,13 @@ interface EquipmentsDao{
     @Query(" Select EquipmentID,SerialNumber,Model,CustomerID " +
             " From Equipments " +
             " Where CustomerID= :Customerid ")
-    fun selectEquipmentByCustomerID(Customerid : Int) : LiveData<List<EquipmentListInCases>>
+    fun selectEquipmentByCustomerID(Customerid : String) : LiveData<List<EquipmentListInCases>>
 
     @Query("Select * FROM Equipments WHERE EquipmentID= :id")
-     fun SelectRecordById(id :Int) : LiveData<Equipments>
+     fun SelectRecordById(id :String) : LiveData<Equipments>
 
      @Query("Select * from Tickets Where EquipmentID= :id")
-     fun getTicketsByEquipmentId(id : Int) : LiveData<List<Tickets>>
+     fun getTicketsByEquipmentId(id : String) : LiveData<List<Tickets>>
 
  @Insert
     fun addEquipments(equipments: Equipments)
@@ -161,6 +166,22 @@ interface FieldReportEquipmentDao {
 
     @Query("Select * from FieldReportEquipment")
     fun getAllFieldReportEquipment(): LiveData<List<FieldReportEquipment>>
+
+    @Query("Select * from FieldReportEquipment where FieldReportEquipmentID= :id ")
+    fun getFieldReportEquipmentByID(id :String):LiveData<FieldReportEquipment>
+
+    @Query (" Select Equipments.EquipmentID as EquipmentID, " +
+            " Equipments.Model as Model, " +
+            " Equipments.SerialNumber as SerialNumber, " +
+            " FieldReportEquipment.CompletedStatus as CompletedStatus, " +
+            " FieldReportEquipment.FieldReportEquipmentID as idFieldReportEquipment " +
+            " From FieldReportEquipment " +
+            " LEFT JOIN Equipments " +
+            " Where FieldReportEquipment.EquipmentID=Equipments.EquipmentID AND " +
+            " FieldReportEquipment.FieldReportID = :id ")
+    fun getFieldReportEquipmentByFieldReportID(id :String ):LiveData<List<CustomDisplayDatFieldReportEquipments>>
+    @Query("UPDATE FieldReportEquipment SET CompletedStatus = :value WHERE FieldReportEquipmentID = :id")
+    fun updateCompletedStatus(value : Int, id :String)
     @Insert
     fun addFieldReportEquipment(fieldReportEquipment: FieldReportEquipment)
 
@@ -170,20 +191,7 @@ interface FieldReportEquipmentDao {
     fun deleteFieldReportEquipment(fieldReportEquipment: FieldReportEquipment)
 
 }
-@Dao
-interface FieldReportInventoryDao {
 
-    @Query("Select * from FieldReportInventory")
-    fun getAllFieldReportInventory(): LiveData<List<FieldReportInventory>>
-    @Insert
-    fun addFieldReportInventory(fieldReportInventory: FieldReportInventory)
-
-    @Update
-    fun updateFieldReportInventory(fieldReportInventory: FieldReportInventory)
-    @Delete
-    fun deleteFieldReportInventory(fieldReportInventory: FieldReportInventory)
-
-}
 @Dao
 interface FieldReportsDao {
 
@@ -191,7 +199,7 @@ interface FieldReportsDao {
     fun getAllFieldReports(): LiveData<List<FieldReports>>
 
     @Query("Select * from FieldReports Where FieldReportID= :id")
-    fun getReportsByID(id :Int) : LiveData<FieldReports>
+    fun getReportsByID(id :String) : LiveData<FieldReports>
 
     @Query("SELECT FieldReports.FieldReportID AS workOrderID " +
             ", FieldReports.ReportNumber AS reportNumber " +
@@ -212,48 +220,8 @@ interface FieldReportsDao {
     fun deleteFieldReports(fieldReports: FieldReports)
 
 }
-@Dao
-interface InventoryDao {
 
-    @Query("Select * from Inventory")
-    fun getAllInventory(): LiveData<List<Inventory>>
-    @Insert
-    fun addInventory(inventory: Inventory)
 
-    @Update
-    fun updateInventory(inventory: Inventory)
-    @Delete
-    fun deleteInventory(inventory: Inventory)
-
-}
-@Dao
-interface MaintenanceFieldFormDao {
-
-    @Query("Select * from MaintenanceFieldForm")
-    fun getAllMaintenanceFieldForm(): LiveData<List<MaintenanceFieldForm>>
-    @Insert
-    fun addMaintenanceFieldForm(maintenanceFieldForm: MaintenanceFieldForm)
-
-    @Update
-    fun updateMaintenanceFieldForm(maintenanceFieldForm: MaintenanceFieldForm)
-    @Delete
-    fun deleteMaintenanceFieldForm(maintenanceFieldForm: MaintenanceFieldForm)
-
-}
-@Dao
-interface MaintenanceInventoryDao {
-
-    @Query("Select * from MaintenanceInventory")
-    fun getAllMaintenanceInventory(): LiveData<List<MaintenanceInventory>>
-    @Insert
-    fun addMaintenanceInventory(maintenanceInventory: MaintenanceInventory)
-
-    @Update
-    fun updateMaintenanceInventory(maintenanceInventory: MaintenanceInventory)
-    @Delete
-    fun deleteMaintenanceInventory(maintenanceInventory: MaintenanceInventory)
-
-}
 @Dao
 interface MaintenancesDao {
 
@@ -276,7 +244,7 @@ interface TicketsDao {
     fun getAllTickets(): LiveData<List<Tickets>>
 
     @Query("Select * from Tickets where Tickets.TicketID= :id")
-    fun getTicketsById(id: Int): LiveData<Tickets>
+    fun getTicketsById(id: String): LiveData<Tickets>
 
     @Query ("Select CustomerID,Name as CustomerName from Customer")
     fun getCustomerID():LiveData<List<CustomerSelect>>
@@ -321,11 +289,14 @@ interface UsersDao {
     @Query("Select * from Users")
     fun getAllUsers(): LiveData<List<Users>>
 
+    @Query("SELECT * FROM Users LIMIT 1")
+    fun getFirstUser(): LiveData<Users>
+
     @Query("UPDATE Users SET LastReportNumber = :number WHERE UserID = :id")
-    fun increaseLastReportNumber(number : Int ,id : Int)
+    fun increaseLastReportNumber(number : Int ,id : String)
 
     @Query("SELECT * FROM Users WHERE UserID = :id ")
-    fun getUserByID(id:Int):LiveData<Users>
+    fun getUserByID(id:String):LiveData<Users>
 
     @Insert
     fun addUsers(users: Users)
@@ -336,16 +307,21 @@ interface UsersDao {
     fun deleteUsers(users: Users)
 
 }
-@Dao
-interface ToolsDao{
 
-}
-@Dao
-interface FieldReportToolsDao{
 
-}
 @Dao
 interface FieldReportCheckFormsDao{
+    @Insert
+    fun insertFieldReportCheckForms(fieldReportCheckForm: FieldReportCheckForm)
+
+    @Update
+    fun updateFieldReportCheckForms(fieldReportCheckForm: FieldReportCheckForm)
+
+    @Delete
+    fun deleteFieldReportCheckForms(fieldReportCheckForm: FieldReportCheckForm)
+
+    @Query(" Select * From FieldReportCheckFOrm where FieldReportEquipmentID= :id ")
+    fun selectFieldReportCheckFormsByFieldReportEquipmentID(id :String) : LiveData<List<FieldReportCheckForm>>
 
 }
 @Dao
@@ -360,6 +336,6 @@ interface CheckFormsDao{
     fun deleteCheckFormsFields(checkForms : CheckForms)
 
     @Query ("Select * from CheckForms where MaintenancesID = :id")
-    fun getCheckFormsFieldsByMaintenanceID(id :Int) :LiveData<List<CheckForms>>
+    fun getCheckFormsFieldsByMaintenanceID(id :String) :LiveData<List<CheckForms>>
 
 }

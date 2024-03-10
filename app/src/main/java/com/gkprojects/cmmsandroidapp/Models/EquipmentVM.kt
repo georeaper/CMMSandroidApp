@@ -21,14 +21,16 @@ class EquipmentVM :ViewModel() {
     {
         RepoEquipment.insert(context,equipment)
     }
-
+    fun getAllEquipmentDataByCustomerID(context: Context,id: String):LiveData<List<Equipments>>{
+        return RepoEquipment.getEquipmentsDataByCustomerID(context,id)
+    }
 
     fun getAllEquipmentData(context: Context):LiveData<List<Equipments>>
     {
         return RepoEquipment.getAllEquipmentData(context)
     }
 
-    fun getTicketByEquipmentId(context: Context,id: Int):LiveData<List<Tickets>>{
+    fun getTicketByEquipmentId(context: Context,id: String):LiveData<List<Tickets>>{
         return  RepoEquipment.getTicketsByEquipmentId(context,id)
     }
      fun updateEquipment(context: Context,equipment: Equipments){
@@ -43,10 +45,10 @@ class EquipmentVM :ViewModel() {
     suspend fun deleteEquipment(context: Context, equipments: Equipments){
         return RepoEquipment.delete(context,equipments)
     }
-    fun getRecordById(context: Context, id : Int):LiveData<Equipments>{
+    fun getRecordById(context: Context, id : String):LiveData<Equipments>{
         return RepoEquipment.getRecordbyId(context,id)
     }
-    fun getEquipmentByCustomerId(context: Context,id: Int):LiveData<List<EquipmentListInCases>>{
+    fun getEquipmentByCustomerId(context: Context,id: String):LiveData<List<EquipmentListInCases>>{
         return  RepoEquipment.getEquipmentByCustomer(context,id)
     }
 }

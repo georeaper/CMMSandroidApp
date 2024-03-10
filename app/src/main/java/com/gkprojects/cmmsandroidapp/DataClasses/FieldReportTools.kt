@@ -2,15 +2,23 @@ package com.gkprojects.cmmsandroidapp.DataClasses
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import java.util.UUID
 
-@Entity(tableName = "FieldReportTools")
+@Entity(tableName = "FieldReportTools",
+    foreignKeys = [
+        ForeignKey(entity = FieldReports::class,
+            childColumns = ["FieldReportID"],
+            parentColumns = ["FieldReportID"],
+            onDelete = ForeignKey.CASCADE, onUpdate = ForeignKey.CASCADE)]
+)
 data class FieldReportTools(
-    @PrimaryKey(autoGenerate = true) var FieldReportToolsID :Int?,
-    @ColumnInfo(name ="RemoteID") var RemoteID :Int?,
-    @ColumnInfo(name ="FieldReportID") var FieldReportID :Int?,
-    @ColumnInfo(name ="ToolsID") var ToolsID :Int?,
-    @ColumnInfo(name ="LastModified") var LastModified :String?,
-    @ColumnInfo(name ="DateCreated") var DateCreated :String?,
-    @ColumnInfo(name ="Version") var Version :String?
+    @PrimaryKey var FieldReportToolsID: String = UUID.randomUUID().toString(),
+    @ColumnInfo(name = "RemoteID") var RemoteID: Int?,
+    @ColumnInfo(name = "FieldReportID") var FieldReportID:String?,
+    @ColumnInfo(name = "ToolsID") var ToolsID: String?,
+    @ColumnInfo(name = "LastModified") var LastModified: String?,
+    @ColumnInfo(name = "DateCreated") var DateCreated: String?,
+    @ColumnInfo(name = "Version") var Version: String?
 )

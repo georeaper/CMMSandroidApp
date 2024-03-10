@@ -24,6 +24,11 @@ class RepoEquipment {
             return CMMSDatabase.getInstance(context)!!
         }
 
+        fun getEquipmentsDataByCustomerID(context: Context,id: String):LiveData<List<Equipments>>{
+            userDatabase= intialiseDB(context)
+            return userDatabase!!.EquipmentsDAO().getAllDataEquipmentsByCustomerID(id)
+        }
+
 
         fun insert(context: Context,equipment: Equipments)
         {
@@ -65,15 +70,15 @@ class RepoEquipment {
 
 
         }
-        fun getRecordbyId(context: Context, id :Int):LiveData<Equipments>{
+        fun getRecordbyId(context: Context, id :String):LiveData<Equipments>{
             userDatabase= intialiseDB(context)
             return userDatabase!!.EquipmentsDAO().SelectRecordById(id)
         }
-        fun getEquipmentByCustomer ( context: Context, id : Int):LiveData<List<EquipmentListInCases>>{
+        fun getEquipmentByCustomer ( context: Context, id : String):LiveData<List<EquipmentListInCases>>{
             userDatabase= intialiseDB(context)
             return userDatabase!!.EquipmentsDAO().selectEquipmentByCustomerID(id)
         }
-        fun getTicketsByEquipmentId(context: Context,id: Int):LiveData<List<Tickets>>{
+        fun getTicketsByEquipmentId(context: Context,id: String):LiveData<List<Tickets>>{
             userDatabase= intialiseDB(context)
             return userDatabase!!.EquipmentsDAO().getTicketsByEquipmentId(id)
         }

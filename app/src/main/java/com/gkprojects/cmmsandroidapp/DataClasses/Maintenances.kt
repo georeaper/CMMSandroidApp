@@ -4,16 +4,17 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import java.util.UUID
 
 
-@Entity(tableName = "Maintenances" )
-
+@Entity(tableName = "Maintenances")
 data class Maintenances(
-    @PrimaryKey(autoGenerate = true) var MaintenanceID :Int?,
-    @ColumnInfo(name ="RemoteID") var RemoteID :Int? ,
-    @ColumnInfo(name ="Name") var Name :String?,
-    @ColumnInfo(name ="Description") var Description :String?,
-    @ColumnInfo(name ="LastModified") var LastModified :String?,
-    @ColumnInfo(name ="DateCreated") var DateCreated :String?,
-    @ColumnInfo(name ="Version") var Version :String?)
+    @PrimaryKey var MaintenanceID: String = UUID.randomUUID().toString(),
+    @ColumnInfo(name = "RemoteID") var RemoteID: Int?,
+    @ColumnInfo(name = "Name") var Name: String?,
+    @ColumnInfo(name = "Description") var Description: String?,
+    @ColumnInfo(name = "LastModified") var LastModified: String?,
+    @ColumnInfo(name = "DateCreated") var DateCreated: String?,
+    @ColumnInfo(name = "Version") var Version: String?
+)
 

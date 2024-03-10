@@ -33,7 +33,7 @@ class RepoWorkOrders {
             }
         }
 
-        fun getWorkOrderByID(context: Context,id :Int):LiveData<FieldReports>{
+        fun getWorkOrderByID(context: Context,id :String):LiveData<FieldReports>{
             userDatabase= initialiseDB(context)
             return userDatabase!!.FieldReportsDao().getReportsByID(id)
         }

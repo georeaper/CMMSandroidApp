@@ -23,12 +23,16 @@ class UsersVM: ViewModel() {
     fun getAllUsers(context: Context):LiveData<List<Users>>{
         return RepoUsers.getAllUsers(context)
     }
-    fun getSingleUser(context: Context,id :Int):LiveData<Users>{
+    fun getSingleUser(context: Context,id :String):LiveData<Users>{
         return RepoUsers.getSingleUser(context, id)
     }
-    fun increaseLastReportNumber(context: Context,number: Int,id: Int){
+    fun increaseLastReportNumber(context: Context,number: Int,id: String){
         RepoUsers.increaseLastReport(context,number,id)
     }
+    fun getFirstUser(context: Context):LiveData<Users>{
+        return RepoUsers.getFirstUser(context)
+    }
+
 
 
 }

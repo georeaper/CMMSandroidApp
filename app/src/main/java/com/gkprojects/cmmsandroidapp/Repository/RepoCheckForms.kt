@@ -29,7 +29,7 @@ class RepoCheckForms {
                 userDatabase!!.CheckFormsDao().deleteCheckFormsFields(checkForms)
             }
         }
-         fun getCheckFormFields (context: Context,id :Int): LiveData<List<CheckForms>> {
+         fun getCheckFormFields (context: Context,id :String): LiveData<List<CheckForms>> {
             userDatabase= initialiseDB(context)
             return userDatabase!!.CheckFormsDao().getCheckFormsFieldsByMaintenanceID(id)
         }

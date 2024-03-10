@@ -29,9 +29,9 @@ class CasesVM : ViewModel() {
     suspend fun updateCustomer(context: Context, cases: Tickets){
         RepoCases.updateCustomerData(context,cases)
     }
-    suspend fun getTicketDataById(context: Context,id:Int):LiveData<Tickets>{
+    suspend fun getTicketDataById(context: Context,id:String?):LiveData<Tickets>{
 
-        return RepoCases.getCustomerDataByID(context,id)
+        return RepoCases.getCustomerDataByID(context,id!!)
     }
     fun getCustomerId(context: Context): LiveData<List<CustomerSelect>> {
         return RepoCases.getCustomerIdData(context)

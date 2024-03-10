@@ -10,6 +10,7 @@
         android:layout_weight="1"
         android:text="N49ssasa"
         android:gravity="center"
+        android:textColor="@color/colorPrimary"
         android:textSize="14sp"/>
     <TextView
         android:layout_width="0dp"
@@ -18,7 +19,8 @@
         android:layout_weight="1.4"
         android:text="sne434343434334wa"
         android:gravity="center"
-        android:textSize="14sp"/>
+        android:textSize="14sp"
+        android:textColor="@color/colorPrimary"/>
     <ImageView
         android:layout_width="0dp"
         android:layout_height="wrap_content"

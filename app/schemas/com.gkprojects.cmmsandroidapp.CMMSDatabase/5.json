@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 5,
-    "identityHash": "cfdbdf1b028472a8ce52f6e52cf570d8",
+    "identityHash": "6c3b1dad3f51615f0b3deaa56b3c2383",
     "entities": [
       {
         "tableName": "Customer",
@@ -178,7 +178,7 @@
       },
       {
         "tableName": "Contracts",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ContractID` INTEGER PRIMARY KEY AUTOINCREMENT, `RemoteID` INTEGER, `Title` TEXT, `DateStart` TEXT, `DateEnd` TEXT, `Value` REAL, `Notes` TEXT, `Description` TEXT, `ContractType` TEXT, `ContractStatus` TEXT, `ContactName` TEXT, `LastModified` TEXT, `DateCreated` TEXT, `Version` TEXT, `CustomerID` INTEGER, FOREIGN KEY(`CustomerID`) REFERENCES `Customer`(`CustomerID`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ContractID` INTEGER PRIMARY KEY AUTOINCREMENT, `RemoteID` INTEGER, `Title` TEXT, `DateStart` TEXT, `DateEnd` TEXT, `Value` REAL, `Notes` TEXT, `Description` TEXT, `ContractType` TEXT, `ContractStatus` TEXT, `ContactName` TEXT, `LastModified` TEXT, `DateCreated` TEXT, `Version` TEXT, `CustomerID` INTEGER, FOREIGN KEY(`CustomerID`) REFERENCES `Customer`(`CustomerID`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "ContractID",
@@ -282,7 +282,7 @@
           {
             "table": "Customer",
             "onDelete": "CASCADE",
-            "onUpdate": "NO ACTION",
+            "onUpdate": "CASCADE",
             "columns": [
               "CustomerID"
             ],
@@ -294,7 +294,7 @@
       },
       {
         "tableName": "ContractEquipments",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ContractEquipmentID` INTEGER PRIMARY KEY AUTOINCREMENT, `RemoteID` TEXT, `Value` REAL, `Visits` REAL, `ContractID` INTEGER, `EquipmentID` INTEGER, `LastModified` TEXT, `DateCreated` TEXT, `Version` TEXT, FOREIGN KEY(`EquipmentID`) REFERENCES `Equipments`(`EquipmentID`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`ContractID`) REFERENCES `Contracts`(`ContractID`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ContractEquipmentID` INTEGER PRIMARY KEY AUTOINCREMENT, `RemoteID` INTEGER, `Value` REAL, `Visits` REAL, `ContractID` INTEGER, `EquipmentID` INTEGER, `LastModified` TEXT, `DateCreated` TEXT, `Version` TEXT, FOREIGN KEY(`EquipmentID`) REFERENCES `Equipments`(`EquipmentID`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`ContractID`) REFERENCES `Contracts`(`ContractID`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "ContractEquipmentID",
@@ -305,7 +305,7 @@
           {
             "fieldPath": "RemoteID",
             "columnName": "RemoteID",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
             "notNull": false
           },
           {
@@ -362,7 +362,7 @@
           {
             "table": "Equipments",
             "onDelete": "CASCADE",
-            "onUpdate": "NO ACTION",
+            "onUpdate": "CASCADE",
             "columns": [
               "EquipmentID"
             ],
@@ -373,7 +373,7 @@
           {
             "table": "Contracts",
             "onDelete": "CASCADE",
-            "onUpdate": "NO ACTION",
+            "onUpdate": "CASCADE",
             "columns": [
               "ContractID"
             ],
@@ -385,7 +385,7 @@
       },
       {
         "tableName": "Departments",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`DeparmentID` INTEGER PRIMARY KEY AUTOINCREMENT, `RemoteID` INTEGER, `Name` TEXT, `Phone` TEXT, `Email` TEXT, `ContactPerson` TEXT, `Notes` TEXT, `Description` TEXT, `CustomerStatus` INTEGER, `LastModified` TEXT, `DateCreated` TEXT, `Version` TEXT, `CustomerID` INTEGER, FOREIGN KEY(`CustomerID`) REFERENCES `Customer`(`CustomerID`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`DeparmentID` INTEGER PRIMARY KEY AUTOINCREMENT, `RemoteID` INTEGER, `Name` TEXT, `Phone` TEXT, `Email` TEXT, `ContactPerson` TEXT, `Notes` TEXT, `Description` TEXT, `CustomerStatus` INTEGER, `LastModified` TEXT, `DateCreated` TEXT, `Version` TEXT, `CustomerID` INTEGER, FOREIGN KEY(`CustomerID`) REFERENCES `Customer`(`CustomerID`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "DeparmentID",
@@ -477,7 +477,7 @@
           {
             "table": "Customer",
             "onDelete": "CASCADE",
-            "onUpdate": "NO ACTION",
+            "onUpdate": "CASCADE",
             "columns": [
               "CustomerID"
             ],
@@ -489,7 +489,7 @@
       },
       {
         "tableName": "Equipments",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`EquipmentID` INTEGER PRIMARY KEY AUTOINCREMENT, `RemoteID` INTEGER, `Name` TEXT, `SerialNumber` TEXT, `Model` TEXT, `Manufacturer` TEXT, `Notes` TEXT, `Description` TEXT, `EquipmentVersion` TEXT, `EquipmentCategory` TEXT, `Warranty` TEXT, `EquipmentStatus` TEXT, `InstallationDate` TEXT, `LastModified` TEXT, `DateCreated` TEXT, `Version` TEXT, `CustomerID` INTEGER, FOREIGN KEY(`CustomerID`) REFERENCES `Customer`(`CustomerID`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`EquipmentID` INTEGER PRIMARY KEY AUTOINCREMENT, `RemoteID` INTEGER, `Name` TEXT, `SerialNumber` TEXT, `Model` TEXT, `Manufacturer` TEXT, `Notes` TEXT, `Description` TEXT, `EquipmentVersion` TEXT, `EquipmentCategory` TEXT, `Warranty` TEXT, `EquipmentStatus` TEXT, `InstallationDate` TEXT, `LastModified` TEXT, `DateCreated` TEXT, `Version` TEXT, `CustomerID` INTEGER, FOREIGN KEY(`CustomerID`) REFERENCES `Customer`(`CustomerID`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "EquipmentID",
@@ -605,7 +605,7 @@
           {
             "table": "Customer",
             "onDelete": "CASCADE",
-            "onUpdate": "NO ACTION",
+            "onUpdate": "CASCADE",
             "columns": [
               "CustomerID"
             ],
@@ -617,7 +617,7 @@
       },
       {
         "tableName": "FieldReportEquipment",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`FieldReportEquipmentID` INTEGER PRIMARY KEY AUTOINCREMENT, `RemoteID` INTEGER, `LastModified` TEXT, `DateCreated` TEXT, `Version` TEXT, `FieldReportID` INTEGER, `EquipmentID` INTEGER, `MaintenanceID` INTEGER, FOREIGN KEY(`FieldReportID`) REFERENCES `FieldReports`(`FieldReportID`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`EquipmentID`) REFERENCES `Equipments`(`EquipmentID`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`FieldReportEquipmentID` INTEGER PRIMARY KEY AUTOINCREMENT, `RemoteID` INTEGER, `CompletedStatus` INTEGER, `LastModified` TEXT, `DateCreated` TEXT, `Version` TEXT, `FieldReportID` INTEGER, `EquipmentID` INTEGER, `MaintenanceID` INTEGER, FOREIGN KEY(`FieldReportID`) REFERENCES `FieldReports`(`FieldReportID`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`EquipmentID`) REFERENCES `Equipments`(`EquipmentID`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`MaintenanceID`) REFERENCES `Maintenances`(`MaintenanceID`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "FieldReportEquipmentID",
@@ -628,6 +628,12 @@
           {
             "fieldPath": "RemoteID",
             "columnName": "RemoteID",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "CompletedStatus",
+            "columnName": "CompletedStatus",
             "affinity": "INTEGER",
             "notNull": false
           },
@@ -650,13 +656,13 @@
             "notNull": false
           },
           {
-            "fieldPath": "UserID",
+            "fieldPath": "FieldReportID",
             "columnName": "FieldReportID",
             "affinity": "INTEGER",
             "notNull": false
           },
           {
-            "fieldPath": "CustomerID",
+            "fieldPath": "EquipmentID",
             "columnName": "EquipmentID",
             "affinity": "INTEGER",
             "notNull": false
@@ -679,7 +685,7 @@
           {
             "table": "FieldReports",
             "onDelete": "CASCADE",
-            "onUpdate": "NO ACTION",
+            "onUpdate": "CASCADE",
             "columns": [
               "FieldReportID"
             ],
@@ -690,19 +696,30 @@
           {
             "table": "Equipments",
             "onDelete": "CASCADE",
-            "onUpdate": "NO ACTION",
+            "onUpdate": "CASCADE",
             "columns": [
               "EquipmentID"
             ],
             "referencedColumns": [
               "EquipmentID"
             ]
+          },
+          {
+            "table": "Maintenances",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "MaintenanceID"
+            ],
+            "referencedColumns": [
+              "MaintenanceID"
+            ]
           }
         ]
       },
       {
         "tableName": "FieldReportInventory",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`FieldReportInventoryID` INTEGER PRIMARY KEY AUTOINCREMENT, `RemoteID` INTEGER, `LastModified` TEXT, `DateCreated` TEXT, `Version` TEXT, `FieldReportID` INTEGER, `InventoryID` INTEGER, FOREIGN KEY(`FieldReportID`) REFERENCES `FieldReports`(`FieldReportID`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`InventoryID`) REFERENCES `Inventory`(`InventoryID`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`FieldReportInventoryID` INTEGER PRIMARY KEY AUTOINCREMENT, `RemoteID` INTEGER, `LastModified` TEXT, `DateCreated` TEXT, `Version` TEXT, `FieldReportID` INTEGER, `InventoryID` INTEGER, FOREIGN KEY(`FieldReportID`) REFERENCES `FieldReports`(`FieldReportID`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`InventoryID`) REFERENCES `Inventory`(`InventoryID`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "FieldReportInventoryID",
@@ -758,7 +775,7 @@
           {
             "table": "FieldReports",
             "onDelete": "CASCADE",
-            "onUpdate": "NO ACTION",
+            "onUpdate": "CASCADE",
             "columns": [
               "FieldReportID"
             ],
@@ -769,7 +786,7 @@
           {
             "table": "Inventory",
             "onDelete": "CASCADE",
-            "onUpdate": "NO ACTION",
+            "onUpdate": "CASCADE",
             "columns": [
               "InventoryID"
             ],
@@ -781,7 +798,7 @@
       },
       {
         "tableName": "FieldReports",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`FieldReportID` INTEGER PRIMARY KEY AUTOINCREMENT, `RemoteID` INTEGER, `ReportNumber` TEXT, `Description` TEXT, `StartDate` TEXT, `EndDate` TEXT, `Title` TEXT, `ClientSignature` BLOB, `Value` REAL, `LastModified` TEXT, `DateCreated` TEXT, `Version` TEXT, `CustomerID` INTEGER, `ContractID` INTEGER, `UserID` INTEGER, `CaseID` INTEGER, FOREIGN KEY(`CustomerID`) REFERENCES `Customer`(`CustomerID`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`UserID`) REFERENCES `Users`(`UserID`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`FieldReportID` INTEGER PRIMARY KEY AUTOINCREMENT, `RemoteID` INTEGER, `ReportNumber` TEXT, `Description` TEXT, `StartDate` TEXT, `EndDate` TEXT, `Title` TEXT, `Department` TEXT, `ClientName` TEXT, `ReportStatus` INTEGER, `ClientSignature` BLOB, `Value` REAL, `LastModified` TEXT, `DateCreated` TEXT, `Version` TEXT, `CustomerID` INTEGER, `ContractID` INTEGER, `UserID` INTEGER, `CaseID` INTEGER, FOREIGN KEY(`CustomerID`) REFERENCES `Customer`(`CustomerID`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`UserID`) REFERENCES `Users`(`UserID`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`ContractID`) REFERENCES `Contracts`(`ContractID`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`CaseID`) REFERENCES `Tickets`(`TicketID`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "FieldReportID",
@@ -823,6 +840,24 @@
             "fieldPath": "Title",
             "columnName": "Title",
             "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "Department",
+            "columnName": "Department",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "ClientName",
+            "columnName": "ClientName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "ReportStatus",
+            "columnName": "ReportStatus",
+            "affinity": "INTEGER",
             "notNull": false
           },
           {
@@ -891,7 +926,7 @@
           {
             "table": "Customer",
             "onDelete": "CASCADE",
-            "onUpdate": "NO ACTION",
+            "onUpdate": "CASCADE",
             "columns": [
               "CustomerID"
             ],
@@ -902,19 +937,41 @@
           {
             "table": "Users",
             "onDelete": "CASCADE",
-            "onUpdate": "NO ACTION",
+            "onUpdate": "CASCADE",
             "columns": [
               "UserID"
             ],
             "referencedColumns": [
               "UserID"
             ]
+          },
+          {
+            "table": "Contracts",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "ContractID"
+            ],
+            "referencedColumns": [
+              "ContractID"
+            ]
+          },
+          {
+            "table": "Tickets",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "CaseID"
+            ],
+            "referencedColumns": [
+              "TicketID"
+            ]
           }
         ]
       },
       {
         "tableName": "Maintenances",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`MaintenanceID` INTEGER PRIMARY KEY AUTOINCREMENT, `RemoteID` TEXT, `Name` TEXT, `Description` TEXT, `LastModified` TEXT, `DateCreated` TEXT, `Version` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`MaintenanceID` INTEGER PRIMARY KEY AUTOINCREMENT, `RemoteID` INTEGER, `Name` TEXT, `Description` TEXT, `LastModified` TEXT, `DateCreated` TEXT, `Version` TEXT)",
         "fields": [
           {
             "fieldPath": "MaintenanceID",
@@ -925,7 +982,7 @@
           {
             "fieldPath": "RemoteID",
             "columnName": "RemoteID",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
             "notNull": false
           },
           {
@@ -1130,7 +1187,7 @@
       },
       {
         "tableName": "Tickets",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`TicketID` INTEGER PRIMARY KEY AUTOINCREMENT, `RemoteID` TEXT, `Title` TEXT, `Description` TEXT, `Notes` TEXT, `Urgency` TEXT, `Active` INTEGER, `DateStart` TEXT, `DateEnd` TEXT, `LastModified` TEXT, `DateCreated` TEXT, `Version` TEXT, `UserID` INTEGER, `CustomerID` INTEGER, `EquipmentID` INTEGER, FOREIGN KEY(`CustomerID`) REFERENCES `Customer`(`CustomerID`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`TicketID` INTEGER PRIMARY KEY AUTOINCREMENT, `RemoteID` INTEGER, `Title` TEXT, `Description` TEXT, `Notes` TEXT, `Urgency` TEXT, `Active` INTEGER, `DateStart` TEXT, `DateEnd` TEXT, `LastModified` TEXT, `DateCreated` TEXT, `Version` TEXT, `UserID` INTEGER, `CustomerID` INTEGER, `EquipmentID` INTEGER, FOREIGN KEY(`CustomerID`) REFERENCES `Customer`(`CustomerID`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`UserID`) REFERENCES `Users`(`UserID`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`EquipmentID`) REFERENCES `Equipments`(`EquipmentID`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "TicketID",
@@ -1141,7 +1198,7 @@
           {
             "fieldPath": "RemoteID",
             "columnName": "RemoteID",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
             "notNull": false
           },
           {
@@ -1234,19 +1291,41 @@
           {
             "table": "Customer",
             "onDelete": "CASCADE",
-            "onUpdate": "NO ACTION",
+            "onUpdate": "CASCADE",
             "columns": [
               "CustomerID"
             ],
             "referencedColumns": [
               "CustomerID"
             ]
+          },
+          {
+            "table": "Users",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "UserID"
+            ],
+            "referencedColumns": [
+              "UserID"
+            ]
+          },
+          {
+            "table": "Equipments",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "EquipmentID"
+            ],
+            "referencedColumns": [
+              "EquipmentID"
+            ]
           }
         ]
       },
       {
         "tableName": "Users",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`UserID` INTEGER PRIMARY KEY AUTOINCREMENT, `RemoteID` TEXT, `Name` TEXT, `Description` TEXT, `Email` TEXT, `Phone` TEXT, `Signature` BLOB, `Prefix` TEXT, `LastReportNumber` INTEGER, `LastModified` TEXT, `DateCreated` TEXT, `Version` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`UserID` INTEGER PRIMARY KEY AUTOINCREMENT, `RemoteID` INTEGER, `Name` TEXT, `Description` TEXT, `Email` TEXT, `Phone` TEXT, `Signature` BLOB, `Prefix` TEXT, `LastReportNumber` INTEGER, `LastModified` TEXT, `DateCreated` TEXT, `Version` TEXT)",
         "fields": [
           {
             "fieldPath": "UserID",
@@ -1257,7 +1336,7 @@
           {
             "fieldPath": "RemoteID",
             "columnName": "RemoteID",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
             "notNull": false
           },
           {
@@ -1329,12 +1408,234 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "CheckForms",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`CheckFormID` INTEGER PRIMARY KEY AUTOINCREMENT, `RemoteID` INTEGER, `MaintenancesID` INTEGER, `Description` TEXT, `ValueExpected` TEXT, `ValueType` TEXT, `LastModified` TEXT, `DateCreated` TEXT, `Version` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "CheckFormID",
+            "columnName": "CheckFormID",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "RemoteID",
+            "columnName": "RemoteID",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "MaintenancesID",
+            "columnName": "MaintenancesID",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "Description",
+            "columnName": "Description",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "ValueExpected",
+            "columnName": "ValueExpected",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "ValueType",
+            "columnName": "ValueType",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "LastModified",
+            "columnName": "LastModified",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "DateCreated",
+            "columnName": "DateCreated",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "Version",
+            "columnName": "Version",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "CheckFormID"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "FieldReportCheckFOrm",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`FieldReportCheckFormID` INTEGER PRIMARY KEY AUTOINCREMENT, `RemoteID` INTEGER, `FieldReportEquipmentID` INTEGER, `Description` TEXT, `ValueExpected` TEXT, `ValueMeasured` TEXT, `Result` TEXT, `LastModified` TEXT, `DateCreated` TEXT, `Version` TEXT, FOREIGN KEY(`FieldReportEquipmentID`) REFERENCES `FieldReportEquipment`(`FieldReportEquipmentID`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "FieldReportCheckFormID",
+            "columnName": "FieldReportCheckFormID",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "RemoteID",
+            "columnName": "RemoteID",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "FieldReportEquipmentID",
+            "columnName": "FieldReportEquipmentID",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "Description",
+            "columnName": "Description",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "ValueExpected",
+            "columnName": "ValueExpected",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "ValueMeasured",
+            "columnName": "ValueMeasured",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "Result",
+            "columnName": "Result",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "LastModified",
+            "columnName": "LastModified",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "DateCreated",
+            "columnName": "DateCreated",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "Version",
+            "columnName": "Version",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "FieldReportCheckFormID"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "FieldReportEquipment",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "FieldReportEquipmentID"
+            ],
+            "referencedColumns": [
+              "FieldReportEquipmentID"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "FieldReportTools",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`FieldReportToolsID` INTEGER PRIMARY KEY AUTOINCREMENT, `RemoteID` INTEGER, `FieldReportID` INTEGER, `ToolsID` INTEGER, `LastModified` TEXT, `DateCreated` TEXT, `Version` TEXT, FOREIGN KEY(`FieldReportID`) REFERENCES `FieldReports`(`FieldReportID`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "FieldReportToolsID",
+            "columnName": "FieldReportToolsID",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "RemoteID",
+            "columnName": "RemoteID",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "FieldReportID",
+            "columnName": "FieldReportID",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "ToolsID",
+            "columnName": "ToolsID",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "LastModified",
+            "columnName": "LastModified",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "DateCreated",
+            "columnName": "DateCreated",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "Version",
+            "columnName": "Version",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "FieldReportToolsID"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "FieldReports",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "FieldReportID"
+            ],
+            "referencedColumns": [
+              "FieldReportID"
+            ]
+          }
+        ]
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'cfdbdf1b028472a8ce52f6e52cf570d8')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6c3b1dad3f51615f0b3deaa56b3c2383')"
     ]
   }
 }

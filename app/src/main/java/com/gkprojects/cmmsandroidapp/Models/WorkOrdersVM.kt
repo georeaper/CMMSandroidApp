@@ -17,7 +17,7 @@ class WorkOrdersVM :ViewModel() {
     suspend fun update(context: Context,workOrder: FieldReports){
         RepoWorkOrders.update(context,workOrder)
     }
-    fun getWorkOrderByID(context: Context,id :Int):LiveData<FieldReports>{
+    fun getWorkOrderByID(context: Context,id :String):LiveData<FieldReports>{
         return RepoWorkOrders.getWorkOrderByID(context, id)
     }
     fun getWorkOrdersCustomerName(context: Context):LiveData<List<WorkOrdersList>>{

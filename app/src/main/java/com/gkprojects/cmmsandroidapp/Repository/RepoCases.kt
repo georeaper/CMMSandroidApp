@@ -52,7 +52,7 @@ class RepoCases {
             }
 
         }
-        fun getCustomerDataByID(context: Context,id:Int):LiveData<Tickets>{
+        fun getCustomerDataByID(context: Context,id:String):LiveData<Tickets>{
             userDatabase= intialiseDB(context)
             return userDatabase!!.TicketsDao().getTicketsById(id)
         }

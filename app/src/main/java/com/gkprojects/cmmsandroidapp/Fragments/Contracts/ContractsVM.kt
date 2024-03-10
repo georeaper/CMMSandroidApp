@@ -46,16 +46,16 @@ class ContractsVM : ViewModel(){
     fun getCustomerName(context: Context): LiveData<List<ContractsCustomerName>>{
         return  RepoContracts.getListContracts(context)
     }
-    fun getContractByID(context: Context,id :Int):LiveData<Contracts>{
+    fun getContractByID(context: Context,id :String):LiveData<Contracts>{
         return  RepoContracts.getContractsById(context,id)
     }
-    fun getContractEquipmentByID(context: Context,id: Int):LiveData<List<ContractEquipments>>{
+    fun getContractEquipmentByID(context: Context,id: String):LiveData<List<ContractEquipments>>{
         return RepoContracts.getContractEquipmentsById(context,id)
     }
-    fun getDetailedContractByID(context: Context,id: Int):LiveData<List<DetailedContract>>{
+    fun getDetailedContractByID(context: Context,id: String):LiveData<List<DetailedContract>>{
         return RepoContracts.getDetailedContractByID(context,id)
     }
-    fun getContractEquipmentByContractEquipmentID(context: Context,id: Int):LiveData<ContractEquipments>{
+    fun getContractEquipmentByContractEquipmentID(context: Context,id: String):LiveData<ContractEquipments>{
         return RepoContracts.getContractEquipmentByContractEquipmentID(context,id)
     }
     suspend fun deleteContractEquipment(context: Context, contractEquipments: ContractEquipments){

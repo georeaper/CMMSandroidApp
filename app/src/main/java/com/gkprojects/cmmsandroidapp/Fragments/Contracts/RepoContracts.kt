@@ -67,15 +67,15 @@ class RepoContracts {
             return userDatabase!!.ContractsDao().getContractsCustomerNames()
 
         }
-        fun getContractsById(context: Context,id :Int): LiveData<Contracts>{
+        fun getContractsById(context: Context,id :String): LiveData<Contracts>{
             userDatabase= intialiseDB(context)
             return userDatabase!!.ContractsDao().getContractsById(id)
         }
-        fun getContractEquipmentsById(context: Context,id : Int):LiveData<List<ContractEquipments>>{
+        fun getContractEquipmentsById(context: Context,id : String):LiveData<List<ContractEquipments>>{
             userDatabase= intialiseDB(context)
             return userDatabase!!.ContractEquipmentsDao().getContractEquipmentByID(id)
         }
-        fun getDetailedContractByID(context: Context, id : Int):LiveData<List<DetailedContract>>{
+        fun getDetailedContractByID(context: Context, id : String):LiveData<List<DetailedContract>>{
             userDatabase= intialiseDB(context)
             return userDatabase!!.ContractEquipmentsDao().getDetailedContractByID(id)
         }
@@ -85,7 +85,7 @@ class RepoContracts {
 
         }
 
-        fun getContractEquipmentByContractEquipmentID(context: Context, id: Int): LiveData<ContractEquipments> {
+        fun getContractEquipmentByContractEquipmentID(context: Context, id: String): LiveData<ContractEquipments> {
             userDatabase= intialiseDB(context)
             return userDatabase!!.ContractEquipmentsDao().getContractEquipmentByEquipmentID(id)
         }
@@ -94,14 +94,14 @@ class RepoContracts {
             userDatabase = intialiseDB(context)
 
             CoroutineScope(Dispatchers.IO).launch {
-                val count = userDatabase!!.ContractEquipmentsDao().count(
-                    contractEquipment.ContractID ?: -1,
-                    contractEquipment.EquipmentID ?: -1
-                )
+//                val count = userDatabase!!.ContractEquipmentsDao().count(
+//                    contractEquipment.ContractID ,
+//                    contractEquipment.EquipmentID
+//                )
 
-                if (count == 0) {
+//                if (count == 0) {
                     userDatabase!!.ContractEquipmentsDao().addContractEquipments(contractEquipment)
-                }
+//                }
             }
         }
 

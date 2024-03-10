@@ -29,17 +29,12 @@ class EquipmentDropDownAdapter(context: Context, private val equipments: List<Eq
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
         val view = convertView ?: LayoutInflater.from(context).inflate(R.layout.custom_dropdown_item, parent, false)
         val equipment = getItem(position)
-//        view.findViewById<TextView>(R.id.textViewEquipmentID).text =equipment!!.EquipmentID.toString()
-//        view.findViewById<TextView>(R.id.textViewSerialNumber).text = equipment!!.SerialNumber
-
-        //view.findViewById<TextView>(R.id.customDropDownTextView)
+        Log.d("temp2","$equipment")
         val serialNumberTextView = view.findViewById<TextView>(R.id.customDropDownTextView)
         serialNumberTextView.text = equipment?.SerialNumber
+        Log.d("temp4","${equipment?.SerialNumber}")
         Log.d("AdapterContractEquipment","$serialNumberTextView")
-
-
-
-        return view
+            return view
     }
 
     override fun getFilter(): Filter {
@@ -62,7 +57,7 @@ class EquipmentDropDownAdapter(context: Context, private val equipments: List<Eq
 
                 results.values = filteredList
                 results.count = filteredList.size
-
+                Log.d("temp5","$results")
                 return results
             }
 
@@ -70,7 +65,9 @@ class EquipmentDropDownAdapter(context: Context, private val equipments: List<Eq
                 clear()
                 if (results != null && results.count > 0) {
                     addAll(results.values as List<EquipmentListInCases>)
+                    Log.d("temp4","$results")
                 }
+                Log.d("temp6","$results")
                 notifyDataSetChanged()
             }
 

@@ -4,5 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class SharedViewModel: ViewModel() {
-    val reportId = MutableLiveData<Int>()
+    val reportId = MutableLiveData<String>()
+    val customerId =MutableLiveData<String>()
 }

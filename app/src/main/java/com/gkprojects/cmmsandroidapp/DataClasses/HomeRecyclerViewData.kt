@@ -14,8 +14,8 @@ data class OverviewMainData(
     val DateEnd :String? ,
     val Title :String?,
     val Description :String?,
-    val UserID :Int?,
-    val EquipmentID :Int?,
-    val TicketID :Int ?,
-    val CustomerID :Int ?
+    val UserID :String?,
+    val EquipmentID :String?,
+    val TicketID :String?,
+    val CustomerID :String?
 )
