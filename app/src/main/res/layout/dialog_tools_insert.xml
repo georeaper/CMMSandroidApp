@@ -55,7 +55,8 @@
         android:id="@+id/dialog_tools_insert_inputLayout_Manufacturer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp">
+        android:layout_margin="8dp"
+        style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/dialog_tools_insert_editText_Manufacturer"
@@ -71,13 +72,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        style="@style/EditTextNoBorder">
+        style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox.Dense"
+        >
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/dialog_tools_insert_editText_SerialNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="SerialNumber"
+            android:hint="SerialNumber/ID"
             android:textSize="16sp"
             android:padding="8dp"/>
 
@@ -89,6 +91,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
+        style="@style/Widget.Material3.AutoCompleteTextView.OutlinedBox"
         >
 
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
@@ -105,22 +108,5 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Floating Label"
-        android:layout_margin="8dp"
-        >
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clickable="false"
-            android:focusable="false"
-            android:inputType="none"
-            android:padding="8dp"
-            android:text="Read-only text"
-            android:textSize="16sp" />
-
-    </com.google.android.material.textfield.TextInputLayout>
 </LinearLayout>

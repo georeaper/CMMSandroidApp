@@ -22,7 +22,7 @@ import com.gkprojects.cmmsandroidapp.Fragments.Customers.CustomerFragment
 import com.gkprojects.cmmsandroidapp.Fragments.Customers.EditCustomerFragment
 import com.gkprojects.cmmsandroidapp.Fragments.Equipments.EquipmentFragment
 import com.gkprojects.cmmsandroidapp.Fragments.Equipments.EquipmentInsertFragment
-import com.gkprojects.cmmsandroidapp.Fragments.Inventory.Inventory
+import com.gkprojects.cmmsandroidapp.Fragments.Inventory.InventoryFragment
 import com.gkprojects.cmmsandroidapp.Fragments.Settings.SettingsFragment
 import com.gkprojects.cmmsandroidapp.Fragments.SpecialTools.SpecialTools
 import com.gkprojects.cmmsandroidapp.Fragments.TechnicalCases.CaseInsertFragment
@@ -102,7 +102,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.contract_item -> replaceFragment(ContractFragment(), TAG_CONTRACTS)
 //                R.id.settings_item -> replaceFragment(SettingsFragment(), TAG_SETTINGS)
                 R.id.tools_item ->replaceFragment(SpecialTools(), TAG_TOOLS)
-                R.id.inventory_item ->replaceFragment(Inventory(), TAG_INVENTORY)
+                R.id.inventory_item ->replaceFragment(InventoryFragment(), TAG_INVENTORY)
                 R.id.configuration_item -> replaceFragment(ConfigurationFragment(), TAG_CONFIGURATION)
                 R.id.statistics_item -> replaceFragment(StatisticsFragment(), TAG_STATISTICS)
  }

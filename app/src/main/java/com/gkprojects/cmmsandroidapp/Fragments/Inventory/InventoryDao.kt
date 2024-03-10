@@ -13,6 +13,9 @@ interface InventoryDao {
 
     @Query("Select * from Inventory")
     fun getAllInventory(): LiveData<List<Inventory>>
+
+    @Query("Select * from Inventory where InventoryID=:id")
+    fun getSingleInventory(id : String ):LiveData<Inventory>
     @Insert
     fun addInventory(inventory: Inventory)
 

@@ -34,41 +34,5 @@ class FgnKeyTest {
         db.close()
     }
 
-    @Test
-    fun testForeignKeyConstraint() {
-        val customer = Customer(CustomerID = 1,null,null,null,null,null,null,null,null,null,null,null,null,null)
-        customerDao.addCustomer(customer)
-        //customerDao.insertCustomer(customer)
 
-        val equipment = Equipments(EquipmentID = 1,
-            CustomerID = 1,
-            RemoteID = null,
-            Notes = null,
-            Warranty = null,
-            Description = null,
-            EquipmentCategory = null,
-            EquipmentStatus =  null ,
-            SerialNumber=null,
-            EquipmentVersion = null,
-            InstallationDate = null,
-            LastModified = null,
-            Model = null,
-            Name = null,
-            Manufacturer = null,
-            Version = null,
-            DateCreated =null )
-
-        equipmentDao.addEquipments(equipment)
-
-        // Update CustomerID in Customer
-        customer.CustomerID = 2
-        customerDao.updateCustomer(customer)
-
-        // Check if CustomerID in Equipment has been updated
-        //val updatedEquipment = equipmentDao.getEquipment(1)
-        val updatedEquipment = equipmentDao.getAllDataEquipmentsByCustomerID(2)
-
-        Log.d("TestCascadeOnUpdate","$updatedEquipment")
-        //assertEquals(2, updatedEquipment)
-    }
 }

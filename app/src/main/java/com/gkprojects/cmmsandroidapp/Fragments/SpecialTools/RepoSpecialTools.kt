@@ -29,5 +29,22 @@ class RepoSpecialTools {
             userDatabase= initialiseDB(context)
             return userDatabase!!.ToolsDao().getAllTools()
         }
+
+        fun getSingleTool(context: Context,id:String):LiveData<Tools>{
+            userDatabase= initialiseDB(context)
+            return userDatabase!!.ToolsDao().getSingleTool(id)
+        }
+        fun updateTools(context: Context,tools: Tools){
+            userDatabase= initialiseDB(context)
+            CoroutineScope(Dispatchers.IO).launch {
+                userDatabase!!.ToolsDao().updateTools(tools)
+            }
+        }
+        fun deleteTools(context: Context,tools: Tools){
+            userDatabase= initialiseDB(context)
+            CoroutineScope(Dispatchers.IO).launch {
+                userDatabase!!.ToolsDao().deleteTools(tools)
+            }
+        }
     }
 }

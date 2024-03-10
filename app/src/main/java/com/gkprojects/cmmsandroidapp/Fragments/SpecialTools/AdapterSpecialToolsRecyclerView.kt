@@ -31,6 +31,10 @@ class AdapterSpecialToolsRecyclerView(private var toolList :ArrayList<Tools>,
         toolList = newList
         notifyDataSetChanged() // Notify the adapter that the data has changed
     }
+    fun filterList(text: String) {
+        val filteredList = toolList.filter { it.Title!!.contains(text, ignoreCase = true) || it.SerialNumber!!.contains(text, ignoreCase = true) }
+        setData(ArrayList(filteredList))
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ToolsViewHolder {
         val binding= SpecialToolsRecyclerviewRowsBinding.inflate(LayoutInflater.from(parent.context), parent, false)

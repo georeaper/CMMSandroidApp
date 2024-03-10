@@ -75,7 +75,7 @@ class EquipmentFragment : Fragment() {
             layoutManager=LinearLayoutManager(this.context)
             adapter= equipmentAdapter
         }
-        equipmentViewModel= ViewModelProvider(this).get(EquipmentVM::class.java)
+        equipmentViewModel= ViewModelProvider(this)[EquipmentVM::class.java]
 
 
         try{
