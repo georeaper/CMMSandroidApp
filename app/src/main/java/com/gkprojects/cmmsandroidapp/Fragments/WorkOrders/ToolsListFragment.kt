@@ -6,9 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.gkprojects.cmmsandroidapp.R
+import com.gkprojects.cmmsandroidapp.databinding.FragmentToolsListBinding
 
 
 class ToolsListFragment : Fragment() {
+
+    private lateinit var binding :FragmentToolsListBinding
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,8 +23,13 @@ class ToolsListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        binding= FragmentToolsListBinding.inflate(inflater,container,false)
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tools_list, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
     }
 
 

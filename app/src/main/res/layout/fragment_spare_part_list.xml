@@ -29,6 +29,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="Select Spare Parts"
+                    android:id="@+id/spare_part_list_dropdownList"
                     android:textSize="14sp"/>
 
 
@@ -40,6 +41,7 @@
                 android:layout_weight="0.3"
                 android:background="@null"
                 android:layout_gravity="center_vertical"
+                android:id="@+id/spare_part_list_addBtn"
                 android:src="@drawable/add_expandable_icon" />
         </LinearLayout>
 
@@ -47,6 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
+            android:id="@+id/spare_part_list_recyclerview"
             />
     </LinearLayout>
 
