@@ -233,7 +233,7 @@ class CustomerInfoFragment : Fragment() {
         val selectedReportState = reportStates.find { it.stateName == selectedStateName }
         val selectedState = selectedReportState?.state
         lastModified = getCurrentDate()
-        val updateFieldReport =FieldReports(reportId!!,remoteDBiD,reportNumber,report,startDate,closedDate,subject,department,clientName,selectedState,clientSignature,reportCostValue,lastModified,dateCreated,version,customerId,contractId,caseId,userId)
+        val updateFieldReport =FieldReports(reportId!!,remoteDBiD,reportNumber,report,startDate,closedDate,subject,department,clientName,selectedState,clientSignature,reportCostValue,lastModified,dateCreated,version,customerId,contractId,userId,caseId,)
         Log.d("InsertWorkOrder","$updateFieldReport")
         lifecycleScope.launch { withContext(Dispatchers.Main){
             workOrderViewModel.update(requireContext(),updateFieldReport)

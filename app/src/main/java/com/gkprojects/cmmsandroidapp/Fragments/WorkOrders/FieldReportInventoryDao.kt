@@ -21,4 +21,15 @@ interface FieldReportInventoryDao {
     @Delete
     fun deleteFieldReportInventory(fieldReportInventory: FieldReportInventory)
 
+    @Query("select Inventory.Description as description, " +
+            "Inventory.Title as title, " +
+            "FieldReportInventory.FieldReportID as fieldReportID, " +
+            "FieldReportInventory.FieldReportInventoryID as fieldReportInventoryID, " +
+            "FieldReportInventory.InventoryID as inventoryID " +
+            "from FieldReportInventory " +
+            "left join Inventory " +
+            "where FieldReportInventory.InventoryID = Inventory.InventoryID and " +
+            "FieldReportInventory.FieldReportID = :id ")
+    fun getFieldReportInventoryByID(id :String):LiveData<List<FieldReportInventoryCustomData>>
+
 }
