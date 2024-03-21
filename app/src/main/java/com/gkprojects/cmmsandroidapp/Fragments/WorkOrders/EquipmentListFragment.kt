@@ -27,12 +27,14 @@ import com.gkprojects.cmmsandroidapp.DataClasses.Equipments
 import com.gkprojects.cmmsandroidapp.DataClasses.FieldReportCheckForm
 import com.gkprojects.cmmsandroidapp.DataClasses.FieldReportEquipment
 import com.gkprojects.cmmsandroidapp.DataClasses.Maintenances
+import com.gkprojects.cmmsandroidapp.DataClasses.Tools
 import com.gkprojects.cmmsandroidapp.Models.CheckFormVM
 import com.gkprojects.cmmsandroidapp.Models.EquipmentVM
 import com.gkprojects.cmmsandroidapp.Models.FieldReportCheckListVM
 import com.gkprojects.cmmsandroidapp.Models.FieldReportEquipmentVM
 import com.gkprojects.cmmsandroidapp.Models.MaintenancesVM
 import com.gkprojects.cmmsandroidapp.Models.SharedViewModel
+import com.gkprojects.cmmsandroidapp.R
 import com.gkprojects.cmmsandroidapp.databinding.DialogChecklistWorkorderPerEquipmentBinding
 import com.gkprojects.cmmsandroidapp.databinding.DialogEquipmentListWorkordersBinding
 import com.gkprojects.cmmsandroidapp.databinding.FragmentEquipmentListBinding
@@ -113,8 +115,18 @@ class EquipmentListFragment : Fragment() {
             })
             customerObserverSetUp = true
         }
-        adapterDropDownChecklist = DropDownAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, maintenancesMap)
+        //adapterDropDownChecklist = DropDownAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, maintenancesMap)
+        maintenancesVM.getAllMaintenances(requireContext()).observe(
+            viewLifecycleOwner,
+            Observer{
+                maintenancesList =it as ArrayList<Maintenances>
 
+                Log.d("testMaintenanceMap", "$maintenancesList")
+
+                //adapterDropDownChecklist.clear()
+               // adapterDropDownChecklist.notifyDataSetChanged()
+
+            })
 
 
         recyclerViewEquipmentList=binding.equipmentListRecyclerView
@@ -138,6 +150,7 @@ class EquipmentListFragment : Fragment() {
         }
 
     }
+//
     private fun getEquipmentsByID(id : String){
         Log.d("CheckID","$id")
         try {
@@ -242,32 +255,29 @@ class EquipmentListFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapterEquipmentChecklist
         recyclerView.setHasFixedSize(true)
-
+        adapterDropDownChecklist = DropDownAdapter(requireContext(), R.layout.dropdown_adapter_tools_work_orders, maintenancesList)
         binding.dialogChecklistWorkorderPerEquipmentSelectCheckFormAutoComplete.setAdapter(adapterDropDownChecklist)
-        binding.dialogChecklistWorkorderPerEquipmentSelectCheckFormAutoComplete.setOnItemClickListener { parent, view, position, id ->
+        binding.dialogChecklistWorkorderPerEquipmentSelectCheckFormAutoComplete.setOnItemClickListener { parent, _, position, _ ->
+            val selectedTool = parent.getItemAtPosition(position) as Maintenances
+            // `selectedTool` is the selected item
             maintenanceCheckListItems.clear()
-            adapterEquipmentChecklist.setData(maintenanceCheckListItems)
-            val selectedItem = parent.getItemAtPosition(position) as Pair<String, String>
-            val selectedId = selectedItem.first
-            val selectedName = selectedItem.second
-            Log.d("fieldtest3","$selectedId , $maintenanceEquipmentCheckListID")
-            populateChecklistByCheckFormID(selectedId,maintenanceEquipmentCheckListID!!)
-            Toast.makeText(requireContext(), "Selected item: $selectedName with ID: $selectedId", Toast.LENGTH_SHORT).show()
+            Log.d("toolsListDrop","$selectedTool")
+            populateChecklistByCheckFormID(selectedTool.MaintenanceID,maintenanceEquipmentCheckListID!!)
+
         }
-        maintenancesVM.getAllMaintenances(requireContext()).observe(
-            viewLifecycleOwner,
-            Observer{
-                maintenancesMap.clear() // Clear previous data
-                    for(i in it.indices){
-                        maintenancesMap.add(Pair(it[i].MaintenanceID , it[i].Name ))
-                    }
 
-                Log.d("testMaintenanceMap", "$maintenancesMap")
 
-                //adapterDropDownChecklist.clear()
-                adapterDropDownChecklist.notifyDataSetChanged()
-
-            })
+//        maintenancesVM.getAllMaintenances(requireContext()).observe(
+//            viewLifecycleOwner,
+//            Observer{
+//                maintenancesList =it as ArrayList<Maintenances>
+//
+//                Log.d("testMaintenanceMap", "$maintenancesList")
+//
+//                //adapterDropDownChecklist.clear()
+//                adapterDropDownChecklist.notifyDataSetChanged()
+//
+//            })
 
 // Set the positive button
         dialogBuilder.setPositiveButton("Positive") { dialog, which ->

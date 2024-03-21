@@ -27,9 +27,8 @@ interface FieldReportInventoryDao {
             "FieldReportInventory.FieldReportInventoryID as fieldReportInventoryID, " +
             "FieldReportInventory.InventoryID as inventoryID " +
             "from FieldReportInventory " +
-            "left join Inventory " +
-            "where FieldReportInventory.InventoryID = Inventory.InventoryID and " +
-            "FieldReportInventory.FieldReportID = :id ")
+            "left join Inventory on Inventory.InventoryID =FieldReportInventory.InventoryID " +
+            "where FieldReportInventory.FieldReportID = :id ")
     fun getFieldReportInventoryByID(id :String):LiveData<List<FieldReportInventoryCustomData>>
 
 }

@@ -136,7 +136,7 @@ class CheckFormsFragment : Fragment() {
 
         val btn=dialogView.findViewById<Button>(R.id.dialogCheckFormsFieldsbtn)
         btn.setOnClickListener {
-            val temp= CheckForms(" ",null,maintenanceId,descriptionEditText.text.toString(),expectedValuesEditText.text.toString(),valueTypeEditText.text.toString(),null,null,null)
+            val temp= CheckForms(UUID.randomUUID().toString(),null,maintenanceId,descriptionEditText.text.toString(),expectedValuesEditText.text.toString(),valueTypeEditText.text.toString(),null,null,null)
             GlobalScope.launch(Dispatchers.IO) { checkFormsVM.insert(requireContext(),temp)  }
         }
 

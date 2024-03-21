@@ -118,18 +118,13 @@ class MainActivity : AppCompatActivity() {
                     }
                     true
                 }
-                R.id.action_search -> {
-                    // Handle Search click
-                    // You can add your logic here
 
-                    true
-                }
-                R.id.action_popUpMenu -> {
-                    // Handle Add click
-                    showCustomDialog(this)
-                    // You can add your logic here
-                    true
-                }
+//                R.id.action_popUpMenu -> {
+//                    // Handle Add click
+//                    showCustomDialog(this)
+//                    // You can add your logic here
+//                    true
+//                }
                 R.id.action_settings -> {
                     if (currentFragmentTag != TAG_SETTINGS) {
                         replaceFragment(SettingsFragment(), TAG_SETTINGS)

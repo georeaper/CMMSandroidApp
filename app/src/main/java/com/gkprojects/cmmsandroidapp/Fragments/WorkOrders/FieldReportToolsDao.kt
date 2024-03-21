@@ -18,9 +18,8 @@ interface FieldReportToolsDao {
             "FieldReportTools.FieldReportID as fieldReportID, " +
             "FieldReportTools.FieldReportToolsID as fieldReportToolsID " +
             "from FieldReportTools " +
-            "left join Tools " +
-            "where FieldReportTools.ToolsID = Tools.ToolsID and " +
-            "FieldReportTools.FieldReportID= :id ")
+            "left join Tools on Tools.ToolsID =FieldReportTools.ToolsID " +
+            "where  FieldReportTools.FieldReportID= :id ")
     fun getFieldReportToolsByID(id :String) :LiveData<List<FieldReportToolsCustomData>>
 
     @Insert

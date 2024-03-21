@@ -5,6 +5,8 @@ import androidx.room.*
 import com.gkprojects.cmmsandroidapp.DataClasseUNused.MaintenanceFieldForm
 import com.gkprojects.cmmsandroidapp.DataClasseUNused.MaintenanceInventory
 import com.gkprojects.cmmsandroidapp.DataClasses.*
+import com.gkprojects.cmmsandroidapp.Fragments.WorkOrders.FieldReportInventoryCustomData
+import com.gkprojects.cmmsandroidapp.Fragments.WorkOrders.FieldReportToolsCustomData
 
 
 @Dao
@@ -219,6 +221,61 @@ interface FieldReportsDao {
     @Delete
     fun deleteFieldReports(fieldReports: FieldReports)
 
+    @Query("Select Customer.Name as customerName, " +
+            "FieldReports.ClientName as signeName, " +
+            "FieldReports.Department as departmentWorkOrder, " +
+            "FieldReports.Title as reportTitle, " +
+            "FieldReports.Description as detailedReport , " +
+            "FieldReports.StartDate as startDate, " +
+            "FieldReports.EndDate as endDate, " +
+            "FieldReports.ReportNumber as reportNumber, " +
+            "Users.Name as usersName " +
+            "from Customer " +
+            "Left join FieldReports " +
+            "Left join Users " +
+            "Where Customer.CustomerID = FieldReports.CustomerID and " +
+            "FieldReports.UserID = Users.UserID and FieldReports.FieldReportID =:id")
+    fun printDetails(id :String):LiveData<CustomWorkOrderPDFDATA>
+
+    @Query("Select FieldReportEquipment.EquipmentID as EquipmentId , " +
+            "FieldReportEquipment.FieldReportEquipmentID as FieldEquipmentId , " +
+            "FieldReportEquipment.FieldReportID as ReportId , " +
+            "FieldReportCheckForm.FieldReportCheckFormID as FieldCheckListId, " +
+            "FieldReportCheckForm.Description as FieldCheckListDescription, " +
+            "FieldReportCheckForm.ValueMeasured as FieldCheckListMeasure , " +
+            "FieldReportCheckForm.ValueExpected as FieldCheckListLimit , " +
+            "FieldReportCheckForm.Result as FieldCheckListResult , " +
+            "Equipments.Manufacturer as EquipmentManufacturer, " +
+            "Equipments.Model as EquipmentModel, " +
+            "Equipments.SerialNumber as EquipmentSerialNumber, " +
+            "Equipments.EquipmentCategory as EquipmentCategory " +
+            "from FieldReportEquipment " +
+            "left join Equipments on Equipments.EquipmentID = FieldReportEquipment.EquipmentID " +
+            "left join FieldReportCheckForm on FieldReportCheckForm.FieldReportEquipmentID = FieldReportEquipment.FieldReportEquipmentID " +
+            "where  FieldReportEquipment.FieldReportID = :reportId "
+    )
+    fun printEquipmentWithCheckList(reportId :String):LiveData<List<CustomCheckListWithEquipmentData>>
+
+    @Query("select Inventory.Description as description, " +
+            "Inventory.Title as title, " +
+            "FieldReportInventory.FieldReportID as fieldReportID, " +
+            "FieldReportInventory.FieldReportInventoryID as fieldReportInventoryID, " +
+            "FieldReportInventory.InventoryID as inventoryID " +
+            "from FieldReportInventory " +
+            "left join Inventory on Inventory.InventoryID =FieldReportInventory.InventoryID " +
+            "where FieldReportInventory.FieldReportID = :id ")
+    fun printInventoryDataByReportID(id :String):LiveData<List<FieldReportInventoryCustomData>>
+    @Query("Select " +
+            "Tools.Title as toolsTitle , " +
+            " Tools.SerialNumber as toolsSerialNumber , " +
+            "Tools.CalibrationDate as toolsCalDate, " +
+            "FieldReportTools.ToolsID as toolsID, " +
+            "FieldReportTools.FieldReportID as fieldReportID, " +
+            "FieldReportTools.FieldReportToolsID as fieldReportToolsID " +
+            "from FieldReportTools " +
+            "left join Tools on Tools.ToolsID =FieldReportTools.ToolsID " +
+            "where  FieldReportTools.FieldReportID= :id ")
+    fun printToolsByReportID(id :String) :LiveData<List<FieldReportToolsCustomData>>
 }
 
 

@@ -1,19 +1,34 @@
 package com.gkprojects.cmmsandroidapp.Fragments.WorkOrders
 
+import com.gkprojects.cmmsandroidapp.PdfFileMaker
+import android.Manifest
+import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
+import android.print.PrintAttributes
+import android.print.PrintManager
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebResourceError
+import android.webkit.WebResourceRequest
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.SearchView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -21,32 +36,46 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gkprojects.cmmsandroidapp.Adapter.RvAdapterFindCustomers
+import com.gkprojects.cmmsandroidapp.DataClasses.CustomCheckListWithEquipmentData
+import com.gkprojects.cmmsandroidapp.DataClasses.CustomDisplayDatFieldReportEquipments
+import com.gkprojects.cmmsandroidapp.DataClasses.CustomWorkOrderPDFDATA
 import com.gkprojects.cmmsandroidapp.DataClasses.Customer
 import com.gkprojects.cmmsandroidapp.DataClasses.CustomerSelect
 import com.gkprojects.cmmsandroidapp.DataClasses.FieldReports
 import com.gkprojects.cmmsandroidapp.DataClasses.ReportState
 import com.gkprojects.cmmsandroidapp.DataClasses.Users
 import com.gkprojects.cmmsandroidapp.Models.CustomerVM
+import com.gkprojects.cmmsandroidapp.Models.FieldReportCheckListVM
+import com.gkprojects.cmmsandroidapp.Models.FieldReportEquipmentVM
 import com.gkprojects.cmmsandroidapp.Models.SharedViewModel
 import com.gkprojects.cmmsandroidapp.Models.UsersVM
 import com.gkprojects.cmmsandroidapp.Models.WorkOrdersVM
 import com.gkprojects.cmmsandroidapp.R
 import com.gkprojects.cmmsandroidapp.SignatureView
 import com.gkprojects.cmmsandroidapp.databinding.FragmentCustomerInfoBinding
+import io.github.mddanishansari.html_to_pdf.HtmlToPdfConvertor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
+import java.io.File
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 import java.util.UUID
 
 
+
 class CustomerInfoFragment : Fragment() {
     private lateinit var customerViewModel: CustomerVM
     private lateinit var workOrderViewModel: WorkOrdersVM
     private lateinit var usersViewModel : UsersVM
+
+//    private lateinit var toolsViewModel : FieldReportToolsVM
+//    private lateinit var inventoryViewModel : FieldReportInventoryVM
+//    private lateinit var equipmentViewModel : FieldReportEquipmentVM
+//    private lateinit var checkListViewModel : FieldReportCheckListVM
+
     private lateinit var binding : FragmentCustomerInfoBinding
     private var customers =ArrayList<Customer>()
     val customerSearch = ArrayList<CustomerSelect>()
@@ -70,7 +99,28 @@ class CustomerInfoFragment : Fragment() {
         ReportState("Open", true),
         ReportState("Close", false)
     )
+    private var printEquipmentList =ArrayList<CustomCheckListWithEquipmentData>()
+    private var printToolsList = ArrayList<FieldReportToolsCustomData>()
+    private var printInventoryList = ArrayList<FieldReportInventoryCustomData>()
 
+    private var isReadPermissionGranted =false
+    private var isWritePermissionGranted =false
+    private val permissionLauncher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+        isReadPermissionGranted = permissions[Manifest.permission.READ_EXTERNAL_STORAGE] ?: isReadPermissionGranted
+        isWritePermissionGranted = permissions[Manifest.permission.WRITE_EXTERNAL_STORAGE] ?: isWritePermissionGranted
+    }
+
+
+    private val openFileLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val uri = result.data?.data
+            uri?.let {
+                val htmlContent = readFileContent(it)
+                createPdfFromHtml(htmlContent, "output.pdf")
+                //saveFileToInternalStorage(it)
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -85,13 +135,17 @@ class CustomerInfoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         customerViewModel= ViewModelProvider(this)[CustomerVM::class.java]
         getCustomers()
-
         workOrderViewModel=ViewModelProvider(this)[WorkOrdersVM::class.java]
-
         usersViewModel =ViewModelProvider(this)[UsersVM::class.java]
+
+//        toolsViewModel=ViewModelProvider(this)[FieldReportToolsVM::class.java]
+//        inventoryViewModel=ViewModelProvider(this)[FieldReportInventoryVM::class.java]
+//        equipmentViewModel=ViewModelProvider(this)[FieldReportEquipmentVM::class.java]
+//        checkListViewModel=ViewModelProvider(this)[FieldReportCheckListVM::class.java]
 
         //val tempUserID =1 // this User shouldn't exist , it is hardcode for testing only
         getUserDetails()
+
 
         val signatureView = SignatureView(requireContext())
         val args =this.arguments
@@ -106,7 +160,9 @@ class CustomerInfoFragment : Fragment() {
                 Observer {
                     setUpData(it as FieldReports)
                 })
-
+            getDataForEquipmentList()
+            getDataForToolsList()
+            getDataForSparePartsList()
         }
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, reportStates.map { it.stateName })
         binding.customerInfoAutocompleteReportType.setAdapter(adapter)
@@ -168,6 +224,19 @@ class CustomerInfoFragment : Fragment() {
                 insertDb()
             }else
                 updateDb()
+        }
+        val imageBtnPrintReport =binding.customerInfoImageButtonPrintReport
+        imageBtnPrintReport.setOnClickListener {
+
+            requestPermission()
+            printPDFData()
+            getDataForEquipmentList()
+            getDataForToolsList()
+            getDataForSparePartsList()
+            //   openFilePicker()
+
+
+
         }
 
 
@@ -233,7 +302,27 @@ class CustomerInfoFragment : Fragment() {
         val selectedReportState = reportStates.find { it.stateName == selectedStateName }
         val selectedState = selectedReportState?.state
         lastModified = getCurrentDate()
-        val updateFieldReport =FieldReports(reportId!!,remoteDBiD,reportNumber,report,startDate,closedDate,subject,department,clientName,selectedState,clientSignature,reportCostValue,lastModified,dateCreated,version,customerId,contractId,userId,caseId,)
+        val updateFieldReport =FieldReports(
+            reportId!!,
+            remoteDBiD,
+            reportNumber,
+            report,
+            startDate,
+            closedDate,
+            subject,
+            department,
+            clientName,
+            selectedState,
+            clientSignature,
+            reportCostValue,
+            lastModified,
+            dateCreated,
+            version,
+            customerId,
+            contractId,
+            userId,
+            caseId
+        )
         Log.d("InsertWorkOrder","$updateFieldReport")
         lifecycleScope.launch { withContext(Dispatchers.Main){
             workOrderViewModel.update(requireContext(),updateFieldReport)
@@ -353,5 +442,133 @@ class CustomerInfoFragment : Fragment() {
 
     }
 
+
+    private fun requestPermission(){
+
+        isReadPermissionGranted= ContextCompat.checkSelfPermission(
+            requireContext(),
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        )== PackageManager.PERMISSION_GRANTED
+
+
+        isWritePermissionGranted= ContextCompat.checkSelfPermission(
+            requireContext(),
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )== PackageManager.PERMISSION_GRANTED
+
+        val permissionRequest :MutableList<String> = ArrayList()
+
+        if(!isReadPermissionGranted){
+            permissionRequest.add(Manifest.permission.READ_EXTERNAL_STORAGE)
+        }
+
+        if(!isWritePermissionGranted){
+            permissionRequest.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        }
+        if(permissionRequest.isNotEmpty()){
+
+            permissionLauncher.launch(permissionRequest.toTypedArray())
+        }
+
+    }
+
+
+
+    private fun saveFileToInternalStorage(uri: Uri) {
+        val inputStream = requireContext().contentResolver.openInputStream(uri)
+        val outputStream = requireContext().openFileOutput("my_file.html", Context.MODE_PRIVATE)
+        inputStream?.copyTo(outputStream)
+        inputStream?.close()
+        outputStream?.close()
+    }
+
+    fun readFileFromInternalStorage(filename: String): String {
+        return try {
+            val fileInputStream = requireContext().openFileInput(filename)
+            fileInputStream.bufferedReader().use { it.readText() }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            ""
+        }
+    }
+    fun createPdfFromHtml(htmlString: String, filename: String) {
+        val webView = WebView(requireContext())
+        webView.webViewClient = object : WebViewClient() {
+            override fun onReceivedError(view: WebView, request: WebResourceRequest, error: WebResourceError) {
+                super.onReceivedError(view, request, error)
+                Log.d("WebViewTEST", "Error while loading HTML content: ${error.description}")
+            }
+        }
+        webView.loadDataWithBaseURL(null, htmlString, "text/HTML", "UTF-8", null)
+
+        val printManager = requireContext().getSystemService(Context.PRINT_SERVICE) as PrintManager
+        webView.createPrintDocumentAdapter(filename).also { printAdapter ->
+            printManager.print(filename, printAdapter, PrintAttributes.Builder().build())
+        }
+    }
+    fun readFileContent(uri: Uri): String {
+        return try {
+            val inputStream = requireContext().contentResolver.openInputStream(uri)
+            inputStream?.bufferedReader().use { it?.readText() } ?: ""
+        } catch (e: Exception) {
+            e.printStackTrace()
+            ""
+        }
+    }
+
+    fun getDataForEquipmentList() {
+        //reportID
+        //A list that contains Equipment Info and FieldEquipmentInfo to Feed CheckForm
+
+        workOrderViewModel.getDataEquipmentListAndCheckListByReportID(requireContext(),reportId!!).observe(
+            viewLifecycleOwner,
+            Observer {
+                printEquipmentList =it as ArrayList<CustomCheckListWithEquipmentData>
+                Log.d("testingViewModel","$printEquipmentList")
+            }
+        )
+
+    }
+
+    fun getDataForSparePartsList(){
+        //reportID
+        workOrderViewModel.printDataInventoryListByReportID(requireContext(),reportId!!).observe(
+            viewLifecycleOwner, Observer {
+                printInventoryList =it as ArrayList<FieldReportInventoryCustomData>
+                Log.d("testing2","$printInventoryList")
+            }
+        )
+
+    }
+    fun getDataForToolsList(){
+        //reportID
+        workOrderViewModel.printDataToolsListByReportID(requireContext(),reportId!!).observe(
+            viewLifecycleOwner,
+            Observer {
+                printToolsList =it as ArrayList<FieldReportToolsCustomData>
+                Log.d("testing3","$printToolsList")
+            }
+        )
+
+    }
+    fun printPDFData(){
+
+        workOrderViewModel.printWorkOrder(requireContext(),reportId!!).observe(
+            viewLifecycleOwner,
+            Observer {
+                val tempData :CustomWorkOrderPDFDATA =it as CustomWorkOrderPDFDATA
+                Log.d("testing4","$tempData")
+                val pdfMake = PdfFileMaker(requireContext(),tempData)
+                pdfMake.printEquipmentList=printEquipmentList
+                pdfMake.printInventoryList=printInventoryList
+                pdfMake.printToolsList=printToolsList
+                pdfMake.printTest()
+                Log.d("testing5","$tempData")
+            }
+        )
+
+
+
+    }
 
 }

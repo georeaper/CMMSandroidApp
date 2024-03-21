@@ -3,9 +3,13 @@ package com.gkprojects.cmmsandroidapp.Repository
 import android.content.Context
 import androidx.lifecycle.LiveData
 import com.gkprojects.cmmsandroidapp.CMMSDatabase
+import com.gkprojects.cmmsandroidapp.DataClasses.CustomCheckListWithEquipmentData
+import com.gkprojects.cmmsandroidapp.DataClasses.CustomWorkOrderPDFDATA
 import com.gkprojects.cmmsandroidapp.DataClasses.Customer
 import com.gkprojects.cmmsandroidapp.DataClasses.FieldReports
 import com.gkprojects.cmmsandroidapp.DataClasses.WorkOrdersList
+import com.gkprojects.cmmsandroidapp.Fragments.WorkOrders.FieldReportInventoryCustomData
+import com.gkprojects.cmmsandroidapp.Fragments.WorkOrders.FieldReportToolsCustomData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -41,6 +45,23 @@ class RepoWorkOrders {
         fun getWorkOrdersCustomerName(context: Context):LiveData<List<WorkOrdersList>>{
             userDatabase= initialiseDB(context)
             return userDatabase!!.FieldReportsDao().getCustomerName()
+        }
+        fun printPdfCustomerData(context: Context,id: String):LiveData<CustomWorkOrderPDFDATA>{
+            userDatabase= initialiseDB(context)
+            return userDatabase!!.FieldReportsDao().printDetails(id)
+        }
+        fun getEquipmentListAndChecklistByReportID(context: Context,id: String):LiveData<List<CustomCheckListWithEquipmentData>>{
+            userDatabase= initialiseDB(context)
+            return userDatabase!!.FieldReportsDao().printEquipmentWithCheckList(id)
+        }
+
+        fun printToolsByReportID(context: Context,id: String):LiveData<List<FieldReportToolsCustomData>>{
+            userDatabase= initialiseDB(context)
+            return userDatabase!!.FieldReportsDao().printToolsByReportID(id)
+        }
+        fun printInventoryReportID(context: Context,id: String):LiveData<List<FieldReportInventoryCustomData>>{
+            userDatabase= initialiseDB(context)
+            return userDatabase!!.FieldReportsDao().printInventoryDataByReportID(id)
         }
     }
 }
