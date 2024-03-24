@@ -32,6 +32,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 import com.gkprojects.cmmsandroidapp.Adapter.MainOverviewAdapter
+import com.gkprojects.cmmsandroidapp.AppData
 import com.gkprojects.cmmsandroidapp.DataClasses.EventItem
 
 import com.gkprojects.cmmsandroidapp.DataClasses.OverviewMainData
@@ -111,6 +112,7 @@ class HomeFragment : Fragment() {
 
         super.onViewCreated(view, savedInstanceState)
 
+        Log.d("testAppData","${AppData.userId}")
 
         templist.clear()
        val currentDateTime = LocalDateTime.now()

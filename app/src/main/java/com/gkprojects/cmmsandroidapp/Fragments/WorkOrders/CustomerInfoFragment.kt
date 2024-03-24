@@ -71,10 +71,7 @@ class CustomerInfoFragment : Fragment() {
     private lateinit var workOrderViewModel: WorkOrdersVM
     private lateinit var usersViewModel : UsersVM
 
-//    private lateinit var toolsViewModel : FieldReportToolsVM
-//    private lateinit var inventoryViewModel : FieldReportInventoryVM
-//    private lateinit var equipmentViewModel : FieldReportEquipmentVM
-//    private lateinit var checkListViewModel : FieldReportCheckListVM
+//
 
     private lateinit var binding : FragmentCustomerInfoBinding
     private var customers =ArrayList<Customer>()

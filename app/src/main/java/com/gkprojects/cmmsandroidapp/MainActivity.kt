@@ -1,14 +1,18 @@
 package com.gkprojects.cmmsandroidapp
 
+import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.widget.Button
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -57,17 +61,22 @@ class MainActivity : AppCompatActivity() {
 
     }
     private lateinit var viewModel: CustomerVM
-    private lateinit var viewModelApi : ApiViewModel
+//    private lateinit var viewModelApi : ApiViewModel
     lateinit var toggle: ActionBarDrawerToggle
     lateinit var drawerLayout: DrawerLayout
     private var currentFragmentTag = "Home"
-
+    private var isReadPermissionGranted =false
+    private var isWritePermissionGranted =false
+    private val permissionLauncher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+        isReadPermissionGranted = permissions[Manifest.permission.READ_EXTERNAL_STORAGE] ?: isReadPermissionGranted
+        isWritePermissionGranted = permissions[Manifest.permission.WRITE_EXTERNAL_STORAGE] ?: isWritePermissionGranted
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        requestPermission()
         drawerLayout = findViewById<DrawerLayout>(R.id.DrawLayout)
         val navView: NavigationView = findViewById(R.id.navView)
         val toolbar: MaterialToolbar = findViewById(R.id.topAppBar)
@@ -87,9 +96,9 @@ class MainActivity : AppCompatActivity() {
         drawerLayout.closeDrawers()
         toolbar.title= "Home"
 
-        viewModelApi = ViewModelProvider(this).get(ApiViewModel::class.java)
+//        viewModelApi = ViewModelProvider(this).get(ApiViewModel::class.java)
 
-        testApi()
+//        testApi()
 
         navView.setNavigationItemSelectedListener {
             it.isChecked=true
@@ -153,15 +162,15 @@ class MainActivity : AppCompatActivity() {
         viewModel.updateCustomer(this,customer)
 
     }
-    private fun testApi(){
-
-
-        viewModelApi.authResponse.observe(this, Observer { response ->
-            // Update UI with the response
-        })
-
-        viewModelApi.authenticate()
-    }
+//    private fun testApi(){
+//
+//
+//        viewModelApi.authResponse.observe(this, Observer { response ->
+//            // Update UI with the response
+//        })
+//
+//        viewModelApi.authenticate()
+//    }
 
     private fun replaceFragment(fragment: Fragment, tag: String) {
         supportFragmentManager.beginTransaction()
@@ -242,7 +251,34 @@ class MainActivity : AppCompatActivity() {
         dialog.show()
     }
 
+    private fun requestPermission(){
 
+        isReadPermissionGranted= ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        )== PackageManager.PERMISSION_GRANTED
+
+
+        isWritePermissionGranted= ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )== PackageManager.PERMISSION_GRANTED
+
+        val permissionRequest :MutableList<String> = ArrayList()
+
+        if(!isReadPermissionGranted){
+            permissionRequest.add(Manifest.permission.READ_EXTERNAL_STORAGE)
+        }
+
+        if(!isWritePermissionGranted){
+            permissionRequest.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        }
+        if(permissionRequest.isNotEmpty()){
+
+            permissionLauncher.launch(permissionRequest.toTypedArray())
+        }
+
+    }
 
 
     }

@@ -27,9 +27,9 @@ class PdfFileMaker(private val context: Context, private val customWorkOrderPdfD
 
         //bellow is the files in the internal storage that act as a template and their filepath
 
-        val filename = "my_file.html" // replace with your file's name
-        val filenameItems = "equipment_and_spareparts.html"
-        val filenameCheckForm ="checkForm.html"
+        val filename = "myFileMainAndTools.html" // replace with your file's name
+        val filenameItems = "myFileEquipmentAndSpareParts.html"
+        val filenameCheckForm ="myFileCheckForms.html"
         val file = context.getFileStreamPath(filename)
         val fileEquipment =context.getFileStreamPath(filenameItems)
         val fileCheckform =context.getFileStreamPath(filenameCheckForm)

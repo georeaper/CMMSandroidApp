@@ -37,6 +37,19 @@ class ConfigurationFragment : Fragment() {
             transaction?.addToBackStack(null)
             transaction?.commit()
         }
+
+        binding.configurationTemplatePDFreportTv.setOnClickListener {
+            val transaction = activity?.supportFragmentManager?.beginTransaction()
+            transaction?.replace(R.id.frameLayout1, TemplatesFragment())
+            transaction?.addToBackStack(null)
+            transaction?.commit()
+        }
+        binding.configurationCustomizedFieldsTv.setOnClickListener {
+            val transaction = activity?.supportFragmentManager?.beginTransaction()
+            transaction?.replace(R.id.frameLayout1, CustomizedFieldFragment())
+            transaction?.addToBackStack(null)
+            transaction?.commit()
+        }
     }
 
 
