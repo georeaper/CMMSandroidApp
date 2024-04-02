@@ -8,6 +8,9 @@ import com.gkprojects.cmmsandroidapp.Fragments.SpecialTools.RepoSpecialTools
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class RepoInventory {
     companion object {
@@ -26,12 +29,20 @@ class RepoInventory {
             return userDatabase!!.InventoryDao().getSingleInventory(id)
         }
         fun insertInventory(context: Context,inventory: Inventory){
+            val currentDateTime = Calendar.getInstance().time
+            val dateFormat = SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.getDefault())
+            inventory.DateCreated = dateFormat.format(currentDateTime)
+            inventory.LastModified=dateFormat.format(currentDateTime)
             userDatabase= initialiseDB(context)
             CoroutineScope(Dispatchers.IO).launch {
                 RepoInventory.userDatabase!!.InventoryDao().addInventory(inventory)
             }
         }
         fun updateInventory(context: Context,inventory: Inventory){
+            val currentDateTime = Calendar.getInstance().time
+            val dateFormat = SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.getDefault())
+
+            inventory.LastModified=dateFormat.format(currentDateTime)
             userDatabase= initialiseDB(context)
             CoroutineScope(Dispatchers.IO).launch {
                 RepoInventory.userDatabase!!.InventoryDao().updateInventory(inventory)

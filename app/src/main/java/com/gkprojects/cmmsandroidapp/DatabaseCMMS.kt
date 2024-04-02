@@ -74,9 +74,7 @@ abstract class CMMSDatabase : RoomDatabase() {
        companion object  {
        @Volatile
        private var instance: CMMSDatabase? = null
-       //private const val DATABASE_NAME="CmmsDb"
-       //private const val DATABASE_NAME="CmmsDb5"
-       //private const val DATABASE_NAME="cmmsAppDB29012024"
+
        //private const val DATABASE_NAME="cmmsAppDB11022024b"
        private const val DATABASE_NAME="cmmsAppDB19032024_b" //ID because UUID Strings
        fun getInstance(context: Context):CMMSDatabase?
@@ -85,10 +83,11 @@ abstract class CMMSDatabase : RoomDatabase() {
            {
                synchronized(CMMSDatabase::class.java)
                {
-                   if(instance == null)
-                   {
-                       instance= Room.databaseBuilder(context,CMMSDatabase::class.java,
-                           DATABASE_NAME)
+                   if (instance == null) {
+                       val sharedPreferences = context.getSharedPreferences("SettingsApp", Context.MODE_PRIVATE)
+                       val dbName = sharedPreferences.getString("dbName", "defaultDbName") ?: "defaultDbName"
+
+                       instance = Room.databaseBuilder(context, CMMSDatabase::class.java, dbName)
                            .fallbackToDestructiveMigration()
                            .build()
                    }

@@ -8,6 +8,9 @@ import com.gkprojects.cmmsandroidapp.DataClasses.Maintenances
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class RepoMaintenances {
     companion object {
@@ -19,23 +22,27 @@ class RepoMaintenances {
 
         fun insert(context: Context,maintenances: Maintenances)
         {
-            RepoMaintenances.userDatabase = RepoMaintenances.initialiseDB(context)
+            val currentDateTime = Calendar.getInstance().time
+            val dateFormat = SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.getDefault())
+            maintenances.DateCreated = dateFormat.format(currentDateTime)
+            maintenances.LastModified=dateFormat.format(currentDateTime)
+            userDatabase = initialiseDB(context)
 
             CoroutineScope(Dispatchers.IO).launch {
-                RepoMaintenances.userDatabase!!.MaintenancesDao().addMaintenances(maintenances)
+                userDatabase!!.MaintenancesDao().addMaintenances(maintenances)
             }
         }
         suspend fun delete(context: Context,maintenances: Maintenances){
-            RepoMaintenances.userDatabase = RepoMaintenances.initialiseDB(context)
+            userDatabase = initialiseDB(context)
 
             CoroutineScope(Dispatchers.IO).launch{
-                RepoMaintenances.userDatabase!!.MaintenancesDao().deleteMaintenances(maintenances)
+                userDatabase!!.MaintenancesDao().deleteMaintenances(maintenances)
             }
         }
         fun getAllMaintenances(context: Context): LiveData<List<Maintenances>>
         {
-            RepoMaintenances.userDatabase = RepoMaintenances.initialiseDB(context)
-            return RepoMaintenances.userDatabase!!.MaintenancesDao().getAllMaintenances()
+            userDatabase = initialiseDB(context)
+            return userDatabase!!.MaintenancesDao().getAllMaintenances()
         }
     }
 }

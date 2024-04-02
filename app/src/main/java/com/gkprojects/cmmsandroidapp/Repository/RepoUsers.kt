@@ -13,6 +13,9 @@ import com.gkprojects.cmmsandroidapp.DataClasses.Users
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class RepoUsers {
 
@@ -26,6 +29,10 @@ class RepoUsers {
 
         fun insertUser(context: Context, users:Users)
         {
+            val currentDateTime = Calendar.getInstance().time
+            val dateFormat = SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.getDefault())
+            users.DateCreated = dateFormat.format(currentDateTime)
+            users.LastModified=dateFormat.format(currentDateTime)
             userDatabase= initialiseDB(context)
 
             CoroutineScope(Dispatchers.IO).launch {
@@ -49,6 +56,10 @@ class RepoUsers {
             return userDatabase!!.UsersDao().getAllUsers()
         }
         fun updateUser(context: Context, users:Users){
+            val currentDateTime = Calendar.getInstance().time
+            val dateFormat = SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.getDefault())
+
+            users.LastModified=dateFormat.format(currentDateTime)
             userDatabase= initialiseDB(context)
 
             CoroutineScope(Dispatchers.IO).launch {

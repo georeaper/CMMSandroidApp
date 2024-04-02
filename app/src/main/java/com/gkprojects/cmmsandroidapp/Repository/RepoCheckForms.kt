@@ -7,6 +7,9 @@ import com.gkprojects.cmmsandroidapp.DataClasses.CheckForms
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class RepoCheckForms {
     companion object {
@@ -16,6 +19,11 @@ class RepoCheckForms {
             return CMMSDatabase.getInstance(context)!!
         }
          fun insertCheckFormField(context:Context,checkForms: CheckForms){
+             val currentDateTime = Calendar.getInstance().time
+             val dateFormat = SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.getDefault())
+             checkForms.DateCreated = dateFormat.format(currentDateTime)
+             checkForms.LastModified=dateFormat.format(currentDateTime)
+
             userDatabase= initialiseDB(context)
             CoroutineScope(Dispatchers.IO).launch {
 

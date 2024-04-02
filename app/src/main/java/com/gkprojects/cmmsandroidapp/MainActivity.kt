@@ -34,6 +34,7 @@ import com.gkprojects.cmmsandroidapp.Fragments.TechnicalCases.CasesFragment
 import com.gkprojects.cmmsandroidapp.Fragments.WorkOrders.Work_Orders
 import com.gkprojects.cmmsandroidapp.Models.CustomerVM
 import com.gkprojects.cmmsandroidapp.api.ApiViewModel
+import com.gkprojects.cmmsandroidapp.api.SyncData.DataSynchronizer
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -87,7 +88,8 @@ class MainActivity : AppCompatActivity() {
         toggle.syncState()
 
         setSupportActionBar(toolbar)
-
+        //Syncrhonization Dialog
+        showSynchronizationDialog()
 
         val startFragment = supportFragmentManager
         val firstTransactionFrag =startFragment.beginTransaction()
@@ -95,7 +97,7 @@ class MainActivity : AppCompatActivity() {
         firstTransactionFrag.commit()
         drawerLayout.closeDrawers()
         toolbar.title= "Home"
-
+        badgeCreation()
 //        viewModelApi = ViewModelProvider(this).get(ApiViewModel::class.java)
 
 //        testApi()
@@ -142,6 +144,11 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.action_notification -> {
+                    val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottomNavigationView)
+                    val badge = bottomNavigationView.getOrCreateBadge(R.id.action_notification)
+                    badge.isVisible = false
+// An optional step, you can display the number of notifications on the badge
+                    badge.clearNumber()
                     // Handle Notifications click
                     // You can add your logic here
                     true
@@ -154,7 +161,16 @@ class MainActivity : AppCompatActivity() {
 
 
     }
-
+    private fun showSynchronizationDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("Synchronization")
+            .setMessage("Do you want to synchronize data?")
+            .setPositiveButton("Yes") { dialog, which ->
+                DataSynchronizer(this).synchronize()
+            }
+            .setNegativeButton("No", null)
+            .show()
+    }
 
 
     private fun updateTest(customer: Customer) {
@@ -280,7 +296,13 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-
+        private fun badgeCreation(){
+            val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottomNavigationView)
+            val badge = bottomNavigationView.getOrCreateBadge(R.id.action_notification)
+            badge.isVisible = true
+// An optional step, you can display the number of notifications on the badge
+            badge.number = 15
+        }
     }
 
 

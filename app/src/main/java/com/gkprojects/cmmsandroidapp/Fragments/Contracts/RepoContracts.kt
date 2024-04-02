@@ -10,6 +10,9 @@ import com.gkprojects.cmmsandroidapp.Repository.RepoEquipment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class RepoContracts {
 
@@ -23,6 +26,10 @@ class RepoContracts {
 
         fun insert(context: Context, contracts: Contracts)
         {
+            val currentDateTime = Calendar.getInstance().time
+            val dateFormat = SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.getDefault())
+            contracts.DateCreated = dateFormat.format(currentDateTime)
+            contracts.LastModified=dateFormat.format(currentDateTime)
             userDatabase= intialiseDB(context)
 
             CoroutineScope(Dispatchers.IO).launch {
@@ -48,6 +55,10 @@ class RepoContracts {
         }
 
         fun updateContractData(context: Context, contract: Contracts){
+            val currentDateTime = Calendar.getInstance().time
+            val dateFormat = SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.getDefault())
+
+            contract.LastModified=dateFormat.format(currentDateTime)
             userDatabase= intialiseDB(context)
             CoroutineScope(Dispatchers.IO).launch {
                 userDatabase!!.ContractsDao().updateContracts(contract)

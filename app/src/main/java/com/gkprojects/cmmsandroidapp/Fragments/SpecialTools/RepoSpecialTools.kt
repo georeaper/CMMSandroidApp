@@ -8,6 +8,9 @@ import com.gkprojects.cmmsandroidapp.Fragments.SpecialTools.ToolsDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 
 class RepoSpecialTools {
@@ -19,6 +22,10 @@ class RepoSpecialTools {
         }
 
         fun insert(context: Context,tools: Tools){
+            val currentDateTime = Calendar.getInstance().time
+            val dateFormat = SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.getDefault())
+            tools.DateCreated = dateFormat.format(currentDateTime)
+            tools.LastModified=dateFormat.format(currentDateTime)
             userDatabase= initialiseDB(context)
 
             CoroutineScope(Dispatchers.IO).launch {
@@ -35,6 +42,10 @@ class RepoSpecialTools {
             return userDatabase!!.ToolsDao().getSingleTool(id)
         }
         fun updateTools(context: Context,tools: Tools){
+            val currentDateTime = Calendar.getInstance().time
+            val dateFormat = SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.getDefault())
+
+            tools.LastModified=dateFormat.format(currentDateTime)
             userDatabase= initialiseDB(context)
             CoroutineScope(Dispatchers.IO).launch {
                 userDatabase!!.ToolsDao().updateTools(tools)

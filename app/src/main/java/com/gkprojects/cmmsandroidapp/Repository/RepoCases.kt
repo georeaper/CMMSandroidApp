@@ -8,6 +8,9 @@ import com.gkprojects.cmmsandroidapp.DataClasses.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class RepoCases {
 
@@ -21,6 +24,10 @@ class RepoCases {
 
         fun insert(context: Context, tickets: Tickets)
         {
+            val currentDateTime = Calendar.getInstance().time
+            val dateFormat = SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.getDefault())
+            tickets.DateCreated = dateFormat.format(currentDateTime)
+            tickets.LastModified=dateFormat.format(currentDateTime)
             userDatabase= intialiseDB(context)
 
             CoroutineScope(Dispatchers.IO).launch {
@@ -46,6 +53,11 @@ class RepoCases {
         }
 //
         fun updateCustomerData(context: Context, tickets: Tickets){
+        val currentDateTime = Calendar.getInstance().time
+        val dateFormat = SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.getDefault())
+
+        tickets.LastModified=dateFormat.format(currentDateTime)
+        userDatabase= intialiseDB(context)
             userDatabase= intialiseDB(context)
             CoroutineScope(Dispatchers.IO).launch {
                 userDatabase!!.TicketsDao().updateTickets(tickets)

@@ -20,6 +20,12 @@ class CustomerVM : ViewModel() {
     {
         RepoCustomer.insert(context,customer)
     }
+    fun updateSync(context: Context,customer: Customer){
+        RepoCustomer.updateSync(context, customer)
+    }
+    fun insertSync(context :Context,customer: Customer){
+        RepoCustomer.insertSync(context,customer)
+    }
 
      fun getAllCustomerData(context: Context): LiveData<List<Customer>>
     {

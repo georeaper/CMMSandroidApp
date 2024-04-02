@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.widget.doOnTextChanged
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -25,6 +26,7 @@ import com.gkprojects.cmmsandroidapp.R
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.textfield.TextInputEditText
 import java.util.*
 
 
@@ -44,8 +46,7 @@ class CustomerFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        val bottomNavigationView: BottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView)
-//        bottomNavigationView.selectedItemId=R.id.action_home
+
 
     }
 
@@ -92,19 +93,12 @@ class CustomerFragment : Fragment() {
 
 
 
-        val searchView = view.findViewById<SearchView>(R.id.searchView_customers)
-        searchView.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
-            override fun onQueryTextSubmit(p0: String?): Boolean {
-                return false
+        val searchView = view.findViewById<TextInputEditText>(R.id.searchView_customers)
+        searchView.doOnTextChanged { text, _, _, _ ->
+            if (text != null) {
+                filterList(text.toString().lowercase(Locale.ROOT))
             }
-
-            override fun onQueryTextChange(p0: String?): Boolean {
-                if (p0 != null) {
-                    filterList(p0.lowercase(Locale.ROOT))
-                }
-                return true
-            }
-        })
+        }
 
 
         val openbtn =view.findViewById<FloatingActionButton>(R.id.openCustomerFragment)

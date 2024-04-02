@@ -14,6 +14,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class RepoEquipment {
     companion object{
@@ -32,6 +35,10 @@ class RepoEquipment {
 
         fun insert(context: Context,equipment: Equipments)
         {
+            val currentDateTime = Calendar.getInstance().time
+            val dateFormat = SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.getDefault())
+            equipment.DateCreated = dateFormat.format(currentDateTime)
+            equipment.LastModified=dateFormat.format(currentDateTime)
             userDatabase= intialiseDB(context)
 
             CoroutineScope(IO).launch {
@@ -46,6 +53,10 @@ class RepoEquipment {
             return userDatabase!!.EquipmentsDAO().getAllEquipments()
         }
         fun updateEquipmentData(context: Context,equipments: Equipments){
+            val currentDateTime = Calendar.getInstance().time
+            val dateFormat = SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.getDefault())
+
+            equipments.LastModified=dateFormat.format(currentDateTime)
             userDatabase = intialiseDB(context)
             CoroutineScope(Dispatchers.IO).launch {
                 userDatabase!!.EquipmentsDAO().updateEquipments(equipments)

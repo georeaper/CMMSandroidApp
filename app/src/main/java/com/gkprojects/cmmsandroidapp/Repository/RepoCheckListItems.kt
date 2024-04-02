@@ -8,6 +8,9 @@ import com.gkprojects.cmmsandroidapp.DataClasses.FieldReportCheckForm
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class RepoCheckListItems {
     companion object {
@@ -17,6 +20,10 @@ class RepoCheckListItems {
             return CMMSDatabase.getInstance(context)!!
         }
         fun insertCheckFormField(context: Context, fieldReportCheckForm: FieldReportCheckForm){
+            val currentDateTime = Calendar.getInstance().time
+            val dateFormat = SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.getDefault())
+            fieldReportCheckForm.DateCreated = dateFormat.format(currentDateTime)
+            fieldReportCheckForm.LastModified=dateFormat.format(currentDateTime)
             userDatabase= initialiseDB(context)
             CoroutineScope(Dispatchers.IO).launch {
 
@@ -30,6 +37,10 @@ class RepoCheckListItems {
             }
         }
         fun updateCheckFormField(context: Context, fieldReportCheckForm: FieldReportCheckForm){
+            val currentDateTime = Calendar.getInstance().time
+            val dateFormat = SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.getDefault())
+
+            fieldReportCheckForm.LastModified=dateFormat.format(currentDateTime)
             userDatabase= initialiseDB(context)
             CoroutineScope(Dispatchers.IO).launch {
                 userDatabase!!.FieldReportCheckFormsDao().updateFieldReportCheckForms(fieldReportCheckForm)

@@ -7,8 +7,9 @@
         android:gravity="center"
         android:textSize="14sp"
         android:text="22"
-    android:layout_margin="5dp"
-        android:background="@drawable/circle_background"
+        android:layout_margin="5dp"
+        android:background="@drawable/circle_background_no_stroke"
+
 
 
         />

@@ -4,58 +4,66 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/BackgroundAppColor"
     tools:context=".Fragments.Configuration.ConfigurationFragment">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:text="Customization"
-        android:textSize="14sp"
-        android:layout_margin="5dp"
-        android:padding="5dp"
-        android:textColor="@color/darkGray"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:id="@+id/configuration_customizedFields_tv"
-        android:text="Customized Fields"
-        android:gravity="center_vertical"
-        android:drawablePadding="8dp"
-        android:textSize="18sp"
-        android:layout_margin="5dp"
-        android:padding="5dp"
-        android:background="@color/BackgroundAppColor"
-        android:textStyle="bold"
-        app:drawableEndCompat="@drawable/baseline_keyboard_arrow_right_24" />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:id="@+id/configuration_checkForms_tv"
-        android:text="Check Forms"
-        android:gravity="center_vertical"
-        android:drawablePadding="8dp"
-        android:textSize="18sp"
-        android:layout_margin="5dp"
-        android:padding="5dp"
-        android:background="@color/BackgroundAppColor"
-        android:textStyle="bold"
-        app:drawableEndCompat="@drawable/baseline_keyboard_arrow_right_24" />
-   <TextView
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:id="@+id/configuration_templatePDFreport_tv"
-        android:text="Template PDF Report"
-        android:gravity="center_vertical"
-        android:drawablePadding="8dp"
-        android:textSize="18sp"
-        android:layout_margin="5dp"
-        android:padding="5dp"
-        android:background="@color/BackgroundAppColor"
-        android:textStyle="bold"
-        app:drawableEndCompat="@drawable/baseline_keyboard_arrow_right_24" />
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Customization"
+            android:textSize="25sp"
+            android:textColor="@color/darkGray"
+            android:layout_marginBottom="25dp"/>
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/configuration_customizedFields_tv"
+                android:text="Customized Fields"
+                android:gravity="center_vertical"
+                android:drawablePadding="8dp"
+
+                android:textSize="20sp"
+                android:layout_marginBottom="16dp"
+
+                android:textStyle="bold"
+                app:drawableEndCompat="@drawable/baseline_keyboard_arrow_right_24" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/configuration_checkForms_tv"
+                android:text="Check Forms"
+                android:gravity="center_vertical"
+                android:drawablePadding="8dp"
+                android:textSize="20sp"
+                android:layout_marginBottom="16dp"
+
+                android:textStyle="bold"
+                app:drawableEndCompat="@drawable/baseline_keyboard_arrow_right_24" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/configuration_templatePDFreport_tv"
+                android:text="Template PDF Report"
+                android:gravity="center_vertical"
+                android:drawablePadding="8dp"
+                android:textSize="20sp"
+
+                android:textStyle="bold"
+                app:drawableEndCompat="@drawable/baseline_keyboard_arrow_right_24" />
+
+
+
+
+
+    </LinearLayout>
 </FrameLayout>

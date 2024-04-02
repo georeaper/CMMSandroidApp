@@ -2,24 +2,17 @@ package com.gkprojects.cmmsandroidapp.Fragments
 
 import android.content.res.ColorStateList
 import android.graphics.Color
-import android.graphics.Paint
 import android.graphics.drawable.Drawable
-import android.graphics.drawable.GradientDrawable
-import android.graphics.drawable.ShapeDrawable
-import android.graphics.drawable.shapes.OvalShape
-import android.media.Image
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.CalendarView
+
 import android.widget.ImageButton
-import android.widget.LinearLayout
+
 import android.widget.TextView
-import androidx.annotation.ColorInt
+
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
@@ -60,6 +53,7 @@ import java.time.format.TextStyle
 
 import java.util.Locale
 import kotlin.Exception
+
 
 
 class HomeFragment : Fragment() {
@@ -127,7 +121,7 @@ class HomeFragment : Fragment() {
         tvGreeting.text= today
         currentMonth = YearMonth.now()
         ticketsViewModel= ViewModelProvider(this)[CasesVM::class.java]
-        ticketsViewModel=ViewModelProvider(this)[CasesVM::class.java]
+        //ticketsViewModel= ViewModelProvider(this)[CasesVM::class.java]
 
         val firstMonth = currentMonth.minusMonths(360) //20years
         val lastMonth = currentMonth.plusMonths(360)
@@ -194,21 +188,12 @@ class HomeFragment : Fragment() {
 
                     }
                     setdatatoRv(workOrdersRecyclerView,adapterHomeWorkOrder,templist)
-
-
                 })
             }
 
         }catch (e:Exception){
             Log.d("ticketOverview",e.toString())
         }
-
-
-
-
-
-
-
 
     }
 
@@ -220,6 +205,7 @@ class HomeFragment : Fragment() {
         // Setup or update CalendarView with the new month
         calendarView.setup(currentMonth.minusMonths(360), currentMonth.plusMonths(360), DayOfWeek.SUNDAY)
         calendarView.scrollToMonth(currentMonth)
+
     }
     private fun setdatatoRv( recyclerview : RecyclerView , adapterRv : MainOverviewAdapter,  input :ArrayList<OverviewMainData>){
         Log.d("debugInput",input.toString())
@@ -260,23 +246,23 @@ class HomeFragment : Fragment() {
                 container.textViewTV.text = day.date.dayOfMonth.toString()
                 //container.textViewTV.setTextColor(Color.BLACK)
                 val drawable: Drawable? = ResourcesCompat.getDrawable(resources, R.drawable.circle_background, null)
-                   // container.textViewTV.background = drawable
-                //val color = ContextCompat.getColor(requireContext(), R.color.colorPrimary)
-                //container.textViewTV.backgroundTintList = ContextCompat.getColorStateList(requireContext(), R.color.colorPrimary)
-                //container.textViewTV.setBackgroundResource(R.drawable.circle_background)
+                container.textViewTV.text = day.date.dayOfMonth.toString()
+                Log.d("setUpCalendar","${day.date.dayOfMonth}")
+                Log.d("setUpCalendar2","${day.date.month}")
+                if (day.date.month == currentMonth.month) {
+                    container.textViewTV.setTextColor(Color.BLACK) // Change this to your desired color for the current month
+                } else {
+                    container.textViewTV.setTextColor(Color.LTGRAY) // Change this to your desired color for other months
+                }
+
+
                 // Default no events
                 if(day.date==LocalDate.now()){
                     container.textViewTV.backgroundTintList = ContextCompat.getColorStateList(requireContext(), R.color.colorPrimary)
                 }
-                //Log.d("localDate","${day.date}")
-                //val dayEvents = calendarEvents.filter { LocalDate.parse(it.DateStart) == day.date }
+
                 val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
                 val dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
-
-              //  Log.d("event2","$dayEvents")
-
-
-
 
                 calendarEvents.forEach { event ->
                     event.DateStart?.let { dateStartString ->
@@ -286,10 +272,6 @@ class HomeFragment : Fragment() {
                             // Assuming day.date is already a LocalDate, compare directly
                             if (eventDate == day.date) {
 
-//                                container.textViewTV.backgroundTintList = ContextCompat.getColorStateList(requireContext(), R.color.red)
-//                                // If the dates match, do something for the matching event
-//                                val colorSelection =
-//                                Log.d("MatchedEvent", "Event on ${eventDate} matches day ${day.date}")
                                 val matchingItem = ticketTypes.firstOrNull { it.type == event.Urgency }
                                 matchingItem?.let { item ->
                                     // Use the color from the matching item

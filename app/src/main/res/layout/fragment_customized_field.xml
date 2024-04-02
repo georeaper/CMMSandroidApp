@@ -12,17 +12,20 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            tools:ignore="UselessParent">
+            tools:ignore="UselessParent"
+            >
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:orientation="horizontal"
                 android:layout_margin="5dp"
+                android:visibility="gone"
                 >
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="0dp"
                     android:layout_height="60dp"
                     android:layout_weight="4"
+                    android:visibility="gone"
                     android:layout_margin="3dp"
                     android:hint="Contract Status"
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
@@ -59,6 +62,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_margin="5dp"
+                android:visibility="gone"
                 />
 <!--The below code is for Contract Type DropDown list-->
             <LinearLayout
@@ -66,6 +70,7 @@
                 android:layout_height="70dp"
                 android:orientation="horizontal"
                 android:layout_margin="5dp"
+                android:visibility="gone"
                 >
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="0dp"
@@ -105,6 +110,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_margin="5dp"
+                android:visibility="gone"
                 />
 
 
@@ -114,6 +120,7 @@
                 android:layout_height="70dp"
                 android:orientation="horizontal"
                 android:layout_margin="5dp"
+                android:visibility="gone"
                 >
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="0dp"
@@ -150,6 +157,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_margin="5dp"
+                android:visibility="gone"
                 />
 
             <!--The below code is for Equipment Model DropDown list-->
@@ -158,6 +166,7 @@
                 android:layout_height="70dp"
                 android:orientation="horizontal"
                 android:layout_margin="5dp"
+                android:visibility="gone"
                 >
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="0dp"
@@ -194,6 +203,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_margin="5dp"
+                android:visibility="gone"
                 />
 
             <!--The below code is for Equipment Manufacturer DropDown list-->
@@ -202,6 +212,7 @@
                 android:layout_height="70dp"
                 android:orientation="horizontal"
                 android:layout_margin="5dp"
+                android:visibility="gone"
                 >
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="0dp"
@@ -238,6 +249,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_margin="5dp"
+                android:visibility="gone"
                 />
 
 
@@ -247,6 +259,7 @@
                 android:layout_height="70dp"
                 android:orientation="horizontal"
                 android:layout_margin="5dp"
+                android:visibility="gone"
                 >
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="0dp"
@@ -283,6 +296,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_margin="5dp"
+                android:visibility="gone"
                 />
 
             <!--The below code is for Equipment Status DropDown list-->
@@ -291,6 +305,7 @@
                 android:layout_height="70dp"
                 android:orientation="horizontal"
                 android:layout_margin="5dp"
+                android:visibility="gone"
                 >
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="0dp"
@@ -327,6 +342,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_margin="5dp"
+                android:visibility="gone"
                 />
 
             <!--The below code is for Technical case Urgency DropDown list-->
@@ -335,6 +351,7 @@
                 android:layout_height="70dp"
                 android:orientation="horizontal"
                 android:layout_margin="5dp"
+                android:visibility="gone"
                 >
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="0dp"
@@ -371,6 +388,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_margin="5dp"
+                android:visibility="gone"
                 />
 
             <!--The below code is for Technical case Active DropDown list-->
@@ -379,6 +397,7 @@
                 android:layout_height="70dp"
                 android:orientation="horizontal"
                 android:layout_margin="5dp"
+                android:visibility="gone"
                 >
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="0dp"
@@ -415,13 +434,75 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_margin="5dp"
+                android:visibility="gone"
+
                 />
 
 
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp"
+                >
 
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Customized Fields"
+                    android:textSize="25sp"
+                    android:textColor="@color/darkGray"
+                    android:layout_marginBottom="25dp"/>
+
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/customizedFields_WorkOrder_ReportType"
+                    android:text="Work Order : Report Type"
+                    android:gravity="center_vertical"
+                    android:drawablePadding="8dp"
+
+                    android:textSize="20sp"
+                    android:layout_marginBottom="16dp"
+
+                    android:textStyle="bold"
+                     />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/configuration_customizedFields_equipmentStatus"
+                    android:text="Equipments : Status"
+                    android:gravity="center_vertical"
+                    android:drawablePadding="8dp"
+                    android:textSize="20sp"
+                    android:layout_marginBottom="16dp"
+
+                    android:textStyle="bold"
+                   />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/customizedFields_TechnicalCasesUserResponsible"
+                    android:text="Technical Case : Status"
+                    android:gravity="center_vertical"
+                    android:drawablePadding="8dp"
+                    android:textSize="20sp"
+
+                    android:textStyle="bold"
+                     />
+
+
+
+
+
+            </LinearLayout>
 
         </LinearLayout>
+
 
 
     </ScrollView>

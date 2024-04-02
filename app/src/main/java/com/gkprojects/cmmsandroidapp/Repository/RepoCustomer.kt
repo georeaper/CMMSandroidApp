@@ -13,6 +13,9 @@ import com.gkprojects.cmmsandroidapp.DataClasses.DashboardCustomerTechnicalCases
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class RepoCustomer {
     companion object{
@@ -25,10 +28,32 @@ class RepoCustomer {
 
         fun insert(context: Context, customer : Customer)
         {
+            val currentDateTime = Calendar.getInstance().time
+            val dateFormat = SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.getDefault())
+            customer.DateCreated = dateFormat.format(currentDateTime)
+            customer.LastModified=dateFormat.format(currentDateTime)
             userDatabase= intialiseDB(context)
 
             CoroutineScope(Dispatchers.IO).launch {
                 userDatabase!!.CustomerDao().addCustomer(customer)
+            }
+        }
+        fun insertSync (context: Context,customer: Customer)
+        {
+            userDatabase= intialiseDB(context)
+
+            CoroutineScope(Dispatchers.IO).launch {
+                userDatabase!!.CustomerDao().addCustomer(customer)
+            }
+        }
+        fun updateSync(context: Context,customer: Customer){
+            userDatabase = intialiseDB(context)
+            CoroutineScope(Dispatchers.IO).launch {
+                try {
+                    userDatabase!!.CustomerDao().updateCustomer(customer)
+                } catch (e: Exception) {
+                    Log.e("Update Error", "Failed to update customer", e)
+                }
             }
         }
         fun getCustomerID(context :Context ,id :String):LiveData<Customer>{
@@ -51,6 +76,10 @@ class RepoCustomer {
         }
 
         fun updateCustomerData(context: Context, customer: Customer) {
+            val currentDateTime = Calendar.getInstance().time
+            val dateFormat = SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.getDefault())
+
+            customer.LastModified=dateFormat.format(currentDateTime)
             userDatabase = intialiseDB(context)
             CoroutineScope(Dispatchers.IO).launch {
                 try {

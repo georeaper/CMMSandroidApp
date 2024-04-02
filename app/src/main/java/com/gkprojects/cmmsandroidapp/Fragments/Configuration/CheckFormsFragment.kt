@@ -1,6 +1,9 @@
 package com.gkprojects.cmmsandroidapp.Fragments.Configuration
 
+import android.app.Activity
 import android.app.AlertDialog
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -41,12 +44,18 @@ class CheckFormsFragment : Fragment() {
     private lateinit var searchViewCheckForms: SearchView
     private var tempCheckFormsList = ArrayList<Maintenances>()
     private var checkFormsFields = ArrayList<CheckForms>()
-
+    private var maintenanceID :String? =null
+    companion object {
+        private const val READ_REQUEST_CODE: Int = 101
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
     }
+
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -74,7 +83,7 @@ class CheckFormsFragment : Fragment() {
         }
         adapterCheckForms.setOnClickListener(object :CheckFormsAdapter.OnClickListener{
             override fun onClick(position: Int, model: Maintenances) {
-                showDialog(model.MaintenanceID!! )
+                showDialog(model.MaintenanceID )
                // Toast.makeText(requireContext(),"test ${model.MaintenanceID}",Toast.LENGTH_SHORT).show()
             }
 
@@ -94,6 +103,7 @@ class CheckFormsFragment : Fragment() {
         checkFormBtn.setOnClickListener{
             showAddMaintenanceDialog()
         }
+
 
 
     }
@@ -125,6 +135,31 @@ class CheckFormsFragment : Fragment() {
             .setNegativeButton("Cancel", null)
             .show()
     }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == READ_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            data?.data?.also { uri ->
+                val myDataList = mutableListOf<CheckForms>()
+                requireContext().contentResolver.openInputStream(uri)?.bufferedReader()?.forEachLine { line ->
+                    val elements = line.split(";")
+                    if(elements.size==3){
+                        myDataList.add(CheckForms(UUID.randomUUID().toString(),null,maintenanceID,elements[0], elements[1],elements[2],null,null ,null))
+                        Log.d("OpenFiletxt","$myDataList")
+                    }
+                    else{
+                        Log.d("errorLines","${elements.size}")
+                    }
+
+                }
+                Log.d("testOpenFile","$checkFormsFields")
+                for(i in myDataList.indices){
+                    checkFormsFields.add(myDataList[i])
+                    GlobalScope.launch(Dispatchers.IO) { checkFormsVM.insert(requireContext(),myDataList[i])  }
+                }
+                adapterCheckFormField.setData(checkFormsFields)
+                Log.d("testOpenFile2","$checkFormsFields")
+            }
+        }
+    }
 
     private fun showDialog(maintenanceId : String ) {
 
@@ -133,6 +168,16 @@ class CheckFormsFragment : Fragment() {
         val expectedValuesEditText = dialogView.findViewById<EditText>(R.id.dialogCheckFormsFieldsExpectedValues)
         val valueTypeEditText = dialogView.findViewById<EditText>(R.id.dialogCheckFormsFieldsTypeValues)
         val recyclerView = dialogView.findViewById<RecyclerView>(R.id.dialogCheckFormsFieldsRecyclerView)
+        val importBtn =dialogView.findViewById<Button>(R.id.importButton)
+        importBtn.setOnClickListener {
+            maintenanceID =maintenanceId
+            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+                addCategory(Intent.CATEGORY_OPENABLE)
+                type = "text/plain"
+            }
+            startActivityForResult(intent, READ_REQUEST_CODE)
+
+        }
 
         val btn=dialogView.findViewById<Button>(R.id.dialogCheckFormsFieldsbtn)
         btn.setOnClickListener {
@@ -157,6 +202,7 @@ class CheckFormsFragment : Fragment() {
             }
         }
 
+
         // Set up your RecyclerView here
 
         AlertDialog.Builder(context)
@@ -165,10 +211,16 @@ class CheckFormsFragment : Fragment() {
             .setPositiveButton("OK") { _, _ ->
                 // Handle the positive button click here
 
-
+                maintenanceID=null
                 // Do something with the input values
             }
-            .setNegativeButton("Cancel", null)
+            .setNegativeButton("Cancel"){_,_ ->
+                maintenanceID=null
+
+            }
+
+
+
             .show()
     }
 

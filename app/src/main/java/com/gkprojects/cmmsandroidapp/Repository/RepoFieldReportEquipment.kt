@@ -8,6 +8,9 @@ import com.gkprojects.cmmsandroidapp.DataClasses.FieldReportEquipment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class RepoFieldReportEquipment {
     companion object {
@@ -18,6 +21,10 @@ class RepoFieldReportEquipment {
         }
 
          fun insertFieldReportEquipment(context: Context,fieldReportEquipment: FieldReportEquipment){
+             val currentDateTime = Calendar.getInstance().time
+             val dateFormat = SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.getDefault())
+             fieldReportEquipment.DateCreated = dateFormat.format(currentDateTime)
+             fieldReportEquipment.LastModified=dateFormat.format(currentDateTime)
             userDatabase = initialiseDB(context)
             CoroutineScope(Dispatchers.IO).launch {
                 userDatabase!!.FieldReportEquipmentDao().addFieldReportEquipment(fieldReportEquipment)
@@ -30,6 +37,10 @@ class RepoFieldReportEquipment {
             }
         }
         fun updateFieldReportEquipment(context: Context,fieldReportEquipment: FieldReportEquipment){
+            val currentDateTime = Calendar.getInstance().time
+            val dateFormat = SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.getDefault())
+
+            fieldReportEquipment.LastModified=dateFormat.format(currentDateTime)
             userDatabase = initialiseDB(context)
             CoroutineScope(Dispatchers.IO).launch {
                 userDatabase!!.FieldReportEquipmentDao().updateFieldReportEquipment(fieldReportEquipment)

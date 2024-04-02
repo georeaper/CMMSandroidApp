@@ -13,6 +13,9 @@ import com.gkprojects.cmmsandroidapp.Fragments.WorkOrders.FieldReportToolsCustom
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class RepoWorkOrders {
     companion object {
@@ -23,13 +26,21 @@ class RepoWorkOrders {
         }
         fun insert(context: Context, workOrder : FieldReports)
         {
-            RepoWorkOrders.userDatabase = RepoWorkOrders.initialiseDB(context)
+            val currentDateTime = Calendar.getInstance().time
+            val dateFormat = SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.getDefault())
+            workOrder.DateCreated = dateFormat.format(currentDateTime)
+            workOrder.LastModified=dateFormat.format(currentDateTime)
+            userDatabase = initialiseDB(context)
 
             CoroutineScope(Dispatchers.IO).launch {
-                RepoWorkOrders.userDatabase!!.FieldReportsDao().addFieldReports(workOrder)
+                userDatabase!!.FieldReportsDao().addFieldReports(workOrder)
             }
         }
         fun update(context: Context,workOrder: FieldReports){
+            val currentDateTime = Calendar.getInstance().time
+            val dateFormat = SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.getDefault())
+
+            workOrder.LastModified=dateFormat.format(currentDateTime)
             userDatabase= initialiseDB(context)
 
             CoroutineScope(Dispatchers.IO).launch {

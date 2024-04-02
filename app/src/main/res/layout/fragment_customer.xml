@@ -7,36 +7,40 @@
     tools:context=".Fragments.Customers.CustomerFragment"
     android:id="@+id/fl_customer">
 
-    <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-        <!--suppress AndroidUnresolvableTag -->
-        <SearchView
-            android:id="@+id/searchView_customers"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/searchView_customers_Layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="wrap_content"
+            app:endIconMode="clear_text">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/searchView_customers"
+                android:hint="Search" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
-
-
-
-            />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/customer_recyclerview"
-        android:layout_weight="1"/>
+            android:id="@+id/customer_recyclerview"
+            android:layout_marginTop="16dp"/>
     </LinearLayout>
-
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/openCustomerFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
         android:clickable="true"
         android:src="@android:drawable/ic_menu_add" />
 

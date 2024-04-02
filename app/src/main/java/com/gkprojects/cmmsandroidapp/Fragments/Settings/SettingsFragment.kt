@@ -63,6 +63,44 @@ class SettingsFragment : Fragment() {
             fragmentTransaction.addToBackStack("settingsNavigation")
             fragmentTransaction.commit()
         }
+
+        binding.settingsNotifications.setOnClickListener{
+            val fragmentManager =parentFragmentManager
+            val fragmentTransaction=fragmentManager.beginTransaction()
+            val fragment = NotificationSettings()
+
+            fragmentTransaction.replace(R.id.frameLayout1,fragment)
+            fragmentTransaction.addToBackStack("settingsNavigation")
+            fragmentTransaction.commit()
+
+        }
+        binding.settingsProfile.setOnClickListener {
+            val fragmentManager =parentFragmentManager
+            val fragmentTransaction=fragmentManager.beginTransaction()
+            val fragment = ProfileSettings()
+
+            fragmentTransaction.replace(R.id.frameLayout1,fragment)
+            fragmentTransaction.addToBackStack("settingsNavigation")
+            fragmentTransaction.commit()
+        }
+        binding.settingsSyncing.setOnClickListener {
+            val fragmentManager =parentFragmentManager
+            val fragmentTransaction=fragmentManager.beginTransaction()
+            val fragment = SyncingSettings()
+
+            fragmentTransaction.replace(R.id.frameLayout1,fragment)
+            fragmentTransaction.addToBackStack("settingsNavigation")
+            fragmentTransaction.commit()
+        }
+        binding.settingsPreferences.setOnClickListener {
+            val fragmentManager =parentFragmentManager
+            val fragmentTransaction=fragmentManager.beginTransaction()
+            val fragment = PreferencesSettings()
+
+            fragmentTransaction.replace(R.id.frameLayout1,fragment)
+            fragmentTransaction.addToBackStack("settingsNavigation")
+            fragmentTransaction.commit()
+        }
     }
 
 

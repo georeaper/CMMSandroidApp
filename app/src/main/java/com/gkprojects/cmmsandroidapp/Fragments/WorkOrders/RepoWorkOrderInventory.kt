@@ -4,6 +4,9 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import com.gkprojects.cmmsandroidapp.CMMSDatabase
 import com.gkprojects.cmmsandroidapp.DataClasses.FieldReportInventory
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class RepoWorkOrderInventory {
     companion object {
@@ -14,10 +17,18 @@ class RepoWorkOrderInventory {
         }
 
         fun insertWorkOrderInventory(context: Context, fieldReportInventory: FieldReportInventory ){
+            val currentDateTime = Calendar.getInstance().time
+            val dateFormat = SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.getDefault())
+            fieldReportInventory.DateCreated = dateFormat.format(currentDateTime)
+            fieldReportInventory.LastModified=dateFormat.format(currentDateTime)
             userDatabase= initialiseDB(context)
             userDatabase!!.FieldReportInventoryDao().addFieldReportInventory(fieldReportInventory)
         }
         fun updateWorkOrderInventory(context: Context, fieldReportInventory: FieldReportInventory ){
+            val currentDateTime = Calendar.getInstance().time
+            val dateFormat = SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.getDefault())
+
+            fieldReportInventory.LastModified=dateFormat.format(currentDateTime)
             userDatabase= initialiseDB(context)
             userDatabase!!.FieldReportInventoryDao().updateFieldReportInventory(fieldReportInventory)
         }
