@@ -10,12 +10,14 @@ import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gkprojects.cmmsandroidapp.Adapter.WorkOrdersAdapter
 import com.gkprojects.cmmsandroidapp.DataClasses.WorkOrdersList
+import com.gkprojects.cmmsandroidapp.Models.SharedViewModel
 
 import com.gkprojects.cmmsandroidapp.Models.WorkOrdersVM
 import com.gkprojects.cmmsandroidapp.R
@@ -63,6 +65,7 @@ class Work_Orders : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val sharedViewModel: SharedViewModel by activityViewModels()
         super.onViewCreated(view, savedInstanceState)
         recyclerViewWorkOrder=binding.workOrdersRecyclerView
         adapterWorkOrder= WorkOrdersAdapter(tempWorkOrdersList)

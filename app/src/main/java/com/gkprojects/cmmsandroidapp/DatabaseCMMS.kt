@@ -1,18 +1,27 @@
 package com.gkprojects.cmmsandroidapp
 
 import android.content.Context
-import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.gkprojects.cmmsandroidapp.DataClasseUNused.MaintenanceFieldForm
-import com.gkprojects.cmmsandroidapp.DataClasseUNused.MaintenanceInventory
+import com.gkprojects.cmmsandroidapp.Dao.CheckFormsDao
+import com.gkprojects.cmmsandroidapp.Dao.ContractEquipmentsDao
+import com.gkprojects.cmmsandroidapp.Dao.ContractsDao
+import com.gkprojects.cmmsandroidapp.Dao.CustomerDao
+import com.gkprojects.cmmsandroidapp.Dao.DepartmentsDao
+import com.gkprojects.cmmsandroidapp.Dao.EquipmentsDao
+import com.gkprojects.cmmsandroidapp.Dao.FieldReportCheckFormsDao
+import com.gkprojects.cmmsandroidapp.Dao.FieldReportEquipmentDao
+import com.gkprojects.cmmsandroidapp.Dao.FieldReportsDao
+import com.gkprojects.cmmsandroidapp.Dao.MaintenancesDao
+import com.gkprojects.cmmsandroidapp.Dao.SettingsDao
+import com.gkprojects.cmmsandroidapp.Dao.TicketsDao
+import com.gkprojects.cmmsandroidapp.Dao.UsersDao
 import com.gkprojects.cmmsandroidapp.DataClasses.*
 import com.gkprojects.cmmsandroidapp.Fragments.Inventory.InventoryDao
 import com.gkprojects.cmmsandroidapp.Fragments.SpecialTools.ToolsDao
 import com.gkprojects.cmmsandroidapp.Fragments.WorkOrders.FieldReportInventoryDao
 import com.gkprojects.cmmsandroidapp.Fragments.WorkOrders.FieldReportToolsDao
-import com.gkprojects.cmmsandroidapp.Repository.*
 
 @Database(
     entities = [Customer::class,
@@ -54,20 +63,21 @@ abstract class CMMSDatabase : RoomDatabase() {
     abstract fun ContractEquipmentsDao(): ContractEquipmentsDao
     abstract fun ContractsDao(): ContractsDao
     abstract fun FieldReportEquipmentDao(): FieldReportEquipmentDao
-    abstract fun FieldReportsDao():FieldReportsDao
+    abstract fun FieldReportsDao(): FieldReportsDao
     //abstract fun InventoryDao():InventoryDao
     abstract fun InventoryDao():InventoryDao
 //    abstract fun MaintenanceFieldFormDao():MaintenanceFieldFormDao
 //    abstract fun MaintenanceInventoryDao():MaintenanceInventoryDao
-    abstract fun MaintenancesDao():MaintenancesDao
-    abstract fun TicketsDao():TicketsDao
-    abstract fun UsersDao():UsersDao
+    abstract fun MaintenancesDao(): MaintenancesDao
+    abstract fun TicketsDao(): TicketsDao
+    abstract fun UsersDao(): UsersDao
     abstract fun FieldReportInventoryDao():FieldReportInventoryDao
 
     abstract fun FieldReportToolsDao(): FieldReportToolsDao
     abstract fun ToolsDao(): ToolsDao
-    abstract fun CheckFormsDao():CheckFormsDao
-    abstract fun FieldReportCheckFormsDao():FieldReportCheckFormsDao
+    abstract fun CheckFormsDao(): CheckFormsDao
+    abstract fun FieldReportCheckFormsDao(): FieldReportCheckFormsDao
+    abstract fun SettingsDao(): SettingsDao
 
 
 

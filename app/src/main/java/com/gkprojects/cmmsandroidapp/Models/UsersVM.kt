@@ -11,6 +11,9 @@ import com.gkprojects.cmmsandroidapp.DataClasses.Tickets
 import com.gkprojects.cmmsandroidapp.DataClasses.Users
 import com.gkprojects.cmmsandroidapp.Repository.RepoEquipment
 import com.gkprojects.cmmsandroidapp.Repository.RepoUsers
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class UsersVM: ViewModel() {
     fun insertUser(context: Context, users: Users)
@@ -32,6 +35,14 @@ class UsersVM: ViewModel() {
     fun getFirstUser(context: Context):LiveData<Users>{
         return RepoUsers.getFirstUser(context)
     }
+    fun updateUser(context: Context,user :Users) {
+
+        CoroutineScope(Dispatchers.IO).launch {
+            RepoUsers.updateUser(context, user)
+        }
+
+    }
+
 
 
 

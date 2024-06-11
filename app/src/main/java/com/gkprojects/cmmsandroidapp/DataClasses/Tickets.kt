@@ -25,6 +25,7 @@ data class Tickets(
     @PrimaryKey var TicketID: String = UUID.randomUUID().toString(),
     @ColumnInfo(name = "RemoteID") var RemoteID: Int?,
     @ColumnInfo(name = "Title") var Title: String?,
+    @ColumnInfo(name = "TicketNumber") var TicketNumber: String?,
     @ColumnInfo(name = "Description") var Description: String?,
     @ColumnInfo(name = "Notes") var Notes: String?,
     @ColumnInfo(name = "Urgency") var Urgency: String?,

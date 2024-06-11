@@ -1,17 +1,12 @@
 package com.gkprojects.cmmsandroidapp
 
-import android.util.Log
 import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.gkprojects.cmmsandroidapp.DataClasses.Customer
-import com.gkprojects.cmmsandroidapp.DataClasses.Equipments
-import com.gkprojects.cmmsandroidapp.Repository.CustomerDao
-import com.gkprojects.cmmsandroidapp.Repository.EquipmentsDao
-import junit.framework.TestCase.assertEquals
+import com.gkprojects.cmmsandroidapp.Dao.CustomerDao
+import com.gkprojects.cmmsandroidapp.Dao.EquipmentsDao
 import org.junit.After
 import org.junit.Before
-import org.junit.Test
 import org.junit.runner.RunWith
 
 

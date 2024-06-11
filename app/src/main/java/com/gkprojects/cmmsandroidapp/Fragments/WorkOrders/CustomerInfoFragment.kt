@@ -134,14 +134,15 @@ class CustomerInfoFragment : Fragment() {
         getCustomers()
         workOrderViewModel=ViewModelProvider(this)[WorkOrdersVM::class.java]
         usersViewModel =ViewModelProvider(this)[UsersVM::class.java]
+        val sharedViewModel: SharedViewModel by activityViewModels()
+        sharedViewModel.user.observe(viewLifecycleOwner, Observer {
+            userId=it.UserID
+        })
 
-//        toolsViewModel=ViewModelProvider(this)[FieldReportToolsVM::class.java]
-//        inventoryViewModel=ViewModelProvider(this)[FieldReportInventoryVM::class.java]
-//        equipmentViewModel=ViewModelProvider(this)[FieldReportEquipmentVM::class.java]
-//        checkListViewModel=ViewModelProvider(this)[FieldReportCheckListVM::class.java]
 
-        //val tempUserID =1 // this User shouldn't exist , it is hardcode for testing only
-        getUserDetails()
+
+
+        //getUserDetails()
 
 
         val signatureView = SignatureView(requireContext())
@@ -240,23 +241,23 @@ class CustomerInfoFragment : Fragment() {
 
     }
 
-    private fun getUserDetails() {
-       usersViewModel.getFirstUser(requireContext()).observe(viewLifecycleOwner, Observer {
-           Log.d("getFirstUser","$it")
-           if(it==null){
-               usersViewModel.insertUser(requireContext(),Users("",null,"DemoUser","Demo","demo@email,com","+306987012345",null,"Demo",0,null,null,null))
-               usersViewModel.getFirstUser(requireContext()).observe(viewLifecycleOwner, Observer {
-                   userDetails=it as Users
-                   Log.d("getFirstUser2","$userDetails")
-               })
-           }else{
-               userDetails=it as Users
-           }
-       })
-
-        //the userBelow is a demoUser
-        //userDetails=Users(userId,null,"DemoUser","Demo","demo@email,com","+306987012345",null,"Demo",0,null,null,null)
-    }
+//    private fun getUserDetails() {
+//       usersViewModel.getFirstUser(requireContext()).observe(viewLifecycleOwner, Observer {
+//           Log.d("getFirstUser","$it")
+//           if(it==null){
+//               usersViewModel.insertUser(requireContext(),Users("",null,"DemoUser","Demo","demo@email,com","+306987012345",null,"Demo","TCdemo",0,0,null,null,null))
+//               usersViewModel.getFirstUser(requireContext()).observe(viewLifecycleOwner, Observer {
+//                   userDetails=it as Users
+//                   Log.d("getFirstUser2","$userDetails")
+//               })
+//           }else{
+//               userDetails=it as Users
+//           }
+//       })
+//
+//        //the userBelow is a demoUser
+//        //userDetails=Users(userId,null,"DemoUser","Demo","demo@email,com","+306987012345",null,"Demo",0,null,null,null)
+//    }
 
     private fun setUpData(fieldReports: FieldReports) {
         caseId=fieldReports.CaseID

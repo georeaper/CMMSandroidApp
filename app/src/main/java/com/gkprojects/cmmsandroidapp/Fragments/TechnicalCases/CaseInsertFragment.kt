@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,6 +26,7 @@ import com.gkprojects.cmmsandroidapp.DataClasses.EquipmentListInCases
 import com.gkprojects.cmmsandroidapp.DataClasses.Tickets
 import com.gkprojects.cmmsandroidapp.Models.CasesVM
 import com.gkprojects.cmmsandroidapp.Models.EquipmentVM
+import com.gkprojects.cmmsandroidapp.Models.SharedViewModel
 import com.gkprojects.cmmsandroidapp.R
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.checkbox.MaterialCheckBox
@@ -60,6 +62,7 @@ class CaseInsertFragment : Fragment() {
     lateinit var filterText : SearchView
     private var customerId :String? =null
     private var equipmentID : String? =null
+    private var userId : String? =null
     private var casesID: String? = null
     private var selectedItem: String? = null
     private var openDate :String?= null
@@ -82,6 +85,10 @@ class CaseInsertFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val sharedViewModel: SharedViewModel by activityViewModels()
+        sharedViewModel.user.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            userId = it.UserID
+        })
         casesViewModel= ViewModelProvider(this)[CasesVM::class.java]
         equipmentViewModel=ViewModelProvider(this)[EquipmentVM::class.java]
         toolbar = requireActivity().findViewById(R.id.topAppBar)
@@ -540,6 +547,7 @@ class CaseInsertFragment : Fragment() {
             if (casesID == null) {
                 val case = Tickets(UUID.randomUUID().toString(),null,
                     titleCase.text.toString(),
+                    null,
                     description.text.toString(),
                     comments.text.toString(),
                     dropdownMenu.text.toString(),
@@ -549,7 +557,7 @@ class CaseInsertFragment : Fragment() {
                     dateSet,
                     openDate,
                     null,
-                    null,
+                    userId,
                     customerId,
                     equipmentID
                 )
@@ -560,6 +568,7 @@ class CaseInsertFragment : Fragment() {
             } else {
                 val case = Tickets(casesID,null,
                     titleCase.text.toString(),
+                    null,
                     description.text.toString(),
                     comments.text.toString(),
                     dropdownMenu.text.toString(),
@@ -569,7 +578,7 @@ class CaseInsertFragment : Fragment() {
                     dateSet,
                     openDate,
                     null,
-                    null,
+                    userId,
                     customerId,
                     equipmentID
                 )

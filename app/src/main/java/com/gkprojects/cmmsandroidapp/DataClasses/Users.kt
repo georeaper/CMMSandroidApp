@@ -14,8 +14,10 @@ data class Users(
     @ColumnInfo(name = "Email") var Email: String?,
     @ColumnInfo(name = "Phone") var Phone: String?,
     @ColumnInfo(name = "Signature") var Signature: ByteArray?,
-    @ColumnInfo(name = "Prefix") var ReportPrefix: String?,
+    @ColumnInfo(name = "PrefixWO") var ReportPrefix: String?,
+    @ColumnInfo(name = "PrefixTC") var TechnicalCasePrefix: String?,
     @ColumnInfo(name = "LastReportNumber") var LastReportNumber: Int?,
+    @ColumnInfo(name = "LastTCNumber") var LastTCNumber: Int?,
     @ColumnInfo(name = "LastModified") var LastModified: String?,
     @ColumnInfo(name = "DateCreated") var DateCreated: String?,
     @ColumnInfo(name = "Version") var Version: String?

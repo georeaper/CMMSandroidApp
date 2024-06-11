@@ -59,6 +59,7 @@ class EquipmentInsertFragment : Fragment() {
     private lateinit var filterText : SearchView
     private var customerId : String?= null
     private var equipmentId : String?= null
+    private var userId : String?= null
     private var lastModified : String? = null
     private var dateCreated : String? = null
     private var version : String? = null

@@ -1,4 +1,4 @@
-package com.gkprojects.cmmsandroidapp.Repository
+package com.gkprojects.cmmsandroidapp.Dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*

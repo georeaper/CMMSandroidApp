@@ -12,6 +12,7 @@ data class Settings(
     @ColumnInfo(name = "SettingsKey") var SettingsKey: String?,
     @ColumnInfo(name = "SettingsValue") var SettingsValue: String?,
     @ColumnInfo(name = "SettingsStyle") var SettingsStyle: String?,
+    @ColumnInfo(name ="SettingsDescription") var SettingsDescription : String ? ,
     @ColumnInfo(name = "LastModified") var LastModified: String?,
     @ColumnInfo(name = "DateCreated") var DateCreated: String?,
     @ColumnInfo(name = "Version") var Version: String?
