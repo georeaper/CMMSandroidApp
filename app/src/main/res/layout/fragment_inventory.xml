@@ -10,20 +10,39 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <com.google.android.material.textfield.TextInputLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:id="@+id/inventory_textInputLayoutSearch">
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
+            android:orientation="horizontal">
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/searchTextInputLayoutInventory"
+                android:layout_width="0dp"
+                android:layout_weight="0.8"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:padding="8dp"
-                android:drawablePadding="8dp"
-                android:drawableStart="@drawable/search_svg_icon"
-                android:id="@+id/inventory_TextInputEditTextSearch"/>
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_margin="10dp"
+                app:endIconMode="clear_text"
+                app:endIconDrawable="@drawable/clear_icon"
+                app:endIconContentDescription="Clear text">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/searchEditTextInventory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Search"
+                    android:layout_gravity="center"
+                    android:drawableStart="@drawable/search_icon"
+                    android:drawablePadding="10dp"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_weight="0.2"
+                android:id="@+id/imageButtonFilterInventory"
+                android:layout_height="45dp"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                android:src="@drawable/filter_icon"/>
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"

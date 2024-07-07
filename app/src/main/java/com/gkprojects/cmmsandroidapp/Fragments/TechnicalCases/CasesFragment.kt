@@ -4,6 +4,8 @@ package com.gkprojects.cmmsandroidapp.Fragments.TechnicalCases
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -26,6 +28,7 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -108,18 +111,22 @@ class CasesFragment : Fragment() {
         }
 
 
-        val searchView = view.findViewById<SearchView>(R.id.searchView_cases)
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(p0: String?): Boolean {
-                return false
+        val searchView = view.findViewById<TextInputEditText>(R.id.searchEditTextCase)
+        searchView.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
             }
 
-            override fun onQueryTextChange(p0: String?): Boolean {
-                if (p0 != null) {
-                    filterList(p0.lowercase(Locale.ROOT))
+            override fun onTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                if (s != null) {
+                    filterList(s.toString().lowercase(Locale.ROOT))
                 }
-                return true
             }
+
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
+
         })
 
         casesAdapter.setOnClickListener(object : CasesAdapter.OnClickListener {

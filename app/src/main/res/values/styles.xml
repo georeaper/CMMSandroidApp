@@ -23,4 +23,17 @@
         <item name="boxStrokeWidthFocused">0dp</item>
     </style>
 
+
+    <!-- Custom Apply Button style -->
+    <style name="CustomApplyButton" parent="Widget.AppCompat.Button">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <!-- Custom Clear Button style -->
+    <style name="CustomClearButton" parent="Widget.AppCompat.Button">
+        <item name="android:background">@color/white</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
 </resources>

@@ -3,10 +3,17 @@ package com.gkprojects.cmmsandroidapp.Fragments.Customers
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.CheckBox
+import android.widget.ImageButton
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -23,17 +30,14 @@ import com.gkprojects.cmmsandroidapp.Fragments.dashboardCustomer.DashboardCustom
 
 import com.gkprojects.cmmsandroidapp.Models.CustomerVM
 import com.gkprojects.cmmsandroidapp.R
+import com.gkprojects.cmmsandroidapp.filterPopWindow
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.textfield.TextInputEditText
 import java.util.*
-
-
-
-
-
-
+import kotlin.collections.ArrayList
 
 
 class CustomerFragment : Fragment() {
@@ -42,6 +46,8 @@ class CustomerFragment : Fragment() {
     private var templist =ArrayList<Customer>()
     private lateinit var customerAdapter: CustomerAdapter
     private lateinit var customerViewModel: CustomerVM
+    private lateinit var bottomSheetFragment : filterPopWindow
+    private var customerActive : Boolean? =null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,24 +87,35 @@ class CustomerFragment : Fragment() {
           context?.let {
             customerViewModel.getAllCustomerData(it).observe(viewLifecycleOwner, Observer {
                 customerAdapter.setData(it as ArrayList<Customer>)
-                Log.d("debug123",it.toString())
+
                 templist.clear() // clear the templist,because it keeps populate everytime we open and close Customer Drawer
                 for(i in it.indices)(
                         templist.add(it[i])
                         )
-                Log.d("templist", templist.size.toString())
+
             })
         }
 
 
 
 
-        val searchView = view.findViewById<TextInputEditText>(R.id.searchView_customers)
-        searchView.doOnTextChanged { text, _, _, _ ->
-            if (text != null) {
-                filterList(text.toString().lowercase(Locale.ROOT))
+        val searchView = view.findViewById<TextInputEditText>(R.id.searchEditTextCustomer)
+        searchView.addTextChangedListener(object :TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
             }
-        }
+
+            override fun onTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                if (s != null) {
+                    filterList(s.toString().lowercase(Locale.ROOT))
+                }
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
+
+        })
 
 
         val openbtn =view.findViewById<FloatingActionButton>(R.id.openCustomerFragment)
@@ -112,6 +129,46 @@ class CustomerFragment : Fragment() {
 
             }
         })
+
+        val filterBtn =view.findViewById<ImageButton>(R.id.imageButtonFilterCustomer)
+
+        filterBtn.setOnClickListener {
+            bottomSheetFragment = filterPopWindow.newInstance(
+                R.layout.filter_pop_customer
+            ) { filterView ->
+                val radioGroup = filterView.findViewById<RadioGroup>(R.id.radioGroupCustomer)
+                var customerActive: Boolean? = null
+
+                radioGroup.setOnCheckedChangeListener { group, checkedId ->
+                    // Get the selected RadioButton
+                    val radioButton = filterView.findViewById<RadioButton>(checkedId)
+
+
+
+                    // Apply filtering based on the selected radio button
+                    customerActive = when (checkedId) {
+                        R.id.radioCustomerButtonActive -> true
+                        R.id.radioCustomerButtonDeactive -> false
+                        else -> null
+                    }
+                }
+
+                val filterButton: MaterialButton = filterView.findViewById(R.id.applyCustomerButton)
+                filterButton.setOnClickListener {
+                    Log.d("FilterButtonClick", "Filter button clicked")
+                    if (customerActive != null) {
+                        val filteredList = templist.filter { it.CustomerStatus == customerActive }
+                        Log.d("FilteredCustomerList", "$filteredList")
+                        customerAdapter.setData(filteredList as ArrayList)
+                    }
+                }
+                val clearButton : MaterialButton =filterView.findViewById(R.id.clearCustomerButton)
+                clearButton.setOnClickListener {
+                    customerAdapter.setData(templist)
+                }
+            }
+            bottomSheetFragment.show(childFragmentManager, "FilterBottomSheetFragment")
+        }
 
         openbtn?.setOnClickListener {
 

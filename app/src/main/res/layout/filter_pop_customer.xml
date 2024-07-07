@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Filter Options for DataClass1"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:paddingBottom="8dp" />
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/radioGroupCustomer">
+        <RadioButton
+            android:id="@+id/radioCustomerButtonActive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Active" />
+
+        <RadioButton
+            android:id="@+id/radioCustomerButtonDeactive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Non Active" />
+
+
+    </RadioGroup>
+
+
+
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/applyCustomerButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Apply"
+        android:layout_gravity="center"
+
+        android:layout_marginTop="16dp"
+
+         />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/clearCustomerButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Clear"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="center"
+        app:backgroundTint="@color/white"
+        android:textColor="@color/colorPrimary"
+
+         />
+
+
+</LinearLayout>

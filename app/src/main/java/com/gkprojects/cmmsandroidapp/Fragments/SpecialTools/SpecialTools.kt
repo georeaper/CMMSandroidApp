@@ -83,12 +83,14 @@ class SpecialTools : Fragment() {
 
             }
 
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
+            override fun onTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                if (s != null) {
+                    filterList(s.toString().lowercase(Locale.ROOT))
+                }
             }
 
             override fun afterTextChanged(s: Editable?) {
-                filterList(s.toString())
+//                filterList(s.toString())
             }
 
         })

@@ -1,14 +1,25 @@
 package com.gkprojects.cmmsandroidapp.Fragments.WorkOrders
 
+import android.content.Context.LAYOUT_INFLATER_SERVICE
+import android.graphics.Color
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.CheckBox
+import android.widget.LinearLayout
+import android.widget.PopupWindow
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.content.ContextCompat.getSystemService
+
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -24,6 +35,7 @@ import com.gkprojects.cmmsandroidapp.R
 import com.gkprojects.cmmsandroidapp.databinding.FragmentWorkOrdersBinding
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.textfield.TextInputEditText
 import java.util.Locale
 
 
@@ -31,7 +43,7 @@ class Work_Orders : Fragment() {
     private lateinit var binding: FragmentWorkOrdersBinding
     private lateinit var recyclerViewWorkOrder: RecyclerView
     private lateinit var adapterWorkOrder: WorkOrdersAdapter
-    private lateinit var searchViewWorkOrder: SearchView
+    private lateinit var searchViewWorkOrder: TextInputEditText
     private lateinit var workOrderViewModel: WorkOrdersVM
     private var tempWorkOrdersList = ArrayList<WorkOrdersList>()
 
@@ -81,19 +93,24 @@ class Work_Orders : Fragment() {
                 tempWorkOrdersList=it as ArrayList<WorkOrdersList>
                 adapterWorkOrder.setData(tempWorkOrdersList)
             })
-        searchViewWorkOrder = binding.workOrdersSearchView
-        searchViewWorkOrder.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
-            override fun onQueryTextSubmit(p0: String?): Boolean {
-                return false
+        searchViewWorkOrder = binding.searchEditTextWorkOrder
+        searchViewWorkOrder.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (s != null) {
+                    filterList(s.toString().lowercase(Locale.ROOT))
+                }
             }
 
-            override fun onQueryTextChange(p0: String?): Boolean {
-                if (p0 != null) {
-                    filterList(p0.lowercase(Locale.ROOT))
-                }
-                return true
-            }
+            override fun afterTextChanged(s: Editable?) {}
         })
+        val filterButton=binding.imageButtonFilterWorkOrder
+        filterButton.setOnClickListener {
+            // Open your filter dialog or activity
+            openFilterDialog(view)
+        }
+
         adapterWorkOrder.setOnClickListener(object : WorkOrdersAdapter.OnClickListener{
             override fun onClick(position: Int, model: WorkOrdersList) {
 
@@ -119,6 +136,49 @@ class Work_Orders : Fragment() {
             fragmentTransaction.replace(R.id.frameLayout1,fragment)
             fragmentTransaction.commit()
         }
+    }
+
+    private fun openFilterDialog(anchorView: View) {
+        // Inflate the popup layout
+        val inflater: LayoutInflater = LayoutInflater.from(requireContext())
+        val popupView: View = inflater.inflate(R.layout.filter_workorder_popup, null)
+//        val inflater: LayoutInflater = LayoutInflater.from(this)
+//        val popupView: View = inflater.inflate(R.layout.filter_workorder_popup, null)
+
+        val popupWindow = PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true)
+
+        val filterOption1: CheckBox = popupView.findViewById(R.id.filterOption1)
+        val filterOption2: CheckBox = popupView.findViewById(R.id.filterOption2)
+        val applyButton: Button = popupView.findViewById(R.id.applyButton)
+
+        applyButton.setOnClickListener {
+            val isOption1Checked = filterOption1.isChecked
+            val isOption2Checked = filterOption2.isChecked
+
+            popupWindow.dismiss()
+        }
+
+        popupWindow.setOnDismissListener {
+            val container = requireActivity().window.decorView.rootView as ViewGroup
+            val dimView = container.findViewById<View>(R.id.dim_view)
+            dimView?.visibility = View.GONE
+        }
+
+        popupWindow.showAtLocation(requireActivity().window.decorView.rootView, Gravity.CENTER, 0, 0)
+
+        val container = requireActivity().window.decorView.rootView as ViewGroup
+        var dimView = container.findViewById<View>(R.id.dim_view)
+        if (dimView == null) {
+            dimView = View(requireContext()).apply {
+                layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+                setBackgroundColor(Color.WHITE)
+                alpha = 0.5f
+                id = R.id.dim_view
+                visibility = View.GONE
+            }
+            container.addView(dimView)
+        }
+        dimView.visibility = View.VISIBLE
     }
 
 

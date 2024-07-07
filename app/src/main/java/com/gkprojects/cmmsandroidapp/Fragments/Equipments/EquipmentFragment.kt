@@ -5,6 +5,8 @@ import android.annotation.SuppressLint
 import android.content.Context
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.widget.addTextChangedListener
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -32,6 +35,7 @@ import com.gkprojects.cmmsandroidapp.R
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.*
 
 import java.util.*
@@ -101,19 +105,25 @@ class EquipmentFragment : Fragment() {
             Log.d("debugE",e.toString())
         }
 
-        val searchView = view.findViewById<SearchView>(R.id.searchView_equipment)
-       searchView.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
-            override fun onQueryTextSubmit(p0: String?): Boolean {
-                return false
+        val searchEditText = view.findViewById<TextInputEditText>(R.id.searchEditTextEquipment)
+
+        searchEditText.addTextChangedListener (object :TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
             }
 
-            override fun onQueryTextChange(p0: String?): Boolean {
-               if (p0 != null) {
-                    filterList(p0.lowercase(Locale.ROOT))
+            override fun onTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                if (s != null) {
+                    filterList(s.toString().lowercase(Locale.ROOT))
                 }
-                return true
             }
+
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
+
         })
+
         equipmentAdapter.setOnClickListener(object : EquipmentAdapter.OnClickListener{
             override fun onClick(position: Int, model: EquipmentSelectCustomerName) {
 
