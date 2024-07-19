@@ -137,6 +137,11 @@ class CustomerInfoFragment : Fragment() {
         val sharedViewModel: SharedViewModel by activityViewModels()
         sharedViewModel.user.observe(viewLifecycleOwner, Observer {
             userId=it.UserID
+
+            usersViewModel.getSingleUser(requireContext(),userId!!).observe(viewLifecycleOwner) {
+
+                userDetails = it as Users
+            }
         })
 
 
