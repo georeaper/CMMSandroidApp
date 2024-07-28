@@ -1,6 +1,5 @@
 package com.gkprojects.cmmsandroidapp.Fragments.WorkOrders
 
-import android.content.Context.LAYOUT_INFLATER_SERVICE
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
@@ -15,10 +14,8 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.LinearLayout
 import android.widget.PopupWindow
-import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.core.content.ContextCompat.getSystemService
 
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.activityViewModels
@@ -141,7 +138,7 @@ class Work_Orders : Fragment() {
     private fun openFilterDialog(anchorView: View) {
         // Inflate the popup layout
         val inflater: LayoutInflater = LayoutInflater.from(requireContext())
-        val popupView: View = inflater.inflate(R.layout.filter_workorder_popup, null)
+        val popupView: View = inflater.inflate(R.layout.filter_pop_workorder, null)
 //        val inflater: LayoutInflater = LayoutInflater.from(this)
 //        val popupView: View = inflater.inflate(R.layout.filter_workorder_popup, null)
 
