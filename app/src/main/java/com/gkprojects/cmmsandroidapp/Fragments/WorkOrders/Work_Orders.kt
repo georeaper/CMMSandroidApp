@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.Toast
@@ -30,7 +31,9 @@ import com.gkprojects.cmmsandroidapp.Models.SharedViewModel
 import com.gkprojects.cmmsandroidapp.Models.WorkOrdersVM
 import com.gkprojects.cmmsandroidapp.R
 import com.gkprojects.cmmsandroidapp.databinding.FragmentWorkOrdersBinding
+import com.gkprojects.cmmsandroidapp.filterPopWindow
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.textfield.TextInputEditText
 import java.util.Locale
@@ -43,6 +46,7 @@ class Work_Orders : Fragment() {
     private lateinit var searchViewWorkOrder: TextInputEditText
     private lateinit var workOrderViewModel: WorkOrdersVM
     private var tempWorkOrdersList = ArrayList<WorkOrdersList>()
+    private lateinit var filterWindow : filterPopWindow
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -104,8 +108,15 @@ class Work_Orders : Fragment() {
         })
         val filterButton=binding.imageButtonFilterWorkOrder
         filterButton.setOnClickListener {
-            // Open your filter dialog or activity
-            openFilterDialog(view)
+            filterWindow  = filterPopWindow.newInstance(
+                R.layout.filter_pop_fieldreports
+            ){filterView ->
+//login that handles filtering
+
+            }
+            filterWindow.show(childFragmentManager, "FilterWorkOrder")
+
+
         }
 
         adapterWorkOrder.setOnClickListener(object : WorkOrdersAdapter.OnClickListener{
@@ -124,6 +135,7 @@ class Work_Orders : Fragment() {
 
         })
 
+
         val btnFloat= binding.workOrdersFloatButton
 
         btnFloat.setOnClickListener {
@@ -135,48 +147,7 @@ class Work_Orders : Fragment() {
         }
     }
 
-    private fun openFilterDialog(anchorView: View) {
-        // Inflate the popup layout
-        val inflater: LayoutInflater = LayoutInflater.from(requireContext())
-        val popupView: View = inflater.inflate(R.layout.filter_pop_workorder, null)
-//        val inflater: LayoutInflater = LayoutInflater.from(this)
-//        val popupView: View = inflater.inflate(R.layout.filter_workorder_popup, null)
 
-        val popupWindow = PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true)
-
-        val filterOption1: CheckBox = popupView.findViewById(R.id.filterOption1)
-        val filterOption2: CheckBox = popupView.findViewById(R.id.filterOption2)
-        val applyButton: Button = popupView.findViewById(R.id.applyButton)
-
-        applyButton.setOnClickListener {
-            val isOption1Checked = filterOption1.isChecked
-            val isOption2Checked = filterOption2.isChecked
-
-            popupWindow.dismiss()
-        }
-
-        popupWindow.setOnDismissListener {
-            val container = requireActivity().window.decorView.rootView as ViewGroup
-            val dimView = container.findViewById<View>(R.id.dim_view)
-            dimView?.visibility = View.GONE
-        }
-
-        popupWindow.showAtLocation(requireActivity().window.decorView.rootView, Gravity.CENTER, 0, 0)
-
-        val container = requireActivity().window.decorView.rootView as ViewGroup
-        var dimView = container.findViewById<View>(R.id.dim_view)
-        if (dimView == null) {
-            dimView = View(requireContext()).apply {
-                layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-                setBackgroundColor(Color.WHITE)
-                alpha = 0.5f
-                id = R.id.dim_view
-                visibility = View.GONE
-            }
-            container.addView(dimView)
-        }
-        dimView.visibility = View.VISIBLE
-    }
 
 
 

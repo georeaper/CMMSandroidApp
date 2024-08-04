@@ -81,13 +81,14 @@
 
             <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_margin="5dp" >
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/contractInsert_TextInputLayout_StartDate"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:hint="Open Date"
+                android:padding="2dp"
                 android:layout_margin="5dp"
                 android:gravity="center"
                 android:layout_weight="1"
@@ -97,6 +98,7 @@
                     android:id="@+id/contractInsert_TextInputEditText_StartDate"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:padding="2dp"
                     android:inputType="none"
                     android:gravity="center"
                     android:textSize="@dimen/textSizeDashboard"
@@ -113,6 +115,7 @@
                 android:layout_weight="1"
                 android:hint="Close Date"
                 android:layout_margin="5dp"
+                android:padding="2dp"
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
@@ -121,6 +124,7 @@
                     android:layout_height="match_parent"
                     android:inputType="none"
                     android:textSize="@dimen/textSizeDashboard"
+                    android:padding="2dp"
                     android:gravity="center"
                     android:focusable="false"
                     android:clickable="true"/>
@@ -129,16 +133,18 @@
 
         </LinearLayout>
 
-            <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp" >
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/contractInsert_TextInputLayout_ContractType"
+        <LinearLayout
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:weightSum="2">
+            <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/contractInsert_TextInputLayout_ContractType"
+            android:layout_width="0dp"
             android:layout_height="60dp"
             android:hint="Contract Type"
             android:layout_margin="5dp"
+                android:padding="2dp"
             android:gravity="center"
             android:layout_weight="1"
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
@@ -147,35 +153,26 @@
                 android:id="@+id/contractInsert_TextInputEditText_ContractType"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_margin="1dp"
                 android:gravity="center"
                 android:inputType="none"
+                android:padding="2dp"
                 android:textSize="@dimen/textSizeDashboard"
                 app:simpleItems="@array/simple_items"
                 android:focusable="false"
                 android:clickable="true"/>
 
         </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.checkbox.MaterialCheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Status"
+                    android:layout_weight="1"
+                    android:textSize="18sp"
+                    android:checked="true"
+                    android:id="@+id/contractInsert_checkBox_ContractStatus"/>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/contractInsert_TextInputLayout_ContractStatus"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_weight="1"
-            android:hint="Contract Status"
-            android:layout_margin="5dp"
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
-            <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                android:id="@+id/contractInsert_TextInputEditText_ContractStatus"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:inputType="none"
-                android:textSize="@dimen/textSizeDashboard"
-                android:focusable="false"
-                android:clickable="true"/>
-
-        </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
 

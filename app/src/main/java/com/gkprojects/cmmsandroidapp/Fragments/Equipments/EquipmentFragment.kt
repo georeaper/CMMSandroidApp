@@ -32,6 +32,9 @@ import com.gkprojects.cmmsandroidapp.DataClasses.Equipments
 import com.gkprojects.cmmsandroidapp.Models.EquipmentVM
 
 import com.gkprojects.cmmsandroidapp.R
+import com.gkprojects.cmmsandroidapp.databinding.FragmentEquipmentBinding
+import com.gkprojects.cmmsandroidapp.databinding.FragmentWorkOrdersBinding
+import com.gkprojects.cmmsandroidapp.filterPopWindow
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
@@ -47,8 +50,10 @@ class EquipmentFragment : Fragment() {
     @SuppressLint("StaticFieldLeak")
     private lateinit var equipmentAdapter: EquipmentAdapter
     private lateinit var equipmentViewModel: EquipmentVM
-    private var templist = ArrayList<EquipmentSelectCustomerName>()
+    private var equipmentList = ArrayList<EquipmentSelectCustomerName>()
     private var dataItems = ArrayList<EquipmentSelectCustomerName>()
+    private lateinit var binding: FragmentEquipmentBinding
+    private lateinit var filterWindow : filterPopWindow
     //private var eq = ArrayList<Equipments>()
     private var eq = Equipments("",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
 
@@ -85,17 +90,13 @@ class EquipmentFragment : Fragment() {
         try{
             lifecycleScope.launch {
                 withContext(Dispatchers.Main){
-                    context?.let { equipmentViewModel.getCustomerName(it).observe(viewLifecycleOwner,
-                        Observer {
-                            equipmentAdapter.setData(it as ArrayList<EquipmentSelectCustomerName>)
-                            templist.clear()
-                            for(i in it.indices){
-                                templist.add(it[i])
-                                //dataItems.add(it[i])
+                     equipmentViewModel.getCustomerName(requireContext()).observe(viewLifecycleOwner,
+                        Observer {list->
+                            equipmentList.clear()
+                            equipmentList=list as ArrayList<EquipmentSelectCustomerName>
+                            equipmentAdapter.setData(list)
 
-                            }
-                            Log.d("dataItems", dataItems.toString())
-                        }) }
+                        })
                 }
             }
 
@@ -133,6 +134,18 @@ class EquipmentFragment : Fragment() {
 
             }
         })
+        val filterButton=binding.imageButtonFilterEquipment
+        filterButton.setOnClickListener {
+            filterWindow  = filterPopWindow.newInstance(
+                R.layout.filter_pop_equipments
+            ){filterView ->
+//login that handles filtering
+
+            }
+            filterWindow.show(childFragmentManager, "FilterEquipment")
+
+
+        }
 
     val btnFloat=view.findViewById<FloatingActionButton>(R.id.openEquipmentFragment)
         btnFloat.setOnClickListener {
@@ -156,7 +169,7 @@ class EquipmentFragment : Fragment() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 //var eq = ArrayList<Equipments>()
-                val pos= templist[viewHolder.absoluteAdapterPosition]
+                val pos= equipmentList[viewHolder.absoluteAdapterPosition]
 
                 Toast.makeText(context,pos.EquipmentID.toString(),Toast.LENGTH_SHORT).show()
 
@@ -192,11 +205,10 @@ class EquipmentFragment : Fragment() {
     }
     private fun filterList(query:String){
         val filteredList= java.util.ArrayList<EquipmentSelectCustomerName>()
-        for (i in templist){
+        for (i in equipmentList){
             if((i.Model?.lowercase(Locale.ROOT)?.contains(query)==true) or (i.SerialNumber?.lowercase(Locale.ROOT)?.contains(query) == true)or(i.CustomerName?.lowercase(Locale.ROOT)?.contains(query) == true))
-
                 filteredList.add(i)
-            Log.d("dataEquipment", filteredList.toString())
+
         }
         if (filteredList.isEmpty() ){
             Toast.makeText(context,"Empty List", Toast.LENGTH_SHORT).show()
@@ -227,16 +239,16 @@ class EquipmentFragment : Fragment() {
         }
     }
 
-    fun reloadData(context: Context){
+    private fun reloadData(context: Context){
         lifecycleScope.launch(Dispatchers.Main){
-            equipmentViewModel.getCustomerName(context).observe(viewLifecycleOwner, Observer {
-                equipmentAdapter.setData(it as ArrayList<EquipmentSelectCustomerName>)
-                templist.clear()
-                for(i in it.indices){
-                    templist.add(it[i])
-                    //dataItems.add(it[i])
+            equipmentViewModel.getCustomerName(context).observe(viewLifecycleOwner,
+                Observer {list->
+                equipmentList.clear()
+                equipmentList=list as ArrayList<EquipmentSelectCustomerName>
 
-                }
+                equipmentAdapter.setData(list )
+
+
             })
         }
 
@@ -248,11 +260,9 @@ class EquipmentFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-//        val bottomNavigationView: BottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView)
-//        bottomNavigationView.selectedItemId=R.id.action_home
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_equipment, container, false)
+    ): View {
+        binding= FragmentEquipmentBinding.inflate(layoutInflater,container,false)
+        return binding.root
     }
 
 

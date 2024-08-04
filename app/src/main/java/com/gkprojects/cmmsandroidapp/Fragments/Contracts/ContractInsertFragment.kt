@@ -41,6 +41,7 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.google.android.material.textfield.TextInputEditText
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -83,7 +84,7 @@ class ContractInsertFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentContractInsertBinding.inflate(inflater, container, false)
         return binding.root
 
@@ -98,7 +99,7 @@ class ContractInsertFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val appDataLoader = AppDataLoader(requireContext())
         val contractTypeArray = appDataLoader.getDataFromJson("contractType.json")
-        val contractStatusArray = appDataLoader.getDataFromJson("contractStatus.json")
+
 
         contractViewModel= ViewModelProvider(this)[ContractsVM::class.java]
         equipmentViewModel= ViewModelProvider(this)[EquipmentVM::class.java]
@@ -145,9 +146,8 @@ class ContractInsertFragment : Fragment() {
         val adapterDropType = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, contractTypeArray)
         contractType.setAdapter(adapterDropType)
 
-        val contractStatus = view.findViewById<MaterialAutoCompleteTextView>(R.id.contractInsert_TextInputEditText_ContractStatus)
-        val adapterDropStatus = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, contractStatusArray)
-        contractStatus.setAdapter(adapterDropStatus)
+        val contractStatus = view.findViewById<CheckBox>(R.id.contractInsert_checkBox_ContractStatus)
+
 
         val contractValue = view.findViewById<TextInputEditText>(R.id.contractInsert_TextInputEditText_Value)
 
@@ -161,7 +161,8 @@ class ContractInsertFragment : Fragment() {
         pickerClose.addOnPositiveButtonClickListener {
             val calendar2 = Calendar.getInstance()
             calendar2.timeInMillis = it
-            val format = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+
+            val format = SimpleDateFormat(getString(R.string.app_date_format), Locale.getDefault())
             val selectedDate = format.format(calendar2.time)
             endDate.setText(selectedDate)
         }
@@ -172,7 +173,7 @@ class ContractInsertFragment : Fragment() {
         pickerOpen.addOnPositiveButtonClickListener {
             val calendar2 = Calendar.getInstance()
             calendar2.timeInMillis = it
-            val format = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            val format = SimpleDateFormat(getString(R.string.app_date_format), Locale.getDefault())
             val selectedDate = format.format(calendar2.time)
             startDate.setText(selectedDate)
         }
@@ -209,7 +210,7 @@ class ContractInsertFragment : Fragment() {
                     description.setText(it.Description)
                     notes.setText(it.Notes)
                     contactName.setText(it.ContactName)
-                    contractStatus.setText(it.ContractStatus)
+                    contractStatus.isChecked=it.ContractStatus!!
                     contractType.setText(it.ContractType)
                     contractValue.setText(it.Value.toString())
                     customerId=it.CustomerID!!
@@ -292,17 +293,17 @@ class ContractInsertFragment : Fragment() {
 
 
         contractCustomer.setOnClickListener {
-            val builder = AlertDialog.Builder(context)
+            val builderContract = AlertDialog.Builder(context)
 
-            builder.setView(R.layout.dialog_searchable_spinner)
+            builderContract.setView(R.layout.dialog_searchable_spinner)
 
-            dialog?.getWindow()?.setLayout(650,800);
+            dialog?.window?.setLayout(650,800);
 
             // set transparent background
-            dialog?.getWindow()?.setBackgroundDrawableResource(com.google.android.material.R.drawable.m3_tabs_transparent_background)
+            dialog?.window?.setBackgroundDrawableResource(com.google.android.material.R.drawable.m3_tabs_transparent_background)
 
 
-            dialog=builder.create()
+            dialog=builderContract.create()
 
             dialog?.show()
 
@@ -315,7 +316,7 @@ class ContractInsertFragment : Fragment() {
                 layoutManager = LinearLayoutManager(this.context)
                 adapter = rvAdapter
             }
-            filterText?.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
+            filterText.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
                 override fun onQueryTextSubmit(p0: String?): Boolean {
                     return false
                 }
@@ -331,10 +332,10 @@ class ContractInsertFragment : Fragment() {
 
             rvAdapter!!.setOnClickListener(object :RvAlertAdapter.OnClickListener{
                 override fun onClick(position: Int, model: CustomerSelect) {
-                    var strtemp: String = model.CustomerName!!
+                    val strTemp: String = model.CustomerName!!
                     customerId = model.CustomerID
 
-                    contractCustomer.text = strtemp
+                    contractCustomer.text = strTemp
                     dialog!!.dismiss();
 
                 }
@@ -408,6 +409,7 @@ class ContractInsertFragment : Fragment() {
             })
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     private fun updateData(){
         val value : String =binding.contractInsertTextInputEditTextValue.text.toString()
         val dValue = value.toDoubleOrNull()
@@ -420,7 +422,7 @@ class ContractInsertFragment : Fragment() {
             binding.contractInsertTextInputEditTextNotes.text.toString(),
             binding.contractInsertTextInputEditTextDescription.text.toString(),
             binding.contractInsertTextInputEditTextContractType.text.toString(),
-            binding.contractInsertTextInputEditTextContractStatus.text.toString(),
+            binding.contractInsertCheckBoxContractStatus.isChecked,
             binding.contractInsertTextInputEditTextContactName.text.toString(),
             dateCurrent,
             dateCreated,
@@ -437,6 +439,7 @@ class ContractInsertFragment : Fragment() {
         fragmentTransaction.replace(R.id.frameLayout1,fragment)
         fragmentTransaction.commit()
     }
+    @OptIn(DelicateCoroutinesApi::class)
     private fun insertData(){
         val value : String =binding.contractInsertTextInputEditTextValue.text.toString()
         val dValue = value.toDoubleOrNull()
@@ -449,7 +452,7 @@ class ContractInsertFragment : Fragment() {
             binding.contractInsertTextInputEditTextNotes.text.toString(),
             binding.contractInsertTextInputEditTextDescription.text.toString(),
             binding.contractInsertTextInputEditTextContractType.text.toString(),
-            binding.contractInsertTextInputEditTextContractStatus.text.toString(),
+            binding.contractInsertCheckBoxContractStatus.isChecked,
             binding.contractInsertTextInputEditTextContactName.text.toString(),
             dateCreated,
             dateCurrent,
@@ -462,7 +465,7 @@ class ContractInsertFragment : Fragment() {
         }
         val bundle = Bundle()
         bundle.putString("customerId", customerId.toString())
-        Log.d("TestTest4","${customerId.toString()}")
+
         //bundle.putString("customerName",binding.tvCustomerNameContract.text.toString())
         bundle.putString("contractTitle",binding.contractInsertTextInputEditTextTitle.text.toString())
         bundle.putString("contractDateEnd",binding.contractInsertTextInputEditTextEndDate.text.toString())
@@ -569,23 +572,20 @@ class ContractInsertFragment : Fragment() {
 
     private fun setUpContractEquipment(){
         recyclerViewEquipment=binding.contractInsertRecyclerViewEquipmentList
-        if (contractEquipment!=null) {
-            rvAdapterEquipmentList = ContractInsertEquipmentListAdapter(contractEquipment)
-            rvAdapterEquipmentList!!.setOnClickListener(object : ContractInsertEquipmentListAdapter.OnClickListener {
-                override fun onDeleteItem(position: Int, item: DetailedContract) {
-                    deleteEquipmentFromContractEquipment(item)
-                    rvAdapterEquipmentList!!.removeItemAt(position)
-                }
-            })
-            recyclerViewEquipment?.apply {
-                setHasFixedSize(true)
-                layoutManager = LinearLayoutManager(this.context)
-                adapter = rvAdapterEquipmentList
+        rvAdapterEquipmentList = ContractInsertEquipmentListAdapter(contractEquipment)
+        rvAdapterEquipmentList!!.setOnClickListener(object : ContractInsertEquipmentListAdapter.OnClickListener {
+            override fun onDeleteItem(position: Int, item: DetailedContract) {
+                deleteEquipmentFromContractEquipment(item)
+                rvAdapterEquipmentList!!.removeItemAt(position)
             }
-            rvAdapterEquipmentList!!.setData(contractEquipment)
-
-
+        })
+        recyclerViewEquipment?.apply {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(this.context)
+            adapter = rvAdapterEquipmentList
         }
+        rvAdapterEquipmentList!!.setData(contractEquipment)
+
 
     }
 

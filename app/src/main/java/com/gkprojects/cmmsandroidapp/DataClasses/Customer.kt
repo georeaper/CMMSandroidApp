@@ -3,7 +3,10 @@ package com.gkprojects.cmmsandroidapp.DataClasses
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import io.github.serpro69.kfaker.Faker
+import kotlinx.datetime.Clock
 import java.util.UUID
+import kotlin.random.Random
 
 
 @Entity (tableName = "Customer")
@@ -23,4 +26,6 @@ data class Customer(
     @ColumnInfo(name ="LastModified") var LastModified :String? ,
     @ColumnInfo(name ="DateCreated") var DateCreated :String? ,
     @ColumnInfo(name ="Version") var Version :String? )
+
+
 

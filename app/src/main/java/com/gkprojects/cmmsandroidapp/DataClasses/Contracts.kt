@@ -22,7 +22,7 @@ data class Contracts(
     @ColumnInfo(name = "Notes") var Notes: String?,
     @ColumnInfo(name = "Description") var Description: String?,
     @ColumnInfo(name = "ContractType") var ContractType: String?,
-    @ColumnInfo(name = "ContractStatus") var ContractStatus: String?,
+    @ColumnInfo(name = "ContractStatus") var ContractStatus: Boolean?,
     @ColumnInfo(name = "ContactName") var ContactName: String?,
     @ColumnInfo(name = "LastModified") var LastModified: String?,
     @ColumnInfo(name = "DateCreated") var DateCreated: String?,

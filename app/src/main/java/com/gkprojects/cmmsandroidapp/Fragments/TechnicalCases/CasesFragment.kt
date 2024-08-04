@@ -24,6 +24,8 @@ import com.gkprojects.cmmsandroidapp.Adapter.CasesAdapter
 import com.gkprojects.cmmsandroidapp.DataClasses.TicketCustomerName
 import com.gkprojects.cmmsandroidapp.Models.CasesVM
 import com.gkprojects.cmmsandroidapp.R
+import com.gkprojects.cmmsandroidapp.databinding.FragmentCasesBinding
+import com.gkprojects.cmmsandroidapp.filterPopWindow
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -38,16 +40,15 @@ import java.util.*
 class CasesFragment : Fragment() {
     private lateinit var casesRecyclerView: RecyclerView
 
-    private var templist = ArrayList<TicketCustomerName>()
+    private var casesList = ArrayList<TicketCustomerName>()
     private lateinit var casesAdapter: CasesAdapter
     private lateinit var casesViewModel: CasesVM
+    private lateinit var binding : FragmentCasesBinding
+    private lateinit var filterWindow : filterPopWindow
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val bottomNavigationView: BottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView)
-//        bottomNavigationView.itemIconTintList = ContextCompat.getColorStateList(requireContext(), R.drawable.bottom_nav_item_selector)
-//        bottomNavigationView.itemTextColor = ContextCompat.getColorStateList(requireContext(), R.drawable.bottom_nav_item_selector)
-//
+
 
         
 }
@@ -55,22 +56,22 @@ class CasesFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-
+    ): View {
+        binding= FragmentCasesBinding.inflate(inflater,container,false)
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_cases, container, false)
+        return binding.root
     }
 
     override fun onResume() {
         super.onResume()
-        var activity =requireActivity()
+        val activity =requireActivity()
 
-        var drawerLayout = activity.findViewById<DrawerLayout>(R.id.DrawLayout)
-        val navView: NavigationView = activity.findViewById(R.id.navView)
+        val drawerLayout = activity.findViewById<DrawerLayout>(R.id.DrawLayout)
+
         val toolbar: MaterialToolbar = activity.findViewById(R.id.topAppBar)
         toolbar.title="Technical Cases"
 
-        var toggle = ActionBarDrawerToggle(activity, drawerLayout, toolbar, R.string.open, R.string.close)
+        val toggle = ActionBarDrawerToggle(activity, drawerLayout, toolbar, R.string.open, R.string.close)
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
@@ -92,16 +93,12 @@ class CasesFragment : Fragment() {
 
         try{
             lifecycleScope.launch { withContext(Dispatchers.Main){
-                casesViewModel.getCustomerName(context!!).observe(viewLifecycleOwner, Observer {
+                casesViewModel.getCustomerName(requireContext()).observe(viewLifecycleOwner,
+                    Observer {list->
+                    casesList.clear()
+                    casesList=list as ArrayList<TicketCustomerName>
+                    casesAdapter.setData(casesList)
 
-                    casesAdapter.setData(it as ArrayList<TicketCustomerName>)
-                    templist.clear()
-                    for(i in it.indices){
-                        templist.add(it[i])
-
-
-                    }
-                    Log.d("casesItems", templist.toString())
                 })
 
             } }
@@ -128,6 +125,18 @@ class CasesFragment : Fragment() {
             }
 
         })
+        val filterButton=binding.imageButtonFilterCase
+        filterButton.setOnClickListener {
+            filterWindow  = filterPopWindow.newInstance(
+                R.layout.filter_pop_equipments
+            ){filterView ->
+//login that handles filtering
+
+            }
+            filterWindow.show(childFragmentManager, "FilterEquipment")
+
+
+        }
 
         casesAdapter.setOnClickListener(object : CasesAdapter.OnClickListener {
             override fun onClick(position: Int, model: TicketCustomerName) {
@@ -152,19 +161,17 @@ class CasesFragment : Fragment() {
 
     private fun filterList(query:String){
         Log.d("query",query)
-        if (query!=null){
-            val filteredList= ArrayList<TicketCustomerName>()
-            for (i in templist){
-                if ((i.Title?.lowercase(Locale.ROOT)?.contains(query) == true)or(i.CustomerName?.lowercase(Locale.ROOT)?.contains(query) == true) )
-                    filteredList.add(i)
-                Log.d("filteredCases", filteredList.toString())
-            }
-            if (filteredList.isEmpty() ){
-                Toast.makeText(context,"Empty List", Toast.LENGTH_SHORT).show()
+        val filteredList= ArrayList<TicketCustomerName>()
+        for (i in casesList){
+            if ((i.Title?.lowercase(Locale.ROOT)?.contains(query) == true)or(i.CustomerName?.lowercase(Locale.ROOT)?.contains(query) == true) )
+                filteredList.add(i)
+            Log.d("filteredCases", filteredList.toString())
+        }
+        if (filteredList.isEmpty() ){
+            Toast.makeText(context,"Empty List", Toast.LENGTH_SHORT).show()
 
-            }else{
-                casesAdapter.setData(filteredList)
-            }
+        }else{
+            casesAdapter.setData(filteredList)
         }
 
 

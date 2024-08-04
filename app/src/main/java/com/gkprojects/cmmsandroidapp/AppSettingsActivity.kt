@@ -38,7 +38,7 @@ class AppSettingsActivity : AppCompatActivity() {
                     checked = useRemoteDB,
                     onCheckedChange = {
                         useRemoteDB = it
-                        dbName = if (it) "RemoteDB245677" else "LocalDB245677"
+                        dbName = if (it) "RemoteDB240804" else "LocalDB240804"
                         sharedPreferences.edit().putBoolean("useRemoteDB", it).putString("dbName", dbName).apply()
                     },
                 )

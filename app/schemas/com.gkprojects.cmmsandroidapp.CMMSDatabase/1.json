@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "2c072b82c429511111ee435275693c99",
+    "identityHash": "dcc732478bec811e2bdebe94e6ef709f",
     "entities": [
       {
         "tableName": "Customer",
@@ -178,7 +178,7 @@
       },
       {
         "tableName": "Contracts",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ContractID` TEXT NOT NULL, `RemoteID` INTEGER, `Title` TEXT, `DateStart` TEXT, `DateEnd` TEXT, `Value` REAL, `Notes` TEXT, `Description` TEXT, `ContractType` TEXT, `ContractStatus` TEXT, `ContactName` TEXT, `LastModified` TEXT, `DateCreated` TEXT, `Version` TEXT, `CustomerID` TEXT, PRIMARY KEY(`ContractID`), FOREIGN KEY(`CustomerID`) REFERENCES `Customer`(`CustomerID`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ContractID` TEXT NOT NULL, `RemoteID` INTEGER, `Title` TEXT, `DateStart` TEXT, `DateEnd` TEXT, `Value` REAL, `Notes` TEXT, `Description` TEXT, `ContractType` TEXT, `ContractStatus` INTEGER, `ContactName` TEXT, `LastModified` TEXT, `DateCreated` TEXT, `Version` TEXT, `CustomerID` TEXT, PRIMARY KEY(`ContractID`), FOREIGN KEY(`CustomerID`) REFERENCES `Customer`(`CustomerID`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "ContractID",
@@ -237,7 +237,7 @@
           {
             "fieldPath": "ContractStatus",
             "columnName": "ContractStatus",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
             "notNull": false
           },
           {
@@ -1809,7 +1809,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2c072b82c429511111ee435275693c99')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'dcc732478bec811e2bdebe94e6ef709f')"
     ]
   }
 }
